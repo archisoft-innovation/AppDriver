@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GoalItem from "./components/GoalItem";
 import { StyleSheet, View, FlatList } from "react-native";
 import GoalInput from "./components/GoalInput";
+import { Authorize } from "./services/authorizationService";
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
 
   function addGoalHandler(enteredGoalText) {
+    Authorize("demo@driver.com", "parola");
+    
     setCourseGoals((currentCourseGoals) => [
       ...courseGoals,
       { text: enteredGoalText, id: Math.random().toString() },
