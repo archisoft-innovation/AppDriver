@@ -1,5 +1,7 @@
 import axios from "axios";
-import { SmartiooApi } from "./contants";
+import { SmartiooApi } from "./apiConstants";
+//import * as SecureStore from "expo-secure-store";
+import { UserData } from "./secureStorageConstants";
 
 function Authorize(email, password) {
   axios
@@ -9,12 +11,13 @@ function Authorize(email, password) {
       role: "driver",
     })
     .then((response) => {
-      console.log(response.data.apiKey); // salvat in state
-      console.log(response.data.token); // salvat in state
-      console.log(response.data.user);
-      console.log(response.data.user.id);
-      console.log(response.data.user.name);
-
+      var userOrbject = {
+        apiKey: response.data.apiKey,
+        token: response.data.token,
+        id: response.data.user.id,
+        name: response.data.user.name,
+      };
+      //  SecureStore.setItemAsync(UserData, userOrbject);
       // console.log(response.data);t
     })
     .catch((error) => {
