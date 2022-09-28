@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
+import { DoLoghin } from "./services/api/authorizationService";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 let foregroundSubscription = null;
@@ -28,6 +29,7 @@ export default function App() {
   // Request permissions right after starting the app
   useEffect(() => {
     const requestPermissions = async () => {
+      await DoLoghin("demo@driver.com", "parola");
       const foreground = await Location.requestForegroundPermissionsAsync();
       startForegroundUpdate();
       if (foreground.granted)
