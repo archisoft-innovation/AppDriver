@@ -17,18 +17,20 @@ async function DoLoghin(email, password) {
       id: response.data.user.id,
       name: response.data.user.name,
     };
-    await SecureStore.setItemAsync(UserData, userOrbject);
+    await SecureStore.setItemAsync(UserData, JSON.stringify(userOrbject));
   } catch (error) {
     console.log("Error");
-    console.log(error.response.status);
-    if (error.response.status == 400) {
-      console.log(error.response);
-      console.log("Wrong username or password");
-      // here return bad request
-    }
-    if (error.response.status == 401) {
-      // unathorized
-      console.log("unhauthorized");
+    console.log(error);
+    if (error.response) {
+      if (error.response.status == 400) {
+        console.log(error.response);
+        console.log("Wrong username or password");
+        // here return bad request
+      }
+      if (error.response.status == 401) {
+        // unathorized
+        console.log("unhauthorized");
+      }
     }
   }
 }

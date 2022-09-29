@@ -13,8 +13,8 @@ import { useState } from "react";
 import { DoLoghin } from "../../services/api/authorizationService";
 
 export default function GoalInput(props) {
-  const [enteredEmailText, setEnteredEmailText] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredEmailText, setEnteredEmailText] = useState("demo@driver.com");
+  const [enteredPassword, setEnteredPassword] = useState("parola");
   const [emailValidation, setEmailValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
@@ -41,6 +41,7 @@ export default function GoalInput(props) {
       // setEnteredEmailText("");
       // setEnteredPassword("");
       console.log("all goodie");
+
       DoLoghin(enteredEmailText, enteredPassword);
     } else {
       setEmailValidation(false);
