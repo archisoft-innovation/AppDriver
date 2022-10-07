@@ -17,7 +17,8 @@ async function DoLoghin(email, password) {
       id: response.data.user.id,
       name: response.data.user.name,
     };
-    await SecureStore.setItemAsync(UserData, JSON.stringify(userOrbject));
+    await SecureStore.setItemAsync(UserData, userOrbject);
+    console.log("all good");
   } catch (error) {
     console.log("Error");
     console.log(error);

@@ -11,10 +11,12 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { DoLoghin } from "../../services/api/authorizationService";
+import * as SecureStore from "expo-secure-store";
+import { UserData } from "../../services/api/secureStorageConstants";
 
 export default function GoalInput(props) {
-  const [enteredEmailText, setEnteredEmailText] = useState("demo@driver.com");
-  const [enteredPassword, setEnteredPassword] = useState("parola");
+  const [enteredEmailText, setEnteredEmailText] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
   const [emailValidation, setEmailValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
@@ -49,6 +51,19 @@ export default function GoalInput(props) {
     }
   }
 
+  function test2() {
+    getValueFor(UserData);
+  }
+
+  async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+      let a = JSON.parse(result);
+      console.log(a.apiKey);
+    } else {
+      console.log("No result passed");
+    }
+  }
   return (
     <View style={styles.inputContainer}>
       <Image
@@ -77,7 +92,7 @@ export default function GoalInput(props) {
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
-          <Pressable onPress={myTest} style={styles.presableButtonForgetPass}>
+          <Pressable onPress={test2} style={styles.presableButtonForgetPass}>
             <Text style={styles.goalText}>Ati uitat parola?</Text>
           </Pressable>
         </View>
