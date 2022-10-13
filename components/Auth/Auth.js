@@ -13,6 +13,7 @@ import { useState } from "react";
 import { DoLoghin } from "../../services/api/authorizationService";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "../../services/api/secureStorageConstants";
+import Some from "./Some";
 
 export default function GoalInput(props) {
   const [enteredEmailText, setEnteredEmailText] = useState("");
@@ -42,9 +43,9 @@ export default function GoalInput(props) {
       // console.log(enteredPassword);
       // setEnteredEmailText("");
       // setEnteredPassword("");
-      console.log("all goodie");
 
       DoLoghin(enteredEmailText, enteredPassword);
+      console.log("all goodie");
     } else {
       setEmailValidation(false);
       Alert.alert("Please check your entered credentials!");
@@ -60,6 +61,8 @@ export default function GoalInput(props) {
     if (result) {
       let a = JSON.parse(result);
       console.log(a.apiKey);
+      console.log(a.name);
+      console.log(a.id);
     } else {
       console.log("No result passed");
     }

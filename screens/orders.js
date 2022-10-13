@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
 import Orders from "../components/Orders/Orders";
 
 export default function Comenzi() {
@@ -9,9 +9,14 @@ export default function Comenzi() {
         <Text style={styles.goalText}>Câștiguri zilnice</Text>
         <Text style={styles.goalText}>{"Suma"} Ron</Text>
       </View>
-      <View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollViewPad}
+      >
         <Orders />
-      </View>
+        <Orders />
+        <Orders />
+      </ScrollView>
     </View>
   );
 }
@@ -47,5 +52,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#06b4e0",
     alignItems: "center",
     textAlign: "center",
+  },
+  scrollViewPad: {
+    marginTop: 20,
   },
 });

@@ -2,6 +2,8 @@ import axios from "axios";
 import { SmartiooApi } from "./apiConstants";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "./secureStorageConstants";
+import { useContext } from "react";
+import { AuthContext } from "./store/auth-context";
 
 async function DoLoghin(email, password) {
   try {
@@ -17,7 +19,8 @@ async function DoLoghin(email, password) {
       id: response.data.user.id,
       name: response.data.user.name,
     };
-    await SecureStore.setItemAsync(UserData, userOrbject);
+
+    await SecureStore.setItemAsync(UserData, JSON.stringify(userOrbject));
     console.log("all good");
   } catch (error) {
     console.log("Error");

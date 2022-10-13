@@ -1,13 +1,37 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
+import { useContext, useState } from "react";
+import { AuthContext } from "../services/api/store/auth-context";
 
 export default function Profil() {
+  const info = useContext(AuthContext);
+  const [context, setContext] = useState(info);
+
+  const tookToken = info.token;
+  const nameToken = info.name;
+  const idToken = info.id;
+  // asa se foloseste tokenul
+
+  function logOut() {
+    console.log("logout function");
+  }
+
   return (
-    <View style={styles.inputContainer}>
-      <View style={styles.goalItem}>
-        <Text style={styles.goalText}>Profil Page</Text>
-        <Text style={styles.goalText}>Profil Page</Text>
-        <Text style={styles.goalText}>Profil Page</Text>
+    <View style={styles.mainContainer}>
+      <Text style={styles.goalText2}>Bună, {nameToken}</Text>
+      <Text style={styles.goalText2}>context.token: {context.token}</Text>
+      <Text style={styles.goalText}>Email:{tookToken}</Text>
+      <Text style={styles.goalText}>Telefon {idToken}</Text>
+      <Pressable style={styles.presableButton}>
+        <Text style={styles.presableText}>Înscrie un curier</Text>
+      </Pressable>
+      <Text style={styles.goalText}>Vehicul setat:</Text>
+      <View style={styles.inputContainer}>
+        <View style={styles}></View>
+        <View></View>
       </View>
+      <Pressable onPress={logOut} style={styles.presableButton}>
+        <Text style={styles.presableText}>Deconectare</Text>
+      </Pressable>
     </View>
   );
 }
@@ -21,13 +45,36 @@ const styles = StyleSheet.create({
   goalText: {
     color: "white",
     padding: 8,
+    fontSize: 20,
   },
-
+  goalText2: {
+    marginTop: 40,
+    color: "white",
+    padding: 8,
+    fontSize: 20,
+  },
   inputContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
+  },
+  mainContainer: {
+    flex: 1,
     backgroundColor: "#06b4e0",
+    padding: 20,
+  },
+  presableButton: {
+    width: 200,
+    backgroundColor: "grey",
+    padding: 8,
+    // alignSelf: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#06b4e0",
+    borderRadius: 6,
+    marginBottom: 8,
+  },
+  presableText: {
+    color: "white",
   },
 });

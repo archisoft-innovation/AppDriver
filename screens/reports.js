@@ -1,12 +1,32 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Button,
+  ScrollView,
+} from "react-native";
+import { useContext, useState } from "react";
+import { AuthContext } from "../services/api/store/auth-context";
+import ReportsItems from "../components/Reports/reportsItems";
 
 export default function Rapoarte() {
+  const infoToUpdate = useContext(AuthContext);
+  const [context, setContext] = useState(infoToUpdate);
+  function test2() {
+    const test1 = "From Reports ma man";
+    infoToUpdate.authenticate(setContext(test1));
+    console.log(test1);
+  }
   return (
     <View style={styles.inputContainer}>
+      <Text style={styles.goalText}>Perioada anterioară de muncă</Text>
+      <ScrollView>
+        <ReportsItems />
+        <ReportsItems />
+      </ScrollView>
       <View style={styles.goalItem}>
-        <Text style={styles.goalText}>Rapoarte Page</Text>
-        <Text style={styles.goalText}>Rapoarte Page</Text>
-        <Text style={styles.goalText}>Rapoarte Page</Text>
+        <Button title="Some btn" onPress={test2} />
       </View>
     </View>
   );
@@ -18,16 +38,28 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: "#5e0acc",
   },
+  reportItem: {
+    marginTop: 30,
+    margin: 8,
+    borderRadius: 6,
+    backgroundColor: "white",
+  },
   goalText: {
     color: "white",
     padding: 8,
+    fontSize: 20,
+    fontWeight: "bold",
   },
 
   inputContainer: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     padding: 16,
     backgroundColor: "#06b4e0",
+  },
+
+  presableBtn: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
