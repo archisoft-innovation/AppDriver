@@ -1,11 +1,15 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useContext, useState } from "react";
 import { AuthContext } from "../services/api/store/auth-context";
+import { useNavigation } from "@react-navigation/native";
+import { DevSettings } from "react-native";
 
 export default function Profil() {
   const info = useContext(AuthContext);
-  const [context, setContext] = useState(info);
-
+  const navigation = useNavigation();
+  // const navigation = useNavigation();
+  // const [context, setContext] = useState(info);
+  console.log(info);
   const tookToken = info.token;
   const nameToken = info.name;
   const idToken = info.id;
@@ -13,12 +17,17 @@ export default function Profil() {
 
   function logOut() {
     console.log("logout function");
+    // navigation.replace("GoalInput");
+    // navigation.navigate("Comenzi");
+    // navigation.navigate("LoggedIn", { screen: "Some" });
+    DevSettings.reload();
+    // reload page to main
   }
 
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.goalText2}>Bună, {nameToken}</Text>
-      <Text style={styles.goalText2}>context.token: {context.token}</Text>
+      <Text style={styles.goalText2}>context.token: </Text>
       <Text style={styles.goalText}>Email:{tookToken}</Text>
       <Text style={styles.goalText}>Telefon {idToken}</Text>
       <Pressable style={styles.presableButton}>

@@ -1,24 +1,27 @@
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext({
-  token: "Tokenul nostru",
-  name: "Nume curier",
+  token: "",
+  name: "",
   id: "",
   isAutheticated: false,
-  authenticate: (token) => {
-    console.log("triggered");
-  },
+  named: () => {},
+  authenticate: () => {},
   logout: () => {},
 });
 
 function AuthContextProvider({ children }) {
-  const [authToken, setAuthToken] = useState();
-  const [authName, setAuthName] = useState();
-  const [authId, setAuthId] = useState();
+  const [authToken, setAuthToken] = useState("");
+  const [authName, setAuthName] = useState("");
+  const [authId, setAuthId] = useState("");
 
-  function authenticate(token) {
+  const authenticate = (token) => {
     setAuthToken(token);
-  }
+  };
+
+  const named = (name) => {
+    setAuthName(name);
+  };
 
   function logout() {
     setAuthToken(null);
@@ -30,7 +33,10 @@ function AuthContextProvider({ children }) {
     id: authId,
     isAutheticated: !!authToken,
     authenticate: authenticate,
-    logout: logout,
+    named: named,
+    logout: (something) => {
+      console.log(something);
+    },
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

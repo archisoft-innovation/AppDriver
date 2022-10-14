@@ -14,8 +14,14 @@ import { DoLoghin } from "../../services/api/authorizationService";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "../../services/api/secureStorageConstants";
 import Some from "./Some";
-
+import { useContext } from "react";
+import { AuthContext } from "../../services/api/store/auth-context";
+import { useNavigation } from "@react-navigation/native";
 export default function GoalInput(props) {
+  const userInfo = useContext(AuthContext);
+  console.log(userInfo, " Goal input");
+  const navigation = useNavigation();
+
   const [enteredEmailText, setEnteredEmailText] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [emailValidation, setEmailValidation] = useState(false);
@@ -32,7 +38,7 @@ export default function GoalInput(props) {
     setEnteredEmailText("");
     setEnteredPassword("");
   }
-  function myTest() {
+  async function myTest() {
     if (
       enteredEmailText.includes("@") &&
       enteredEmailText.length > 4 &&
@@ -44,8 +50,11 @@ export default function GoalInput(props) {
       // setEnteredEmailText("");
       // setEnteredPassword("");
 
-      DoLoghin(enteredEmailText, enteredPassword);
+      let test = await DoLoghin(enteredEmailText, enteredPassword);
       console.log("all goodie");
+      console.log(test);
+      userInfo.authenticate(test.token);
+      userInfo.named(test.name);
     } else {
       setEmailValidation(false);
       Alert.alert("Please check your entered credentials!");
@@ -53,9 +62,13 @@ export default function GoalInput(props) {
   }
 
   function test2() {
+    // navigation.navigate("Some");
     getValueFor(UserData);
   }
-
+  function navigateToLogged() {
+    console.log("test3");
+    navigation.replace("LoggedIn");
+  }
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
     if (result) {
@@ -97,6 +110,16 @@ export default function GoalInput(props) {
         <View style={styles.button}>
           <Pressable onPress={test2} style={styles.presableButtonForgetPass}>
             <Text style={styles.goalText}>Ati uitat parola?</Text>
+          </Pressable>
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
+          <Pressable
+            onPress={navigateToLogged}
+            style={styles.presableButtonForgetPass}
+          >
+            <Text style={styles.goalText}>Navigate</Text>
           </Pressable>
         </View>
       </View>

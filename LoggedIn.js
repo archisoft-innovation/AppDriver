@@ -31,7 +31,7 @@ export default function LoggedIn() {
     alert("request iesire in tura");
   }
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <BottomTab.Navigator
         screenOptions={{
           headerStyle: { backgroundColor: "black" },

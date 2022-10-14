@@ -10,8 +10,13 @@ import ShiftCall from "./screens/shiftCall";
 import LoggedIn from "./LoggedIn";
 import AuthContextProvider from "./services/api/store/auth-context";
 
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
-  let testLog = false;
+  let testLog = true;
   function mainRender() {
     console.log("something 2");
     // getValueFor(UserData);
@@ -44,12 +49,23 @@ export default function App() {
     // <GoalInput />
     // <LoggedIn />
     // mainRender()
-    <AuthContextProvider>
-      <>
-        {!testLog && <LoggedIn />}
-        {testLog && <GoalInput />}
-      </>
-    </AuthContextProvider>
+    <NavigationContainer>
+      <AuthContextProvider>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="GoalInput" component={GoalInput} />
+          <Stack.Screen name="LoggedIn" component={LoggedIn} />
+          <Stack.Screen name="Some" component={Some} />
+        </Stack.Navigator>
+        {/* <>
+          {!testLog && <LoggedIn />}
+          {testLog && <GoalInput />}
+        </> */}
+      </AuthContextProvider>
+    </NavigationContainer>
   );
 }
 
