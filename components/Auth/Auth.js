@@ -17,9 +17,10 @@ import Some from "./Some";
 import { useContext } from "react";
 import { AuthContext } from "../../services/api/store/auth-context";
 import { useNavigation } from "@react-navigation/native";
+
 export default function GoalInput(props) {
   const userInfo = useContext(AuthContext);
-  console.log(userInfo, " Goal input");
+  // console.log(userInfo, " Goal input");
   const navigation = useNavigation();
 
   const [enteredEmailText, setEnteredEmailText] = useState("");
@@ -51,31 +52,50 @@ export default function GoalInput(props) {
       // setEnteredPassword("");
 
       let test = await DoLoghin(enteredEmailText, enteredPassword);
-      console.log("all goodie");
-      console.log(test);
-      userInfo.authenticate(test.token);
-      userInfo.named(test.name);
+      // console.log("all goodie");
+      // console.log(test);
+      // userInfo.authenticate(test.token);
+      // userInfo.named(test.name);
+      // console.log(userInfo.isAutheticated + " userinfo.isAutheticated");
+      // console.log(userInfo.name + " userinfo.name");
+
+      // save from data from login to useContext
+      // if (await DoLoghin(enteredEmailText, enteredPassword)) {
+      if (test) {
+        console.log("returned true");
+        userInfo.authenticate(test.token);
+        userInfo.named(test.name);
+        navigation.replace("LoggedIn");
+      }
     } else {
       setEmailValidation(false);
       Alert.alert("Please check your entered credentials!");
     }
   }
-
-  function test2() {
-    // navigation.navigate("Some");
-    getValueFor(UserData);
+  async function getValuesStore() {
+    // console.log("in this one");
+    let infoSecure = await getValueFor(UserData);
+    console.log(infoSecure);
   }
-  function navigateToLogged() {
+  async function navigateToLogged() {
     console.log("test3");
-    navigation.replace("LoggedIn");
+
+    // console.log(userInfo);
+    // console.log(await getValuesStore());
+
+    // navigation.replace("LoggedIn");
+  }
+  async function test2() {
+    getValueFor(UserData);
   }
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
     if (result) {
       let a = JSON.parse(result);
-      console.log(a.apiKey);
-      console.log(a.name);
-      console.log(a.id);
+      console.log(a);
+      // console.log(a.apiKey);
+      // console.log(a.name);
+      // console.log(a.id);
     } else {
       console.log("No result passed");
     }

@@ -14,6 +14,7 @@ function AuthContextProvider({ children }) {
   const [authToken, setAuthToken] = useState("");
   const [authName, setAuthName] = useState("");
   const [authId, setAuthId] = useState("");
+  const [authIsAutheticated, setauthIsAutheticated] = useState(false);
 
   const authenticate = (token) => {
     setAuthToken(token);

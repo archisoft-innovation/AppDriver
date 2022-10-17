@@ -20,6 +20,7 @@ async function DoLoghin(email, password) {
 
     await SecureStore.setItemAsync(UserData, JSON.stringify(userOrbject));
     console.log("all good");
+    // return true;
     return userOrbject;
   } catch (error) {
     console.log("Error");
@@ -29,10 +30,12 @@ async function DoLoghin(email, password) {
         console.log(error.response);
         console.log("Wrong username or password");
         // here return bad request
+        return false;
       }
       if (error.response.status == 401) {
         // unathorized
         console.log("unhauthorized");
+        return false;
       }
     }
   }

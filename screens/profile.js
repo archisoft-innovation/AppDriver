@@ -3,7 +3,8 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../services/api/store/auth-context";
 import { useNavigation } from "@react-navigation/native";
 import { DevSettings } from "react-native";
-
+import * as SecureStore from "expo-secure-store";
+import { UserData } from "../services/api/secureStorageConstants";
 export default function Profil() {
   const info = useContext(AuthContext);
   const navigation = useNavigation();
@@ -16,11 +17,9 @@ export default function Profil() {
   // asa se foloseste tokenul
 
   function logOut() {
-    console.log("logout function");
-    // navigation.replace("GoalInput");
-    // navigation.navigate("Comenzi");
-    // navigation.navigate("LoggedIn", { screen: "Some" });
+    SecureStore.deleteItemAsync(UserData);
     DevSettings.reload();
+
     // reload page to main
   }
 
