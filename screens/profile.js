@@ -8,9 +8,8 @@ import { UserData } from "../services/api/secureStorageConstants";
 export default function Profil() {
   const info = useContext(AuthContext);
   const navigation = useNavigation();
-  // const navigation = useNavigation();
-  // const [context, setContext] = useState(info);
-  console.log(info);
+
+  // console.log(info);
   const tookToken = info.token;
   const nameToken = info.name;
   const idToken = info.id;
@@ -23,13 +22,16 @@ export default function Profil() {
     // reload page to main
   }
 
+  function registerADriver() {
+    console.log("register a driver function");
+  }
+
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.goalText2}>Bună, {nameToken}</Text>
-      <Text style={styles.goalText2}>context.token: </Text>
-      <Text style={styles.goalText}>Email:{tookToken}</Text>
-      <Text style={styles.goalText}>Telefon {idToken}</Text>
-      <Pressable style={styles.presableButton}>
+      <Text style={styles.goalText}>Email:</Text>
+      <Text style={styles.goalText}>Telefon </Text>
+      <Pressable onPress={registerADriver} style={styles.presableButton}>
         <Text style={styles.presableText}>Înscrie un curier</Text>
       </Pressable>
       <Text style={styles.goalText}>Vehicul setat:</Text>

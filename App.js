@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import GoalItem from "./components/Auth/GoalItem";
 import { StyleSheet, View, FlatList, Button, Text } from "react-native";
 import GoalInput from "./components/Auth/Auth";
 import Some from "./components/Auth/Some";
@@ -12,6 +11,7 @@ import AuthContextProvider from "./services/api/store/auth-context";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AcceptedOrders from "./components/Orders/AcceptOrders";
 
 const Stack = createNativeStackNavigator();
 
@@ -87,45 +87,8 @@ export default function App() {
       );
     }
   }
-  // mai jos de verificat inainte de stergere
-  // function test2() {
-  //   let testSome = getValueFor(UserData);
-  //   console.log("log from test2 use effect on load");
-  //   console.log(testSome);
-  // }
-  // async function getValueFor(key) {
-  //   let result = await SecureStore.getItemAsync(key);
-  //   if (result) {
-  //     let a = JSON.parse(result);
-  //     console.log(a.apiKey);
-  //     return true;
-  //   } else {
-  //     console.log("No result passed");
-  //     return false;
-  //   }
-  // }
-  let testLog = true;
-  function mainRender2() {
-    console.log("something 2");
-    // getValueFor(UserData);
-    if (getValueFor(UserData)) {
-      console.log("trueeee");
-      return <LoggedIn />;
-      return <GoalInput />;
-      return <ShiftCall />;
-    } else {
-      console.log("Falseeee");
-      return <GoalInput />;
-    }
-  }
-  // mai sus de verificat inainte de stergere
-
+  // return <AcceptedOrders />;
   return (
-    // <ShiftCall />
-    // <Some />
-    // <GoalInput />
-    // <LoggedIn />
-    // mainRender()
     <NavigationContainer>
       <AuthContextProvider>
         {mainRender()}

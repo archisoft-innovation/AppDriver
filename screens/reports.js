@@ -13,10 +13,8 @@ import ReportsItems from "../components/Reports/reportsItems";
 export default function Rapoarte() {
   const infoToUpdate = useContext(AuthContext);
   const [context, setContext] = useState(infoToUpdate);
-  function test2() {
-    const test1 = "From Reports ma man";
-    infoToUpdate.authenticate(setContext(test1));
-    console.log(test1);
+  function reportsBtn() {
+    console.log("repots btn");
   }
   return (
     <View style={styles.inputContainer}>
@@ -26,7 +24,7 @@ export default function Rapoarte() {
         <ReportsItems />
       </ScrollView>
       <View style={styles.goalItem}>
-        <Button title="Some btn" onPress={test2} />
+        <Button title="Some btn" onPress={reportsBtn} />
       </View>
     </View>
   );

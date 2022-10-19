@@ -4,7 +4,7 @@ export default function Some() {
   return (
     <View style={styles.goalItem}>
       <Text style={styles.goalText}>
-        This is another page man, quite another page
+        This is be forget password page, when we have the design
       </Text>
     </View>
   );

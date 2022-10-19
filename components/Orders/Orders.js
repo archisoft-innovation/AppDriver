@@ -1,12 +1,18 @@
+import { useState } from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { Button } from "react-native-web";
+import AcceptedOrders from "./AcceptOrders";
 
 export default function Orders() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   function acceptOrder() {
-    console.log("presabble text pressed");
+    setModalIsVisible(true);
+  }
+  function onTheWayOrder() {
+    setModalIsVisible(false);
   }
   return (
     <View style={styles.mainContainer}>
+      <AcceptedOrders visible={modalIsVisible} onTheRoad={onTheWayOrder} />
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>Smt Code</Text>
         <Text style={styles.textPadding}>De achitat la partener</Text>

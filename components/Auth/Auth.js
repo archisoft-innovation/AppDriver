@@ -13,7 +13,6 @@ import { useState } from "react";
 import { DoLoghin } from "../../services/api/authorizationService";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "../../services/api/secureStorageConstants";
-import Some from "./Some";
 import { useContext } from "react";
 import { AuthContext } from "../../services/api/store/auth-context";
 import { useNavigation } from "@react-navigation/native";
@@ -77,16 +76,10 @@ export default function GoalInput(props) {
     let infoSecure = await getValueFor(UserData);
     console.log(infoSecure);
   }
-  async function navigateToLogged() {
-    console.log("test3");
 
-    // console.log(userInfo);
-    // console.log(await getValuesStore());
-
-    // navigation.replace("LoggedIn");
-  }
-  async function test2() {
-    getValueFor(UserData);
+  async function forgetPassword() {
+    // getValueFor(UserData);
+    console.log("forget Password btn");
   }
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
@@ -128,18 +121,11 @@ export default function GoalInput(props) {
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
-          <Pressable onPress={test2} style={styles.presableButtonForgetPass}>
-            <Text style={styles.goalText}>Ati uitat parola?</Text>
-          </Pressable>
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
           <Pressable
-            onPress={navigateToLogged}
+            onPress={forgetPassword}
             style={styles.presableButtonForgetPass}
           >
-            <Text style={styles.goalText}>Navigate</Text>
+            <Text style={styles.goalText}>Ati uitat parola?</Text>
           </Pressable>
         </View>
       </View>
