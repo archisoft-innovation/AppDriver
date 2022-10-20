@@ -1,43 +1,15 @@
-import {
-  StyleSheet,
-  Modal,
-  View,
-  Image,
-  Text,
-  Pressable,
-  Switch,
-} from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Modal, View, Image, Text, Pressable } from "react-native";
 
-export default function ShiftCall(props) {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+export default function ShiftCallOut(props) {
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputContainer}>
         <View style={styles.buttonContainer}>
           <View>
             <Text style={styles.goalText}>
-              Ca urmare că nu ești online, nu putem sa îți atribuim comenzi :-(
-            </Text>
-            <Text style={styles.goalText}>
               Solicitarea ta a fost trimisă către dispecerat urmând să fie
               procesată
             </Text>
-            {/* <View style={styles.shiftBContainer}>
-              <View style={styles.shiftContainer}>
-                <Text style={styles.shiftText}>Intră în tură</Text>
-                <Switch
-                  style={styles.switchMrg}
-                  trackColor={{ false: "white", true: "orange" }}
-                  thumbColor={isEnabled ? "green" : "white"}
-                  ios_backgroundColor="red"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                />
-              </View>
-            </View> */}
-
             <View style={styles.readySet}>
               <Image
                 style={styles.image}
@@ -49,7 +21,7 @@ export default function ShiftCall(props) {
               </View>
             </View>
             <Pressable
-              onPress={props.shiftInAcknowledged}
+              onPress={props.shiftOutAcknowledged}
               style={styles.presableButton}
             >
               <Text style={styles.pressableText}>OK</Text>

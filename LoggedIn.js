@@ -1,4 +1,11 @@
-import { StyleSheet, View, FlatList, Button, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Button,
+  Text,
+  Pressable,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Calendar from "./screens/calendar";
@@ -6,12 +13,23 @@ import Rapoarte from "./screens/reports";
 import Comenzi from "./screens/orders";
 import Profil from "./screens/profile";
 import { Ionicons } from "@expo/vector-icons";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+// import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { useState } from "react";
+import ShiftCall from "./screens/shiftCall";
+import ShiftCallOut from "./screens/shifltCallOut";
 
 const BottomTab = createBottomTabNavigator();
 
 export default function LoggedIn() {
+  const [modalShiftIn, setModalShiftIn] = useState(false);
+  const [modalShiftOut, setModalShiftOut] = useState(false);
+  function shiftIn() {
+    setModalShiftIn(true);
+  }
+  function shiftOut() {
+    setModalShiftIn(false);
+  }
+
   const [shift, setShift] = useState(false);
   // let a = false;
   // if (a === 1) {
@@ -23,15 +41,33 @@ export default function LoggedIn() {
   // } else return <GoalInput />;
 
   function requestInShift() {
-    alert("request intrare in tura");
+    // alert("request intrare in tura");
+    setModalShiftIn(true);
     setShift(true);
   }
+  function requestInShiftModalClose() {
+    // alert("request intrare in tura");
+    setModalShiftIn(false);
+  }
   function requestOutShift() {
+    setModalShiftOut(true);
     setShift(false);
-    alert("request iesire in tura");
+    // alert("request iesire in tura");
+  }
+  function requestOutShiftModalClose() {
+    // alert("request intrare in tura");
+    setModalShiftOut(false);
   }
   return (
     <NavigationContainer independent={true}>
+      <ShiftCall
+        visible={modalShiftIn}
+        shiftInAcknowledged={requestInShiftModalClose}
+      />
+      <ShiftCallOut
+        visible={modalShiftOut}
+        shiftOutAcknowledged={requestOutShiftModalClose}
+      />
       <BottomTab.Navigator
         screenOptions={{
           headerStyle: { backgroundColor: "black" },
