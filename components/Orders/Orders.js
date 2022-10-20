@@ -10,6 +10,7 @@ export default function Orders() {
   function onTheWayOrder() {
     setModalIsVisible(false);
   }
+
   return (
     <View style={styles.mainContainer}>
       <AcceptedOrders visible={modalIsVisible} onTheRoad={onTheWayOrder} />
