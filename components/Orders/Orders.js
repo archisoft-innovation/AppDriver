@@ -1,8 +1,27 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Linking } from "react-native";
 import AcceptedOrders from "./AcceptOrders";
 
-export default function Orders() {
+export default function Orders(props) {
+  function call() {
+    const url = "tel://" + props.vendorPhone;
+    Linking.openURL(url);
+  }
+
+  function mapAddress() {
+    let latitude = "40.7127753";
+    // let latitude = props.lat;
+    let longitude = "-74.0059728";
+    // let longitude = props.long;
+    let label = "New York, NY, USA";
+    // let label = props.address;
+
+    let url = Platform.select({
+      ios: "maps:" + latitude + "," + longitude + "?q=" + label,
+      android: "geo:" + latitude + "," + longitude + "?q=" + label,
+    });
+    Linking.openURL(url);
+  }
   const [modalIsVisible, setModalIsVisible] = useState(false);
   function acceptOrder() {
     setModalIsVisible(true);
@@ -13,20 +32,35 @@ export default function Orders() {
 
   return (
     <View style={styles.mainContainer}>
-      <AcceptedOrders visible={modalIsVisible} onTheRoad={onTheWayOrder} />
+      <AcceptedOrders
+        visible={modalIsVisible}
+        onTheRoad={onTheWayOrder}
+        vendorName={props.vendorName}
+        orderCode={props.orderCode}
+        paymentMethod={props.paymentMethod}
+        totalPrice={props.totalPrice}
+        orderID={props.orderID}
+      />
       <View style={styles.inLineText}>
-        <Text style={styles.textPadding}>Smt Code</Text>
-        <Text style={styles.textPadding}>De achitat la partener</Text>
+        <Text style={styles.textPadding}>{props.orderCode}</Text>
+        <Text style={styles.textPadding}>De achitat la {props.vendorName}</Text>
       </View>
       <View style={styles.inLineText}>
-        <Text style={styles.textPadding}>Data</Text>
+        <Text style={styles.textPadding}>Data </Text>
         <Text style={styles.textPadding}>Suma 1250 Ron</Text>
       </View>
-      <Text style={styles.textPadding}>Partener:</Text>
-      <Text style={styles.textPadding}>Telefon</Text>
-      <Text style={styles.textPadding}>Adresa</Text>
-      <Text style={styles.textPadding}>Metoda de plata</Text>
-      <Text style={styles.textPadding}>Valoare: Ron</Text>
+      <Text style={styles.textPadding}>Partener:{props.vendorName}</Text>
+      <Pressable onPress={call}>
+        <Text style={styles.textPadding}>Telefon:{props.vendorPhone}</Text>
+      </Pressable>
+
+      <Pressable onPress={mapAddress}>
+        <Text style={styles.textPadding}>Adresa:{props.vendorAddress}</Text>
+      </Pressable>
+      <Text style={styles.textPadding}>
+        Metoda de plata: {props.paymentMethod}
+      </Text>
+      <Text style={styles.textPadding}>Valoare:{props.totalPrice} Ron</Text>
       <Pressable onPress={acceptOrder} style={styles.presableButton}>
         <Text style={styles.pressableText}>Acceptare comandă</Text>
       </Pressable>

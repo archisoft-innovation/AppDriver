@@ -13,16 +13,21 @@ import SelectDropdown from "react-native-select-dropdown";
 export default function AcceptedOrders(props) {
   const [pickUpTime, setPickUpTime] = useState(true);
   // de vazut la pickUpTime cum sa rezolv, daca intra o data si selecteaza un timp, urmatoarea data cand intru nu-i mai cere
-  const hours = [30, 40, 50, 60];
-
+  const hours = [
+    "30 de minute",
+    "40 de minute",
+    "50 de minute",
+    "60 de minute",
+  ];
+  // props.orderID orderIdul
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputContainer}>
         <View style={styles.buttonContainer}>
           <View>
             <Text style={styles.goalText}>
-              Seteaza timpul aproximativ in care ajungi la partenerul{" "}
-              {"Nume Partener"} dupa comanda {"Nume comanda"}
+              Seteaza timpul aproximativ in care ajungi la partenerul
+              {" " + props.vendorName} dupa comanda {" " + props.orderCode}
             </Text>
 
             <View style={styles.shiftBContainer}>
@@ -49,11 +54,15 @@ export default function AcceptedOrders(props) {
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Metoda de plata</Text>
-                <Text style={styles.pickupTimeColor}>{"Metoda de plata"}</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.paymentMethod}
+                </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Valoare</Text>
-                <Text style={styles.pickupTimeColor}>{"38.21 Ron"}</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.totalPrice + " Ron"}
+                </Text>
               </View>
             </View>
             <Pressable
