@@ -16,8 +16,11 @@ export default function Calendar() {
     // setSelectedDate(date);
     // (newValue) => setSelectedDate(newValue);
     // console.log(selectedDate);
-    console.log(id);
+    // console.log(id);
+    setSelectedDate(id);
+    // ceva nu e ok aici, da aflu maine. nu apuca sa se salveze statul si la log apare mereu cel din urma
     setmodalVisibility(false);
+    console.log(selectedDate);
   }
   function setModalVisible() {
     setmodalVisibility(true);
