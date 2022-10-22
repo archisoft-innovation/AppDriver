@@ -1,4 +1,11 @@
-import { StyleSheet, View, Text, Pressable, Modal } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Modal,
+  ScrollView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
 export default function Calendar() {
@@ -26,10 +33,11 @@ export default function Calendar() {
     setmodalVisibility(true);
   }
   return (
-    <View style={styles.inputContainer}>
+    <View style={styles.inputContainerMain}>
       <Pressable onPress={setModalVisible}>
-        <Text>Pick a date</Text>
+        <Text style={styles.heading}>Pick a date</Text>
       </Pressable>
+      <Text>Data selectata</Text>
       <Modal visible={modalVisibility}>
         <View style={styles.inputContainer}>
           <DatePicker
@@ -52,9 +60,104 @@ export default function Calendar() {
           />
         </View>
       </Modal>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 08:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>09:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 10:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>11:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 12:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>13:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 14:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>15:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 16:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>17:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 18:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>19:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 20:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>21:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}> 22:00</Text>
+            </Pressable>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>23:00</Text>
+            </Pressable>
+          </View>
+        </View>
+      </ScrollView>
 
       <View style={styles.goalItem}>
-        <View style={styles.hoursViews}>
+        {/* <View style={styles.rowsViews}>
+          <View style={styles.presablesViews1}>
+            <Pressable style={styles.presables}>
+              <Text>08:00</Text>
+            </Pressable>
+          </View>
+          <View style={styles.presablesViews}>
+            <Pressable style={styles.presables}>
+              <Text>09:00</Text>
+            </Pressable>
+          </View>
+        </View> */}
+
+        {/* <View style={styles.hoursViews}>
           <View style={styles.bordersBottom}>
             <Pressable style={styles.firstPres}>
               <Text style={styles.goalText}>08:00</Text>
@@ -84,9 +187,9 @@ export default function Calendar() {
           <Pressable style={styles.presables}>
             <Text style={styles.goalText}>00:00</Text>
           </Pressable>
-        </View>
+        </View> */}
 
-        <View style={styles.hoursViews}>
+        {/* <View style={styles.hoursViews}>
           <Pressable style={styles.presables}>
             <Text style={styles.goalText}>09:00</Text>
           </Pressable>
@@ -111,7 +214,7 @@ export default function Calendar() {
           <Pressable style={styles.presables}>
             <Text style={styles.goalText}>23:00</Text>
           </Pressable>
-        </View>
+        </View> */}
       </View>
     </View>
   );
@@ -145,19 +248,56 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#06b4e0",
   },
+  inputContainerMain: {
+    flex: 1,
+    // justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: "#06b4e0",
+  },
   rowsViews: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  presablesViews: {
+    width: 60,
+    backgroundColor: "green",
+  },
+  presablesViews1: {
+    width: 60,
+    backgroundColor: "green",
+    marginRight: 20,
   },
   presables: {
     padding: 6,
   },
   firstPres: {
-    padding: 6,
+    padding: 16,
     backgroundColor: "green",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "green",
   },
-  bordersBottom: {
-    borderBottomColor: "white",
-    borderBottomWidth: 2,
+  pressText: {
+    color: "white",
+    fontSize: 16,
+  },
+  presableBtn: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  viewSt: {
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    // backgroundColor: "white",
+    width: 300,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#fff",
+  },
+  heading: {
+    fontSize: 20,
+    color: "white",
   },
 });
