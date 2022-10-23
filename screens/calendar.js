@@ -64,16 +64,6 @@ export default function Calendar() {
         <View style={styles.viewSt}>
           <View style={styles.presableBtn}>
             <Pressable style={styles.firstPres}>
-              <Text style={styles.pressText}> 08:00</Text>
-            </Pressable>
-            <Pressable style={styles.firstPres}>
-              <Text style={styles.pressText}>09:00</Text>
-            </Pressable>
-          </View>
-        </View>
-        <View style={styles.viewSt}>
-          <View style={styles.presableBtn}>
-            <Pressable style={styles.firstPres}>
               <Text style={styles.pressText}> 10:00</Text>
             </Pressable>
             <Pressable style={styles.firstPres}>
@@ -138,6 +128,13 @@ export default function Calendar() {
             </Pressable>
             <Pressable style={styles.firstPres}>
               <Text style={styles.pressText}>23:00</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.viewSt}>
+          <View style={styles.presableBtn}>
+            <Pressable style={styles.firstPres}>
+              <Text style={styles.pressText}>00:00</Text>
             </Pressable>
           </View>
         </View>
@@ -293,8 +290,8 @@ const styles = StyleSheet.create({
     // backgroundColor: "white",
     width: 300,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#fff",
+    // borderWidth: 1,
+    // borderColor: "#fff",
   },
   heading: {
     fontSize: 20,

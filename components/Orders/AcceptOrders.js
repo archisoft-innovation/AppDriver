@@ -13,11 +13,13 @@ import SelectDropdown from "react-native-select-dropdown";
 export default function AcceptedOrders(props) {
   const [pickUpTime, setPickUpTime] = useState(true);
   // de vazut la pickUpTime cum sa rezolv, daca intra o data si selecteaza un timp, urmatoarea data cand intru nu-i mai cere
-  const hours = [
-    "30 de minute",
-    "40 de minute",
-    "50 de minute",
-    "60 de minute",
+  const mins = [
+    "10 minute",
+    "20 minute",
+    "30 minute",
+    "40 minute",
+    "50 minute",
+    "60 minute",
   ];
   // props.orderID orderIdul
   return (
@@ -34,7 +36,7 @@ export default function AcceptedOrders(props) {
               <View style={styles.shiftContainer}>
                 <SelectDropdown
                   defaultButtonText={"Setează timp pick up"}
-                  data={hours}
+                  data={mins}
                   buttonStyle={styles.dropdown1BtnStyle}
                   buttonTextStyle={styles.dropdown1BtnTxtStyle}
                   dropdownStyle={styles.dropdown1DropdownStyle}
