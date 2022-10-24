@@ -68,10 +68,10 @@ export default function App() {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
           <Stack.Screen name="LoggedIn" component={LoggedIn} />
           <Stack.Screen name="GoalInput" component={GoalInput} />
-          <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
-          <Stack.Screen name="Some" component={Some} />
+          {/* <Stack.Screen name="Some" component={Some} /> */}
         </Stack.Navigator>
       );
     } else {
@@ -85,7 +85,7 @@ export default function App() {
           <Stack.Screen name="GoalInput" component={GoalInput} />
           <Stack.Screen name="LoggedIn" component={LoggedIn} />
           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
-          <Stack.Screen name="Some" component={Some} />
+          {/* <Stack.Screen name="Some" component={Some} /> */}
         </Stack.Navigator>
       );
     }

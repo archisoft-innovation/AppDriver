@@ -71,6 +71,9 @@ export default function GoalInput(props) {
       Alert.alert("Please check your entered credentials!");
     }
   }
+  function moveToRegister() {
+    navigation.navigate("RegisterDriver");
+  }
   async function getValuesStore() {
     // console.log("in this one");
     let infoSecure = await getValueFor(UserData);
@@ -116,6 +119,13 @@ export default function GoalInput(props) {
         <View style={styles.button}>
           <Pressable onPress={myTest} style={styles.presableButton}>
             <Text style={styles.goalText}>Log In</Text>
+          </Pressable>
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
+          <Pressable onPress={moveToRegister} style={styles.presableButton}>
+            <Text style={styles.goalText}>Înregistrare</Text>
           </Pressable>
         </View>
       </View>

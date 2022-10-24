@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
-
+import { saveForm } from "../services/sendDriverRegistration";
 import { useNavigation } from "@react-navigation/native";
 
 export default function RegisterDriver(props) {
@@ -30,47 +30,94 @@ export default function RegisterDriver(props) {
   const navigation = useNavigation();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  const [enteredName, setEnteredName] = useState("");
   const [enteredEmailText, setEnteredEmailText] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredPhone, setEnteredPhone] = useState("");
+  const [enteredCity, setEnteredCity] = useState("");
+  const [enteredDeliveryMethod, setEnteredDeliveryMethod] = useState("");
+  const [enteredAditionalInformations, setEnteredAditionalInformations] =
+    useState("");
   const [emailValidation, setEmailValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
+  function nameInputHandler(enteredText) {
+    setEnteredName(enteredText);
+  }
   function emailInputHandler(enteredText) {
     setEnteredEmailText(enteredText);
   }
-  function passwordInputHandler(enteredText) {
-    setEnteredPassword(enteredText);
+  function phoneInputHandler(enteredText) {
+    setEnteredPhone(enteredText);
   }
   function addGoalHandler() {
     props.onAddGoal(enteredEmailText);
     setEnteredEmailText("");
-    setEnteredPassword("");
+    setEnteredPhone("");
+    setEmailValidation("");
   }
-  async function myTest() {
+  async function registerDrv() {
     if (
       enteredEmailText.includes("@") &&
       enteredEmailText.length > 4 &&
-      enteredPassword.length > 4
+      enteredName.length > 2 &&
+      !isNaN(enteredPhone) &&
+      enteredPhone.length > 9 &&
+      isEnabled === true
     ) {
-      setEmailValidation(true);
-      // console.log(enteredEmailText);
-      // console.log(enteredPassword);
-      // setEnteredEmailText("");
-      // setEnteredPassword("");
+      // setEmailValidation(true);
+      let info = driverData();
+      // let allGood = await saveForm(info);
+      saveForm(info);
+      // console.log(info);
+      // aici vine requestul saveForm, trebuie sa il si importez
+      // if (allGood) {
+      //   console.log("all good from registerDRV reregisterDriver Page");
+      // } else if (!allGood) {
+      //   throw console.error("error sending data");
+      // }
+      console.log("in true");
+      // request de send
+    } else if (isNaN(enteredPhone)) {
+      Alert.alert("Nu ai introdus un numar de telefon valid!");
+    } else if (enteredPhone.length < 9) {
+      Alert.alert("Nu ai introdus un numar de telefon valid!");
+    } else if (!enteredEmailText.includes("@")) {
+      Alert.alert("Email nevalid!");
+    } else if (enteredCity === "") {
+      Alert.alert("Nu ai selectat Orașul!");
+    } else if (enteredDeliveryMethod === "") {
+      Alert.alert("Nu ai selectat modalitatea de livrare!");
+    } else if (enteredAditionalInformations === "") {
+      Alert.alert("Nu ai selectat informațiile adiționale!");
+    } else if (isEnabled === false) {
+      Alert.alert(
+        "Pentru a continua, trebuie să accepți termenii și condițiile!"
+      );
     } else {
       setEmailValidation(false);
-      Alert.alert("Please check your entered credentials!");
+      Alert.alert("Câmpuri incomplete!");
     }
   }
 
-  async function forgetPassword() {
-    // getValueFor(UserData);
-    console.log("forget Password btn");
+  function backToMain() {
+    navigation.navigate("GoalInput");
   }
-  function logDropdowns(id) {
-    console.log("from dropdowns");
-    console.log(id);
+
+  function driverData() {
+    var driverData = {
+      driver: {
+        name: enteredName,
+        email: enteredEmailText,
+        phoneNumber: enteredPhone,
+        workCity: enteredCity,
+        vehicle: enteredDeliveryMethod,
+        companyPfaSrl: enteredAditionalInformations,
+      },
+    };
+    return driverData;
   }
+
   return (
     <View style={styles.inputContainer}>
       <Image
@@ -81,14 +128,14 @@ export default function RegisterDriver(props) {
       <TextInput
         style={styles.textInput}
         placeholder="Nume"
-        onChangeText={passwordInputHandler}
-        value={enteredPassword}
+        onChangeText={nameInputHandler}
+        value={enteredName}
       />
       <TextInput
         style={styles.textInput}
         placeholder="Telefon"
-        onChangeText={passwordInputHandler}
-        value={enteredPassword}
+        onChangeText={phoneInputHandler}
+        value={enteredPhone}
       />
       <TextInput
         style={styles.textInput}
@@ -107,7 +154,8 @@ export default function RegisterDriver(props) {
           rowTextStyle={styles.dropdown1RowTxtStyle}
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
-            logDropdowns(selectedItem);
+            setEnteredCity(selectedItem);
+            // logDropdowns(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -128,7 +176,8 @@ export default function RegisterDriver(props) {
           rowTextStyle={styles.dropdown1RowTxtStyle}
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
-            logDropdowns(selectedItem);
+            setEnteredDeliveryMethod(selectedItem);
+            // logDropdowns(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -149,7 +198,8 @@ export default function RegisterDriver(props) {
           rowTextStyle={styles.dropdown1RowTxtStyle}
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
-            logDropdowns(selectedItem);
+            setEnteredAditionalInformations(selectedItem);
+            // logDropdowns(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -174,21 +224,21 @@ export default function RegisterDriver(props) {
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
-          <Pressable onPress={myTest} style={styles.presableButton}>
+          <Pressable onPress={registerDrv} style={styles.presableButton}>
             <Text style={styles.goalText}>Înregistrează</Text>
           </Pressable>
         </View>
       </View>
-      {/* <View style={styles.buttonContainer}>
+      <View style={styles.buttonContainer}>
         <View style={styles.button}>
           <Pressable
-            onPress={forgetPassword}
+            onPress={backToMain}
             style={styles.presableButtonForgetPass}
           >
-            <Text style={styles.goalText}>Ati uitat parola?</Text>
+            <Text style={styles.goalTextBack}>Renunță</Text>
           </Pressable>
         </View>
-      </View> */}
+      </View>
     </View>
   );
 }
@@ -227,6 +277,11 @@ const styles = StyleSheet.create({
   },
   goalText: {
     color: "white",
+    padding: 8,
+    fontSize: 16,
+  },
+  goalTextBack: {
+    color: "black",
     padding: 8,
     fontSize: 16,
   },
@@ -280,5 +335,14 @@ const styles = StyleSheet.create({
   },
   switchMrg: {
     marginRight: 10,
+  },
+  presableButtonForgetPass: {
+    width: 200,
+    padding: 8,
+    alignSelf: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 6,
   },
 });
