@@ -12,6 +12,7 @@ import AuthContextProvider from "./services/api/store/auth-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RegisterDriver from "./components/registerDriver";
+import LoadingOverlay from "./components/Auth/LoadingOverlay";
 
 const Stack = createNativeStackNavigator();
 
@@ -115,7 +116,7 @@ export default function App() {
       );
     }
   }
-  // return <AcceptedOrders />;
+  // return <LoadingOverlay message={"În curs de logare"} />;
   return (
     <NavigationContainer>
       <AuthContextProvider>

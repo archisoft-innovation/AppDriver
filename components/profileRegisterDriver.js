@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { saveForm } from "../services/sendDriverRegistration";
+import LoadingOverlay from "./Auth/LoadingOverlay";
 
 export default function ProfileRegisterDriver(props) {
   const city = [
@@ -27,6 +28,7 @@ export default function ProfileRegisterDriver(props) {
   const aditionalInformations = ["Nu am PFA/SRL", "Am PFA/SRL"];
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredEmailText, setEnteredEmailText] = useState("");
@@ -62,10 +64,18 @@ export default function ProfileRegisterDriver(props) {
       enteredPhone.length > 9 &&
       isEnabled === true
     ) {
+      setIsAuthenticating(true);
       // setEmailValidation(true);
       let info = driverData();
-      saveForm(info);
-
+      // let allGood = await saveForm(info);
+      let saveF = await saveForm(info);
+      if (saveF) {
+        console.log("in tru let saveF");
+        setIsAuthenticating(false);
+      } else {
+        setIsAuthenticating(false);
+        Alert.alert("Something went wrong!");
+      }
       console.log("in true");
       // request de send
     } else if (isNaN(enteredPhone)) {
@@ -103,131 +113,141 @@ export default function ProfileRegisterDriver(props) {
     };
     return driverData;
   }
-
-  return (
-    <Modal visible={props.visible} animationType="slide">
-      <View style={styles.inputContainer}>
-        <Image
-          style={styles.image}
-          source={require("../assets/images/logoAlb.png")}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Nume"
-          onChangeText={nameInputHandler}
-          value={enteredName}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Telefon"
-          onChangeText={phoneInputHandler}
-          value={enteredPhone}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="E-mail"
-          onChangeText={emailInputHandler}
-          value={enteredEmailText}
-        />
-        <View style={styles.dropDownView}>
-          <SelectDropdown
-            defaultButtonText={"Oraș"}
-            data={city}
-            buttonStyle={styles.dropdown1BtnStyle}
-            buttonTextStyle={styles.dropdown1BtnTxtStyle}
-            dropdownStyle={styles.dropdown1DropdownStyle}
-            rowStyle={styles.dropdown1RowStyle}
-            rowTextStyle={styles.dropdown1RowTxtStyle}
-            onSelect={(selectedItem, index) => {
-              // console.log(selectedItem, index);
-              setEnteredCity(selectedItem);
-              // logDropdowns(selectedItem);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
+  if (isAuthenticating) {
+    return (
+      <LoadingOverlay message="Se trimit datele. Trebuie ceva sa il anunt ca am finalizat, un pop up sau ceva sa stie ca au fost trimise" />
+    );
+  } else {
+    return (
+      <Modal visible={props.visible} animationType="slide">
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/logoAlb.png")}
           />
-          {/* </View>
-        <View> */}
-          <SelectDropdown
-            defaultButtonText={"Cu ce vrei să livrezi"}
-            data={deliveryMethod}
-            buttonStyle={styles.dropdown1BtnStyle}
-            buttonTextStyle={styles.dropdown1BtnTxtStyle}
-            dropdownStyle={styles.dropdown1DropdownStyle}
-            rowStyle={styles.dropdown1RowStyle}
-            rowTextStyle={styles.dropdown1RowTxtStyle}
-            onSelect={(selectedItem, index) => {
-              // console.log(selectedItem, index);
-              setEnteredDeliveryMethod(selectedItem);
-              // logDropdowns(selectedItem);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
+          <TextInput
+            style={styles.textInput}
+            placeholder="Nume"
+            placeholderTextColor="grey"
+            onChangeText={nameInputHandler}
+            value={enteredName}
           />
-          {/* </View>
-        <View> */}
-          <SelectDropdown
-            defaultButtonText={"Informații adiționale"}
-            data={aditionalInformations}
-            buttonStyle={styles.dropdown1BtnStyle}
-            buttonTextStyle={styles.dropdown1BtnTxtStyle}
-            dropdownStyle={styles.dropdown1DropdownStyle}
-            rowStyle={styles.dropdown1RowStyle}
-            rowTextStyle={styles.dropdown1RowTxtStyle}
-            onSelect={(selectedItem, index) => {
-              // console.log(selectedItem, index);
-              setEnteredAditionalInformations(selectedItem);
-              // logDropdowns(selectedItem);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
+          <TextInput
+            style={styles.textInput}
+            placeholder="Telefon"
+            placeholderTextColor="grey"
+            onChangeText={phoneInputHandler}
+            value={enteredPhone}
           />
-        </View>
-        <View style={styles.shiftBContainer}>
-          <View style={styles.shiftContainer}>
-            <Switch
-              style={styles.switchMrg}
-              trackColor={{ false: "white", true: "orange" }}
-              thumbColor={isEnabled ? "white" : "white"}
-              ios_backgroundColor="red"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
+          <TextInput
+            style={styles.textInput}
+            placeholder="E-mail"
+            placeholderTextColor="grey"
+            onChangeText={emailInputHandler}
+            value={enteredEmailText}
+          />
+          <View style={styles.dropDownView}>
+            <SelectDropdown
+              defaultButtonText={"Oraș"}
+              data={city}
+              buttonStyle={styles.dropdown1BtnStyle}
+              buttonTextStyle={styles.dropdown1BtnTxtStyle}
+              dropdownStyle={styles.dropdown1DropdownStyle}
+              rowStyle={styles.dropdown1RowStyle}
+              rowTextStyle={styles.dropdown1RowTxtStyle}
+              onSelect={(selectedItem, index) => {
+                // console.log(selectedItem, index);
+                setEnteredCity(selectedItem);
+                // logDropdowns(selectedItem);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
             />
-            <Text style={styles.shiftText}>Accept termenii și condițiile</Text>
+            {/* </View>
+        <View> */}
+            <SelectDropdown
+              defaultButtonText={"Cu ce vrei să livrezi"}
+              data={deliveryMethod}
+              buttonStyle={styles.dropdown1BtnStyle}
+              buttonTextStyle={styles.dropdown1BtnTxtStyle}
+              dropdownStyle={styles.dropdown1DropdownStyle}
+              rowStyle={styles.dropdown1RowStyle}
+              rowTextStyle={styles.dropdown1RowTxtStyle}
+              onSelect={(selectedItem, index) => {
+                // console.log(selectedItem, index);
+                setEnteredDeliveryMethod(selectedItem);
+                // logDropdowns(selectedItem);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+            {/* </View>
+        <View> */}
+            <SelectDropdown
+              defaultButtonText={"Informații adiționale"}
+              data={aditionalInformations}
+              buttonStyle={styles.dropdown1BtnStyle}
+              buttonTextStyle={styles.dropdown1BtnTxtStyle}
+              dropdownStyle={styles.dropdown1DropdownStyle}
+              rowStyle={styles.dropdown1RowStyle}
+              rowTextStyle={styles.dropdown1RowTxtStyle}
+              onSelect={(selectedItem, index) => {
+                // console.log(selectedItem, index);
+                setEnteredAditionalInformations(selectedItem);
+                // logDropdowns(selectedItem);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+          </View>
+          <View style={styles.shiftBContainer}>
+            <View style={styles.shiftContainer}>
+              <Switch
+                style={styles.switchMrg}
+                trackColor={{ false: "white", true: "orange" }}
+                thumbColor={isEnabled ? "white" : "white"}
+                ios_backgroundColor="red"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+              <Text style={styles.shiftText}>
+                Accept termenii și condițiile
+              </Text>
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+              <Pressable onPress={registerDrv} style={styles.presableButton}>
+                <Text style={styles.goalText}>Înregistrează</Text>
+              </Pressable>
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+              <Pressable
+                onPress={props.cancelRegister}
+                style={styles.presableButtonForgetPass}
+              >
+                <Text style={styles.goalTextBack}>Renunță</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Pressable onPress={registerDrv} style={styles.presableButton}>
-              <Text style={styles.goalText}>Înregistrează</Text>
-            </Pressable>
-          </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Pressable
-              onPress={props.cancelRegister}
-              style={styles.presableButtonForgetPass}
-            >
-              <Text style={styles.goalTextBack}>Renunță</Text>
-            </Pressable>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  );
+      </Modal>
+    );
+  }
 }
 const styles = StyleSheet.create({
   image: {
@@ -251,7 +271,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginRight: 8,
     padding: 16,
-    color: "#120438",
+    color: "red",
     borderRadius: 6,
   },
   buttonContainer: {

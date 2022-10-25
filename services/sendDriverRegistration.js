@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { SmartiooMcsApi } from "./apiConstants";
 import { SmartiooMcsApi } from "./api/apiConstants";
 
 // async function saveForm(form) {
@@ -29,11 +28,11 @@ async function saveForm(form) {
     );
     console.log("in SaveForm Function");
     console.log(form);
-    // return true;
+    return true;
   } catch (error) {
     console.log("An error has occurred");
     console.log(error);
-    // return false;
+    return false;
   }
 }
 export { saveForm };
