@@ -5,7 +5,9 @@ import { useNavigation } from "@react-navigation/native";
 import { DevSettings } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "../services/api/secureStorageConstants";
+import ProfileRegisterDriver from "../components/profileRegisterDriver";
 export default function Profil() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const info = useContext(AuthContext);
   const navigation = useNavigation();
 
@@ -23,11 +25,18 @@ export default function Profil() {
   }
 
   function registerADriver() {
-    console.log("register a driver function");
+    setModalIsVisible(true);
   }
 
+  function closeRegisterPage() {
+    setModalIsVisible(false);
+  }
   return (
     <View style={styles.mainContainer}>
+      <ProfileRegisterDriver
+        visible={modalIsVisible}
+        cancelRegister={closeRegisterPage}
+      />
       <Text style={styles.goalText2}>Bună, {nameToken}</Text>
       <Text style={styles.goalText}>Email:</Text>
       <Text style={styles.goalText}>Telefon </Text>
