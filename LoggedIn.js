@@ -17,12 +17,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import ShiftCall from "./screens/shiftCall";
 import ShiftCallOut from "./screens/shifltCallOut";
+// import { AuthContext } from "../services/api/store/auth-context";
 
 const BottomTab = createBottomTabNavigator();
 
 export default function LoggedIn() {
   const [modalShiftIn, setModalShiftIn] = useState(false);
   const [modalShiftOut, setModalShiftOut] = useState(false);
+
   function shiftIn() {
     setModalShiftIn(true);
   }

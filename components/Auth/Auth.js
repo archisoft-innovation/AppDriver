@@ -16,12 +16,15 @@ import { UserData } from "../../services/api/secureStorageConstants";
 import { useContext } from "react";
 import { AuthContext } from "../../services/api/store/auth-context";
 import { useNavigation } from "@react-navigation/native";
+import LoadingOverlay from "./LoadingOverlay";
+// import LoggedIn from "../../LoggedIn";
 
 export default function GoalInput(props) {
   const userInfo = useContext(AuthContext);
-  // console.log(userInfo, " Goal input");
   const navigation = useNavigation();
+  const [loggedin, setLoggedin] = useState(false);
 
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [enteredEmailText, setEnteredEmailText] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [emailValidation, setEmailValidation] = useState(false);
@@ -44,6 +47,7 @@ export default function GoalInput(props) {
       enteredEmailText.length > 4 &&
       enteredPassword.length > 4
     ) {
+      setIsAuthenticating(true);
       setEmailValidation(true);
       // console.log(enteredEmailText);
       // console.log(enteredPassword);
@@ -61,13 +65,19 @@ export default function GoalInput(props) {
       // save from data from login to useContext
       // if (await DoLoghin(enteredEmailText, enteredPassword)) {
       if (test) {
+        setIsAuthenticating(false);
         console.log("returned true");
         userInfo.authenticate(test.token);
         userInfo.named(test.name);
         navigation.replace("LoggedIn");
+      } else {
+        setIsAuthenticating(false);
+        Alert.alert("Please check your entered credentials!");
       }
     } else {
       setEmailValidation(false);
+      setIsAuthenticating(false);
+      console.log("in else ");
       Alert.alert("Please check your entered credentials!");
     }
   }
@@ -83,6 +93,7 @@ export default function GoalInput(props) {
   async function forgetPassword() {
     // getValueFor(UserData);
     console.log("forget Password btn");
+    // setIsAuthenticating(true);
   }
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
@@ -96,52 +107,63 @@ export default function GoalInput(props) {
       console.log("No result passed");
     }
   }
-  return (
-    <View style={styles.inputContainer}>
-      <Image
-        style={styles.image}
-        source={require("../../assets/images/logoAlb.png")}
-      />
-      <TextInput
-        style={styles.textInput}
-        placeholder="E-mail"
-        onChangeText={emailInputHandler}
-        value={enteredEmailText}
-      />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Parola"
-        onChangeText={passwordInputHandler}
-        value={enteredPassword}
-        secureTextEntry={true}
-      />
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Pressable onPress={myTest} style={styles.presableButton}>
-            <Text style={styles.goalText}>Log In</Text>
-          </Pressable>
+  if (isAuthenticating) {
+    return <LoadingOverlay message="Logging in" />;
+  }
+  // if (userInfo.isAutheticated) {
+  //   return <Loading />;
+  //   // console.log("LOGGED IN FROM AUTH JS");
+  //   // navigation.replace("LoggedIn");
+  // }
+  else {
+    return (
+      <View style={styles.inputContainer}>
+        <Image
+          style={styles.image}
+          source={require("../../assets/images/logoAlb.png")}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="E-mail"
+          onChangeText={emailInputHandler}
+          value={enteredEmailText}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Parola"
+          onChangeText={passwordInputHandler}
+          value={enteredPassword}
+          secureTextEntry={true}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Pressable onPress={myTest} style={styles.presableButton}>
+              <Text style={styles.goalText}>Log In</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Pressable onPress={moveToRegister} style={styles.presableButton}>
+              <Text style={styles.goalText}>Înregistrare</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Pressable
+              onPress={forgetPassword}
+              style={styles.presableButtonForgetPass}
+            >
+              <Text style={styles.goalText}>Ati uitat parola?</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Pressable onPress={moveToRegister} style={styles.presableButton}>
-            <Text style={styles.goalText}>Înregistrare</Text>
-          </Pressable>
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Pressable
-            onPress={forgetPassword}
-            style={styles.presableButtonForgetPass}
-          >
-            <Text style={styles.goalText}>Ati uitat parola?</Text>
-          </Pressable>
-        </View>
-      </View>
-    </View>
-  );
+    );
+  }
 }
+
 const styles = StyleSheet.create({
   image: {
     width: 300,

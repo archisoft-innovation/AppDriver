@@ -24,16 +24,16 @@ async function saveForm(form) {
     const request = await axios.post(
       SmartiooMcsApi + "/mcsuser/StoreRegister",
       {
-        //   headers: { "Content-Type": "application/json" },
-        form,
+        data: form,
       }
     );
-    console.log("in save form request");
-    return true;
+    console.log("in SaveForm Function");
+    console.log(form);
+    // return true;
   } catch (error) {
     console.log("An error has occurred");
     console.log(error);
-    return false;
+    // return false;
   }
 }
 export { saveForm };
