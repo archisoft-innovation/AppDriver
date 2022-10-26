@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import { useContext, useState } from "react";
 import { AuthContext } from "../services/api/store/auth-context";
 import { useNavigation } from "@react-navigation/native";
@@ -15,8 +15,10 @@ export default function Profil() {
   const tookToken = info.token;
   const nameToken = info.name;
   const idToken = info.id;
+  const userEmail = info.email;
   // asa se foloseste tokenul
-
+  // console.log(info);
+  // console.log(userEmail);
   function logOut() {
     SecureStore.deleteItemAsync(UserData);
     DevSettings.reload();
@@ -32,26 +34,35 @@ export default function Profil() {
     setModalIsVisible(false);
   }
   return (
-    <View style={styles.mainContainer}>
-      <ProfileRegisterDriver
-        visible={modalIsVisible}
-        cancelRegister={closeRegisterPage}
-      />
-      <Text style={styles.goalText2}>Bună, {nameToken}</Text>
-      <Text style={styles.goalText}>Email:</Text>
-      <Text style={styles.goalText}>Telefon </Text>
-      <Pressable onPress={registerADriver} style={styles.presableButton}>
-        <Text style={styles.presableText}>Înscrie un curier</Text>
-      </Pressable>
-      <Text style={styles.goalText}>Vehicul setat:</Text>
-      <View style={styles.inputContainer}>
-        <View style={styles}></View>
-        <View></View>
+    <>
+      <View style={styles.mainContainer}>
+        <View style={styles.contentContainer}>
+          <ProfileRegisterDriver
+            visible={modalIsVisible}
+            cancelRegister={closeRegisterPage}
+          />
+          <Text style={styles.goalText2}>Bună, {nameToken}</Text>
+          <Text style={styles.goalText}>Email: {info.email}</Text>
+          <Text style={styles.goalText}>Telefon: </Text>
+          <Text style={styles.goalText}>Vehicul setat:</Text>
+          <Pressable onPress={registerADriver} style={styles.presableButton2}>
+            <Text style={styles.presableText}>Înscrie un curier</Text>
+          </Pressable>
+          <View style={styles.inputContainer}>
+            <View style={styles}></View>
+            <View></View>
+          </View>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/profilePic.png")}
+          />
+        </View>
+
+        <Pressable onPress={logOut} style={styles.presableButton}>
+          <Text style={styles.presableText}>Deconectare</Text>
+        </Pressable>
       </View>
-      <Pressable onPress={logOut} style={styles.presableButton}>
-        <Text style={styles.presableText}>Deconectare</Text>
-      </Pressable>
-    </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -67,10 +78,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   goalText2: {
-    marginTop: 40,
+    // marginTop: 10,
+    marginBottom: 40,
     color: "white",
     padding: 8,
-    fontSize: 20,
+    fontSize: 26,
+    fontWeight: "bold",
   },
   inputContainer: {
     justifyContent: "center",
@@ -84,7 +97,7 @@ const styles = StyleSheet.create({
   },
   presableButton: {
     width: 200,
-    backgroundColor: "grey",
+    backgroundColor: "red",
     padding: 8,
     // alignSelf: "center",
     alignItems: "center",
@@ -93,7 +106,26 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginBottom: 8,
   },
+  presableButton2: {
+    width: 200,
+    backgroundColor: "orange",
+    padding: 8,
+    // alignSelf: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#06b4e0",
+    borderRadius: 6,
+    marginTop: 18,
+  },
   presableText: {
     color: "white",
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  image: {
+    width: 300,
+    height: 250,
+    // margin: 20,
   },
 });

@@ -12,6 +12,7 @@ import SelectDropdown from "react-native-select-dropdown";
 
 export default function AcceptedOrders(props) {
   const [pickUpTime, setPickUpTime] = useState(true);
+  const [pickUpTime2, setPickUpTime2] = useState("");
   // de vazut la pickUpTime cum sa rezolv, daca intra o data si selecteaza un timp, urmatoarea data cand intru nu-i mai cere
   const mins = [
     "10 minute",
@@ -22,6 +23,12 @@ export default function AcceptedOrders(props) {
     "60 minute",
   ];
   // props.orderID orderIdul
+  function sendPickupTimeOrder() {
+    console.log(pickUpTime2 + " selected time");
+    console.log(props.orderID + " order id din sendPickupTimeORder");
+    // setPickUpTime(false);
+    // send pickup time reqeust comes here, above are selected minutes and order id
+  }
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputContainer}>
@@ -44,6 +51,7 @@ export default function AcceptedOrders(props) {
                   rowTextStyle={styles.dropdown1RowTxtStyle}
                   onSelect={(selectedItem, index) => {
                     // console.log(selectedItem, index);
+                    setPickUpTime2(selectedItem);
                     setPickUpTime(false);
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -70,6 +78,7 @@ export default function AcceptedOrders(props) {
             <Pressable
               disabled={pickUpTime}
               onPress={props.onTheRoad}
+              onPressIn={sendPickupTimeOrder}
               style={styles.presableButton}
             >
               <Text style={styles.presableText}>Sunt pe drum</Text>

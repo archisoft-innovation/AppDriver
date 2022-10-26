@@ -4,8 +4,10 @@ export const AuthContext = createContext({
   token: "",
   name: "",
   id: "",
+  email: "",
   isAutheticated: false,
   named: () => {},
+  emailed: () => {},
   authenticate: () => {},
   logout: () => {},
 });
@@ -13,6 +15,7 @@ export const AuthContext = createContext({
 function AuthContextProvider({ children }) {
   const [authToken, setAuthToken] = useState("");
   const [authName, setAuthName] = useState("");
+  const [authEmail, setAuthEmail] = useState("");
   const [authId, setAuthId] = useState("");
   const [authIsAutheticated, setauthIsAutheticated] = useState(false);
 
@@ -23,7 +26,9 @@ function AuthContextProvider({ children }) {
   const named = (name) => {
     setAuthName(name);
   };
-
+  const emailed = (email) => {
+    setAuthEmail(email);
+  };
   function logout() {
     setAuthToken(null);
   }
@@ -32,9 +37,11 @@ function AuthContextProvider({ children }) {
     token: authToken,
     name: authName,
     id: authId,
+    email: authEmail,
     isAutheticated: !!authToken,
     authenticate: authenticate,
     named: named,
+    emailed: emailed,
     logout: (something) => {
       console.log(something);
     },

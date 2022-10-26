@@ -41,7 +41,7 @@ export default function ShiftCall(props) {
             <View style={styles.readySet}>
               <Image
                 style={styles.image}
-                source={require("../assets/images/gpsNavigator.png")}
+                source={require("../assets/images/shiftIn.png")}
               />
               <View>
                 <Text style={styles.readyText}>Ready, Set</Text>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   image: {
-    width: 200,
+    width: 220,
     height: 240,
     margin: 20,
   },

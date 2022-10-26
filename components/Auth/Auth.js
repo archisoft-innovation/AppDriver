@@ -55,6 +55,8 @@ export default function GoalInput(props) {
       // setEnteredPassword("");
 
       let test = await DoLoghin(enteredEmailText, enteredPassword);
+      userInfo.emailed(enteredEmailText);
+
       // console.log("all goodie");
       // console.log(test);
       // userInfo.authenticate(test.token);

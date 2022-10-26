@@ -27,6 +27,10 @@ export default function Orders(props) {
     setModalIsVisible(true);
   }
   function onTheWayOrder() {
+    console.log(props.orderID + " order ID on accept order btn");
+    // post accept order function
+
+    // maybe refresh the page when he accepts the order
     setModalIsVisible(false);
   }
 
