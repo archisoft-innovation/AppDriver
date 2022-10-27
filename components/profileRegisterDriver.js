@@ -40,6 +40,12 @@ export default function ProfileRegisterDriver(props) {
   const [emailValidation, setEmailValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
+  function resetData() {
+    setEnteredName("");
+    setEnteredEmailText("");
+    setEnteredPhone("");
+  }
+
   function nameInputHandler(enteredText) {
     setEnteredName(enteredText);
   }
@@ -70,14 +76,12 @@ export default function ProfileRegisterDriver(props) {
       // let allGood = await saveForm(info);
       let saveF = await saveForm(info);
       if (saveF) {
-        console.log("in tru let saveF");
+        resetData();
         setIsAuthenticating(false);
       } else {
         setIsAuthenticating(false);
         Alert.alert("Something went wrong!");
       }
-      console.log("in true");
-      // request de send
     } else if (isNaN(enteredPhone)) {
       Alert.alert("Nu ai introdus un numar de telefon valid!");
     } else if (enteredPhone.length < 9) {

@@ -15,6 +15,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { saveForm } from "../services/sendDriverRegistration";
 import { useNavigation } from "@react-navigation/native";
 import LoadingOverlay from "./Auth/LoadingOverlay";
+import RegistrationSent from "./Modals/registrationSentModal";
 
 export default function RegisterDriver(props) {
   const city = [
@@ -32,7 +33,7 @@ export default function RegisterDriver(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [enteredName, setEnteredName] = useState("");
   const [enteredEmailText, setEnteredEmailText] = useState("");
   const [enteredPhone, setEnteredPhone] = useState("");
@@ -43,6 +44,14 @@ export default function RegisterDriver(props) {
   const [emailValidation, setEmailValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
+  function resetData() {
+    setEnteredName("");
+    setEnteredEmailText("");
+    setEnteredPhone("");
+  }
+  function closeModal() {
+    setModalIsVisible(false);
+  }
   function nameInputHandler(enteredText) {
     setEnteredName(enteredText);
   }
@@ -73,8 +82,9 @@ export default function RegisterDriver(props) {
       // let allGood = await saveForm(info);
       let saveF = await saveForm(info);
       if (saveF) {
-        console.log("in tru let saveF");
+        resetData();
         setIsAuthenticating(false);
+        setModalIsVisible(true);
       } else {
         setIsAuthenticating(false);
         Alert.alert("Something went wrong!");
@@ -129,11 +139,14 @@ export default function RegisterDriver(props) {
   }
   if (isAuthenticating) {
     return (
-      <LoadingOverlay message="Se trimit datele. Trebuie ceva sa il anunt ca am finalizat, un pop up sau ceva sa stie ca au fost trimise" />
+      <>
+        <LoadingOverlay message="Se trimit datele" />
+      </>
     );
   } else {
     return (
       <View style={styles.inputContainer}>
+        <RegistrationSent visible={modalIsVisible} closeM={closeModal} />
         <Image
           style={styles.image}
           // source={require("../../assets/images/logoAlb.png")}
