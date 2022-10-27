@@ -3,14 +3,12 @@ import { SmartiooMcsApi } from "./api/apiConstants";
 
 // async function saveForm(form) {
 //   try {
-//     const request = await axios.post(
-//       SmartiooMcsApi + "/mcsuser/StoreRegister",
-//       {
-//         //   headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(form),
-//       }
-//     );
-//         console.log("in save form request");
+//     const request = await axios({
+//       method: "post",
+//       url: SmartiooMcsApi + "/mcsuser/StoreRegister",
+//       data: form,
+//     });
+//     console.log("returned ok");
 //     return true;
 //   } catch (error) {
 //     console.log("An error has occurred");
@@ -22,12 +20,9 @@ async function saveForm(form) {
   try {
     const request = await axios.post(
       SmartiooMcsApi + "/mcsuser/StoreRegister",
-      {
-        data: form,
-      }
+      form
     );
-    console.log("in SaveForm Function");
-    console.log(form);
+    console.log("returned ok");
     return true;
   } catch (error) {
     console.log("An error has occurred");
