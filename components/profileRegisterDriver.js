@@ -13,6 +13,7 @@ import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { saveForm } from "../services/sendDriverRegistration";
 import LoadingOverlay from "./Auth/LoadingOverlay";
+import RegistrationSent from "./Modals/registrationSentModal";
 
 export default function ProfileRegisterDriver(props) {
   const city = [
@@ -29,7 +30,7 @@ export default function ProfileRegisterDriver(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [enteredName, setEnteredName] = useState("");
   const [enteredEmailText, setEnteredEmailText] = useState("");
   const [enteredPhone, setEnteredPhone] = useState("");
@@ -40,6 +41,9 @@ export default function ProfileRegisterDriver(props) {
   const [emailValidation, setEmailValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
+  function closeModal() {
+    setModalIsVisible(false);
+  }
   function resetData() {
     setEnteredName("");
     setEnteredEmailText("");
@@ -78,6 +82,7 @@ export default function ProfileRegisterDriver(props) {
       if (saveF) {
         resetData();
         setIsAuthenticating(false);
+        setModalIsVisible(true);
       } else {
         setIsAuthenticating(false);
         Alert.alert("Something went wrong!");
@@ -124,6 +129,8 @@ export default function ProfileRegisterDriver(props) {
   } else {
     return (
       <Modal visible={props.visible} animationType="slide">
+        <RegistrationSent visible={modalIsVisible} closeM={closeModal} />
+
         <View style={styles.inputContainer}>
           <Image
             style={styles.image}
@@ -275,7 +282,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginRight: 8,
     padding: 16,
-    color: "red",
+    color: "black",
     borderRadius: 6,
   },
   buttonContainer: {
