@@ -14,10 +14,10 @@ import Comenzi from "./screens/orders";
 import Profil from "./screens/profile";
 import { Ionicons } from "@expo/vector-icons";
 // import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ShiftCall from "./screens/shiftCall";
 import ShiftCallOut from "./screens/shifltCallOut";
-// import { AuthContext } from "../services/api/store/auth-context";
+import { AuthContext } from "./services/api/store/auth-context";
 import { shiftIn2 } from "./services/api/shiftService";
 // import { shiftIn } from "./services/api/shiftService";
 
@@ -26,6 +26,8 @@ const BottomTab = createBottomTabNavigator();
 export default function LoggedIn() {
   const [modalShiftIn, setModalShiftIn] = useState(false);
   const [modalShiftOut, setModalShiftOut] = useState(false);
+  const info = useContext(AuthContext);
+  console.log(info.token);
 
   function shiftIn() {
     setModalShiftIn(true);
@@ -47,10 +49,9 @@ export default function LoggedIn() {
   async function requestInShift() {
     // setModalShiftIn(true);
     // setShift(true);
-    let apiKey =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3VzZXJkYXRhIjoie1wiSWRcIjoxOSxcIkNvZGVcIjpcIkM2bm9NXCIsXCJOYW1lXCI6XCJCb2x0IHRheGlcIixcIkVtYWlsXCI6XCJkZW1vQGRyaXZlci5jb21cIixcIlBob25lXCI6XCIxMjM0NTY3ODkxXCIsXCJDb3VudHJ5Q29kZVwiOm51bGwsXCJWZW5kb3JJZFwiOm51bGwsXCJSb2xlXCI6XCJkcml2ZXJcIixcIlJvbGVJZFwiOjR9IiwibmJmIjoxNjY2OTUwNDgzLCJleHAiOjE2OTgwNTQ0ODMsImlhdCI6MTY2Njk1MDQ4M30.eCGT4-rMfb7S752YYdE5i38B-IpJMm2t6nVCaIw_sMg";
 
-    shiftIn2(apiKey);
+    console.log(shiftIn2(info.token));
+    console.log(info.token);
   }
   function requestInShiftModalClose() {
     // alert("request intrare in tura");

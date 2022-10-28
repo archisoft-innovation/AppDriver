@@ -23,14 +23,15 @@ async function shiftIn2(api) {
     const request = await axios({
       method: "post",
       url: SmartiooMcsApi + "/mcsdriver/ShiftRequest/shiftRequest",
-      apiKey: api,
+      athKey: api,
     });
     console.log("returned ok");
     return true;
   } catch (error) {
-    console.log("An error has occurred .");
+    console.log("An error has occurred");
     console.log(error);
     return false;
   }
 }
+
 export { shiftIn2 };
