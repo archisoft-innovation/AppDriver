@@ -35,7 +35,7 @@ export default function Calendar() {
   return (
     <View style={styles.inputContainerMain}>
       <Pressable onPress={setModalVisible}>
-        <Text style={styles.heading}>Pick a date</Text>
+        <Text style={styles.heading}>Selectează data</Text>
       </Pressable>
       <Text>Data selectata</Text>
       <Modal visible={modalVisibility}>
@@ -66,7 +66,7 @@ export default function Calendar() {
             <Pressable style={styles.firstPres}>
               <Text style={styles.pressText}> 10:00</Text>
             </Pressable>
-            <Pressable style={styles.firstPres}>
+            <Pressable style={styles.falsePress}>
               <Text style={styles.pressText}>11:00</Text>
             </Pressable>
           </View>
@@ -76,14 +76,14 @@ export default function Calendar() {
             <Pressable style={styles.firstPres}>
               <Text style={styles.pressText}> 12:00</Text>
             </Pressable>
-            <Pressable style={styles.firstPres}>
+            <Pressable style={styles.falsePress}>
               <Text style={styles.pressText}>13:00</Text>
             </Pressable>
           </View>
         </View>
         <View style={styles.viewSt}>
           <View style={styles.presableBtn}>
-            <Pressable style={styles.firstPres}>
+            <Pressable style={styles.falsePress}>
               <Text style={styles.pressText}> 14:00</Text>
             </Pressable>
             <Pressable style={styles.firstPres}>
@@ -96,7 +96,7 @@ export default function Calendar() {
             <Pressable style={styles.firstPres}>
               <Text style={styles.pressText}> 16:00</Text>
             </Pressable>
-            <Pressable style={styles.firstPres}>
+            <Pressable style={styles.falsePress}>
               <Text style={styles.pressText}>17:00</Text>
             </Pressable>
           </View>
@@ -123,10 +123,10 @@ export default function Calendar() {
         </View>
         <View style={styles.viewSt}>
           <View style={styles.presableBtn}>
-            <Pressable style={styles.firstPres}>
+            <Pressable style={styles.falsePress}>
               <Text style={styles.pressText}> 22:00</Text>
             </Pressable>
-            <Pressable style={styles.firstPres}>
+            <Pressable style={styles.falsePress}>
               <Text style={styles.pressText}>23:00</Text>
             </Pressable>
           </View>
@@ -274,6 +274,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "green",
+  },
+  falsePress: {
+    padding: 16,
+    backgroundColor: "red",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "red",
   },
   pressText: {
     color: "white",

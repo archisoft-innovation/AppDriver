@@ -68,12 +68,12 @@ export default function App() {
     const result = await SecureStore.getItemAsync(key);
     if (result) {
       let a = result;
-      // console.log(a);
+      console.log(a);
       //aici am apikey etc de vazut
       // storeSec = true;
       // console.log(storeSec);
       // return true;
-      userInfo.authenticate(a.token);
+      userInfo.authenticate(a.apiKey);
       userInfo.named(a.name);
       setStoreSec(true);
     } else {

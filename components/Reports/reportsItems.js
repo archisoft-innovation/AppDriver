@@ -4,8 +4,8 @@ export default function ReportsItems() {
   return (
     <View style={styles.viewSt}>
       <Pressable style={styles.presableBtn}>
-        <Text>Perioada</Text>
-        <Text>{"ceva suma"} Ron</Text>
+        <Text>22 Aug - 28 Aug</Text>
+        <Text>250 Ron</Text>
       </Pressable>
     </View>
   );

@@ -18,6 +18,8 @@ import { useState } from "react";
 import ShiftCall from "./screens/shiftCall";
 import ShiftCallOut from "./screens/shifltCallOut";
 // import { AuthContext } from "../services/api/store/auth-context";
+import { shiftIn2 } from "./services/api/shiftService";
+// import { shiftIn } from "./services/api/shiftService";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -42,10 +44,13 @@ export default function LoggedIn() {
   //   );
   // } else return <GoalInput />;
 
-  function requestInShift() {
-    // alert("request intrare in tura");
-    setModalShiftIn(true);
-    setShift(true);
+  async function requestInShift() {
+    // setModalShiftIn(true);
+    // setShift(true);
+    let apiKey =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3VzZXJkYXRhIjoie1wiSWRcIjoxOSxcIkNvZGVcIjpcIkM2bm9NXCIsXCJOYW1lXCI6XCJCb2x0IHRheGlcIixcIkVtYWlsXCI6XCJkZW1vQGRyaXZlci5jb21cIixcIlBob25lXCI6XCIxMjM0NTY3ODkxXCIsXCJDb3VudHJ5Q29kZVwiOm51bGwsXCJWZW5kb3JJZFwiOm51bGwsXCJSb2xlXCI6XCJkcml2ZXJcIixcIlJvbGVJZFwiOjR9IiwibmJmIjoxNjY2OTUwNDgzLCJleHAiOjE2OTgwNTQ0ODMsImlhdCI6MTY2Njk1MDQ4M30.eCGT4-rMfb7S752YYdE5i38B-IpJMm2t6nVCaIw_sMg";
+
+    shiftIn2(apiKey);
   }
   function requestInShiftModalClose() {
     // alert("request intrare in tura");

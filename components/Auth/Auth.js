@@ -70,6 +70,7 @@ export default function GoalInput(props) {
         setIsAuthenticating(false);
         console.log("returned true");
         userInfo.authenticate(test.token);
+        userInfo.authenticate(test.apiKey);
         userInfo.named(test.name);
         navigation.replace("LoggedIn");
       } else {

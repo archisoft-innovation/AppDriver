@@ -42,8 +42,8 @@ export default function Profil() {
             cancelRegister={closeRegisterPage}
           />
           <Text style={styles.goalText2}>Bună, {nameToken}</Text>
-          <Text style={styles.goalText}>Email: {info.email}</Text>
-          <Text style={styles.goalText}>Telefon: </Text>
+          <Text style={styles.goalText}>Email: {userEmail}</Text>
+          <Text style={styles.goalText}>Telefon:</Text>
           <Text style={styles.goalText}>Vehicul setat:</Text>
           <Pressable onPress={registerADriver} style={styles.presableButton2}>
             <Text style={styles.presableText}>Înscrie un curier</Text>
