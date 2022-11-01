@@ -44,9 +44,9 @@ export default function LoggedIn() {
   // } else return <GoalInput />;
 
   async function requestInShift() {
-    // setModalShiftIn(true);
-    // setShift(true);
-    // setRequestedInShift(true);
+    setModalShiftIn(true);
+    setShift(true);
+    setRequestedInShift(true);
     // mai jost am shift inu request
     // console.log(shiftIn2(info.token));
     // console.log(info.token);
@@ -55,7 +55,6 @@ export default function LoggedIn() {
   }
   if (!testInterval2) {
     // mai jost am shift Request Status
-    getStatus();
     console.log("Shift status is false");
   } else {
     timeOutFunctionForShift();
@@ -67,6 +66,7 @@ export default function LoggedIn() {
     console.log(requestStatus.message);
   }
   function timeOutFunctionForShift() {
+    getStatus();
     console.log("in interval");
     const interval = setInterval(() => {
       console.log("This will be called every 2 seconds");
