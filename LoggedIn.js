@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Button,
-  Text,
-  Pressable,
-} from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Calendar from "./screens/calendar";
@@ -18,7 +11,7 @@ import { useState, useContext } from "react";
 import ShiftCall from "./screens/shiftCall";
 import ShiftCallOut from "./screens/shifltCallOut";
 import { AuthContext } from "./services/api/store/auth-context";
-import { shiftIn2 } from "./services/api/shiftService";
+import { shiftIn2, shiftRequestStatus } from "./services/api/shiftService";
 // import { shiftIn } from "./services/api/shiftService";
 
 const BottomTab = createBottomTabNavigator();
@@ -26,6 +19,11 @@ const BottomTab = createBottomTabNavigator();
 export default function LoggedIn() {
   const [modalShiftIn, setModalShiftIn] = useState(false);
   const [modalShiftOut, setModalShiftOut] = useState(false);
+  const [testInterval2, setTestInterval2] = useState(false);
+  const [shift, setShift] = useState(false);
+  const [shiftOutBtn, setShiftOutBtn] = useState(false);
+  const [requestedInShift, setRequestedInShift] = useState(false);
+  const [requestedOutShift, setRequestedOutShift] = useState(false);
   const info = useContext(AuthContext);
   console.log(info.token);
 
@@ -36,7 +34,6 @@ export default function LoggedIn() {
     setModalShiftIn(false);
   }
 
-  const [shift, setShift] = useState(false);
   // let a = false;
   // if (a === 1) {
   //   return (
@@ -49,9 +46,33 @@ export default function LoggedIn() {
   async function requestInShift() {
     // setModalShiftIn(true);
     // setShift(true);
+    // setRequestedInShift(true);
+    // mai jost am shift inu request
+    // console.log(shiftIn2(info.token));
+    // console.log(info.token);
+    // setTestInterval2(true);
+    // mai sus, setTestInterval se apeleaza dupa ce face request de shift in si asteapta raspuns. cumva sa vad sa ii ascund butonu de shift in dupa ce e facut requestul
+  }
+  if (!testInterval2) {
+    // mai jost am shift Request Status
+    getStatus();
+    console.log("Shift status is false");
+  } else {
+    timeOutFunctionForShift();
+  }
+  async function getStatus() {
+    let requestStatus = await shiftRequestStatus(info.token);
+    console.log(requestStatus.isApproved);
+    console.log(requestStatus.isRejected);
+    console.log(requestStatus.message);
+  }
+  function timeOutFunctionForShift() {
+    console.log("in interval");
+    const interval = setInterval(() => {
+      console.log("This will be called every 2 seconds");
+    }, 2000);
 
-    console.log(shiftIn2(info.token));
-    console.log(info.token);
+    return () => clearInterval(interval);
   }
   function requestInShiftModalClose() {
     // alert("request intrare in tura");
@@ -66,6 +87,7 @@ export default function LoggedIn() {
     // alert("request intrare in tura");
     setModalShiftOut(false);
   }
+
   return (
     <NavigationContainer independent={true}>
       <ShiftCall
@@ -84,7 +106,7 @@ export default function LoggedIn() {
             backgroundColor: "black",
           },
           headerRight: function test() {
-            if (shift) {
+            if (shiftOutBtn) {
               return (
                 <View style={styles.shiftAll}>
                   <Pressable style={styles.shift} onPress={requestOutShift}>
@@ -96,13 +118,22 @@ export default function LoggedIn() {
             }
           },
           headerLeft: function test() {
-            if (!shift) {
+            if (!shift && !requestedInShift) {
               return (
                 <View style={styles.shiftAll}>
                   <Pressable style={styles.shift} onPress={requestInShift}>
                     <Ionicons name="radio-button-on" color="green" size="20" />
                     <Text style={styles.headerRightText}>Intra in tura</Text>
                   </Pressable>
+                </View>
+              );
+            } else {
+              return (
+                <View style={styles.shiftAll}>
+                  {/* <Pressable style={styles.shift} onPress={requestInShift}> */}
+                  {/* <Ionicons name="radio-button-on" color="green" size="20" /> */}
+                  <Text style={styles.headerRightText}>Asteapta raspuns</Text>
+                  {/* </Pressable> */}
                 </View>
               );
             }
