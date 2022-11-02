@@ -8,7 +8,7 @@ async function shiftIn2(api) {
       url: SmartiooMcsApi + "/mcsdriver/ShiftRequest/shiftRequest",
       headers: { athKey: api },
     });
-    console.log(request);
+    // console.log(request);
     console.log("returned ok");
     return true;
   } catch (error) {
@@ -25,8 +25,9 @@ async function shiftRequestStatus(api) {
       url: SmartiooMcsApi + "/mcsdriver/ShiftRequest/driverRequestStatus",
       headers: { athKey: api },
     });
-    console.log(request.data);
-    console.log("returned ok");
+    // console.log(request);
+    // console.log(request.data);
+    // console.log("returned ok");
     return request.data;
   } catch (error) {
     console.log("An error has occurred");

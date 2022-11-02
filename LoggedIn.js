@@ -19,14 +19,14 @@ const BottomTab = createBottomTabNavigator();
 export default function LoggedIn() {
   const [modalShiftIn, setModalShiftIn] = useState(false);
   const [modalShiftOut, setModalShiftOut] = useState(false);
-  const [testInterval2, setTestInterval2] = useState(false);
+  const [checkShiftInStatus, setCheckShiftInStatus] = useState(false);
   const [shift, setShift] = useState(false);
   const [shiftOutBtn, setShiftOutBtn] = useState(false);
-  const [requestedInShift, setRequestedInShift] = useState(false);
+  // const [requestedInShift, setRequestedInShift] = useState(false);
   const [requestedOutShift, setRequestedOutShift] = useState(false);
   const info = useContext(AuthContext);
-  console.log(info.token);
-
+  // refacere shift states
+  const [shiftInRequestAnswer, setShiftInRequestAnswer] = useState("noRequest");
   function shiftIn() {
     setModalShiftIn(true);
   }
@@ -34,46 +34,46 @@ export default function LoggedIn() {
     setModalShiftIn(false);
   }
 
-  // let a = false;
-  // if (a === 1) {
-  //   return (
-  //     <View style={styles.appContainer2}>
-  //       <Some />
-  //     </View>
-  //   );
-  // } else return <GoalInput />;
-
   async function requestInShift() {
     setModalShiftIn(true);
     setShift(true);
-    setRequestedInShift(true);
+    // setRequestedInShift(true);
     // mai jost am shift inu request
-    // console.log(shiftIn2(info.token));
+    shiftIn2(info.token);
+    setCheckShiftInStatus(true);
     // console.log(info.token);
-    // setTestInterval2(true);
+    // setCheckShiftInStatus(true);
     // mai sus, setTestInterval se apeleaza dupa ce face request de shift in si asteapta raspuns. cumva sa vad sa ii ascund butonu de shift in dupa ce e facut requestul
   }
-  if (!testInterval2) {
-    // mai jost am shift Request Status
+  if (!checkShiftInStatus) {
     console.log("Shift status is false");
   } else {
-    timeOutFunctionForShift();
+    // mai jost am shift Request Status
+    console.log("in else check shiftInStatus");
+    // setTimeout(getStatus, 6000);
+    getStatus();
   }
   async function getStatus() {
+    // console.log("in get status");
     let requestStatus = await shiftRequestStatus(info.token);
-    console.log(requestStatus.isApproved);
-    console.log(requestStatus.isRejected);
-    console.log(requestStatus.message);
+    if (requestStatus.isApproved) {
+      // set notification to approve
+      setShiftInRequestAnswer("Accepted");
+      setShiftOutBtn(true);
+      console.log("request in approved");
+      // mai trebuie sa pun shiftOut sa se vada
+    } else if (requestStatus.isRejected) {
+      // set notification to Rejected
+      setShiftInRequestAnswer("Denied");
+      console.log("request in rejected");
+    } else {
+      // set notification to waitting
+      setShiftInRequestAnswer("Waitting");
+      console.log("in set Timeout all false");
+      setTimeout(getStatus, 30000);
+    }
   }
-  function timeOutFunctionForShift() {
-    getStatus();
-    console.log("in interval");
-    const interval = setInterval(() => {
-      console.log("This will be called every 2 seconds");
-    }, 2000);
 
-    return () => clearInterval(interval);
-  }
   function requestInShiftModalClose() {
     // alert("request intrare in tura");
     setModalShiftIn(false);
@@ -118,7 +118,7 @@ export default function LoggedIn() {
             }
           },
           headerLeft: function test() {
-            if (!shift && !requestedInShift) {
+            if (!shift && shiftInRequestAnswer === "noRequest") {
               return (
                 <View style={styles.shiftAll}>
                   <Pressable style={styles.shift} onPress={requestInShift}>
@@ -127,13 +127,31 @@ export default function LoggedIn() {
                   </Pressable>
                 </View>
               );
-            } else {
+            } else if (shiftInRequestAnswer === "Waitting") {
               return (
                 <View style={styles.shiftAll}>
                   {/* <Pressable style={styles.shift} onPress={requestInShift}> */}
                   {/* <Ionicons name="radio-button-on" color="green" size="20" /> */}
-                  <Text style={styles.headerRightText}>Asteapta raspuns</Text>
+                  <Text style={styles.headerRightText}>Procesare tura</Text>
                   {/* </Pressable> */}
+                </View>
+              );
+            } else if (shiftInRequestAnswer === "Accepted") {
+              return (
+                <View style={styles.shiftAll}>
+                  {/* <Pressable style={styles.shift} onPress={requestInShift}> */}
+                  {/* <Ionicons name="radio-button-on" color="green" size="20" /> */}
+                  <Text style={styles.headerRightText}>In tura</Text>
+                  {/* </Pressable> */}
+                </View>
+              );
+            } else if (shiftInRequestAnswer === "Denied") {
+              return (
+                <View style={styles.shiftAll}>
+                  <Pressable style={styles.shift} onPress={requestInShift}>
+                    <Ionicons name="radio-button-on" color="green" size="20" />
+                    <Text style={styles.headerRightText}>Intra in tura</Text>
+                  </Pressable>
                 </View>
               );
             }
