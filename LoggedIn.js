@@ -13,10 +13,32 @@ import ShiftCallOut from "./screens/shifltCallOut";
 import { AuthContext } from "./services/api/store/auth-context";
 import { shiftIn2, shiftRequestStatus } from "./services/api/shiftService";
 // import { shiftIn } from "./services/api/shiftService";
+import * as Notifications from "expo-notifications";
 
 const BottomTab = createBottomTabNavigator();
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+      shouldShowAlert: true,
+    };
+  },
+});
 
 export default function LoggedIn() {
+  function scheduleNoticationHandler() {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Time's up!",
+        body: "Change sides!",
+      },
+      trigger: {
+        seconds: 5,
+      },
+    });
+  }
+
   const [modalShiftIn, setModalShiftIn] = useState(false);
   const [modalShiftOut, setModalShiftOut] = useState(false);
   const [checkShiftInStatus, setCheckShiftInStatus] = useState(false);

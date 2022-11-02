@@ -68,7 +68,8 @@ export default function App() {
     const result = await SecureStore.getItemAsync(key);
     if (result) {
       let a = result;
-      console.log(a);
+      // console.log(a);
+      console.log(here);
       //aici am apikey etc de vazut
       // storeSec = true;
       // console.log(storeSec);
@@ -87,7 +88,7 @@ export default function App() {
   function mainRender() {
     fetchData(UserData);
     if (storeSec) {
-      console.log("in storeSec True");
+      // console.log("in storeSec True");
       return (
         <Stack.Navigator
           screenOptions={{
@@ -101,7 +102,7 @@ export default function App() {
         </Stack.Navigator>
       );
     } else {
-      console.log("in storeSec False");
+      // console.log("in storeSec False");
       return (
         <Stack.Navigator
           screenOptions={{
