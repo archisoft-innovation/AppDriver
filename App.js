@@ -69,7 +69,7 @@ export default function App() {
     if (result) {
       let a = result;
       // console.log(a);
-      console.log(here);
+      console.log("here");
       //aici am apikey etc de vazut
       // storeSec = true;
       // console.log(storeSec);

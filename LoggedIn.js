@@ -7,7 +7,7 @@ import Comenzi from "./screens/orders";
 import Profil from "./screens/profile";
 import { Ionicons } from "@expo/vector-icons";
 // import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ShiftCall from "./screens/shiftCall";
 import ShiftCallOut from "./screens/shifltCallOut";
 import { AuthContext } from "./services/api/store/auth-context";
@@ -16,29 +16,42 @@ import { shiftIn2, shiftRequestStatus } from "./services/api/shiftService";
 import * as Notifications from "expo-notifications";
 
 const BottomTab = createBottomTabNavigator();
+async function requestPermissionsAsync() {
+  return await Notifications.requestPermissionsAsync({
+    ios: {
+      allowAlert: true,
+      allowBadge: true,
+      allowSound: true,
+      allowAnnouncements: true,
+    },
+  });
+}
+
 Notifications.setNotificationHandler({
-  handleNotification: async () => {
+  handleNotification: async (notif) => {
     return {
+      shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: false,
-      shouldShowAlert: true,
     };
   },
 });
 
 export default function LoggedIn() {
-  function scheduleNoticationHandler() {
+  useEffect(() => {
+    requestPermissionsAsync();
+  }, []);
+  function notificationsCall() {
     Notifications.scheduleNotificationAsync({
       content: {
-        title: "Time's up!",
-        body: "Change sides!",
+        title: "Look at that notification",
+        body: "I'm so proud of myself!",
       },
       trigger: {
-        seconds: 5,
+        seconds: 1,
       },
     });
   }
-
   const [modalShiftIn, setModalShiftIn] = useState(false);
   const [modalShiftOut, setModalShiftOut] = useState(false);
   const [checkShiftInStatus, setCheckShiftInStatus] = useState(false);
@@ -83,6 +96,8 @@ export default function LoggedIn() {
       setShiftInRequestAnswer("Accepted");
       setShiftOutBtn(true);
       console.log("request in approved");
+      //mai jos notificarea, trebuie facuta doar sa arate ce trebuie :-D sunet etc
+      // notificationsCall();
       // mai trebuie sa pun shiftOut sa se vada
     } else if (requestStatus.isRejected) {
       // set notification to Rejected
