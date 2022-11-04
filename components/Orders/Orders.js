@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { StyleSheet, View, Text, Pressable, Linking } from "react-native";
 import AcceptedOrders from "./AcceptOrders";
+import ConfirmOrderPicked from "./confirmOrderPicked";
+import OrderDetailsAndDeliver from "./orderDetailsAndDeliver";
 
 export default function Orders(props) {
   function call() {
@@ -23,17 +25,45 @@ export default function Orders(props) {
     Linking.openURL(url);
   }
   const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [modalIsVisibleDetailsOrder, setModalIsVisibleDetailsOrders] =
+    useState(false);
+  const [modalIsVisibleConfirmOrder, setModalIsVisibleConfirmOrder] =
+    useState(false);
+  // const [pressed, setPressed] = useState(false);
+  const [pressed, setPressed] = useState("acceptOrder");
+  const [presableText, setPresableText] = useState("Acceptare comandă");
   function acceptOrder() {
-    setModalIsVisible(true);
+    if (pressed === "acceptOrder") {
+      setModalIsVisible(true);
+    } else if (pressed === "acceptedOrder") {
+      setModalIsVisibleConfirmOrder(true);
+      console.log("Accept order thing");
+    } else if (pressed === "detailsOrder") {
+      setModalIsVisibleDetailsOrders(true);
+      console.log("here comes th modal order details");
+    }
+  }
+  function closeConfirmOrderPickedModal() {
+    setModalIsVisibleConfirmOrder(false);
+    setPressed("detailsOrder");
+    setPresableText("Detalii comanda/ Livrare");
   }
   function onTheWayOrder() {
     console.log(props.orderID + " order ID on accept order btn");
+    setPressed("acceptedOrder");
+    setPresableText("Am ridicat comanda");
     // post accept order function
 
     // maybe refresh the page when he accepts the order
     setModalIsVisible(false);
   }
-
+  function closeModalDetails() {
+    setModalIsVisibleDetailsOrders(false);
+  }
+  function deliverOrdersFromModal() {
+    console.log("Order DELIVERED");
+    setModalIsVisibleDetailsOrders(false);
+  }
   return (
     <View style={styles.mainContainer}>
       <AcceptedOrders
@@ -44,6 +74,23 @@ export default function Orders(props) {
         paymentMethod={props.paymentMethod}
         totalPrice={props.totalPrice}
         orderID={props.orderID}
+      />
+      <ConfirmOrderPicked
+        visible={modalIsVisibleConfirmOrder}
+        closeModalConfirm={closeConfirmOrderPickedModal}
+        vendorName={props.vendorName}
+        orderCode={props.orderCode}
+        orderID={props.orderID}
+      />
+      <OrderDetailsAndDeliver
+        visible={modalIsVisibleDetailsOrder}
+        vendorName={props.vendorName}
+        orderCode={props.orderCode}
+        paymentMethod={props.paymentMethod}
+        totalPrice={props.totalPrice}
+        orderID={props.orderID}
+        closeDetailsModal={closeModalDetails}
+        deliver={deliverOrdersFromModal}
       />
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>{props.orderCode}</Text>
@@ -66,8 +113,11 @@ export default function Orders(props) {
       </Text>
       <Text style={styles.textPadding}>Valoare:{props.totalPrice} Ron</Text>
       <Pressable onPress={acceptOrder} style={styles.presableButton}>
-        <Text style={styles.pressableText}>Acceptare comandă</Text>
+        <Text style={styles.pressableText}>{presableText}</Text>
       </Pressable>
+      {/* <Pressable onPress={acceptOrder} style={styles.presableButton}>
+        <Text style={styles.pressableText}>Am ridicat comanda</Text>
+      </Pressable> */}
       {/* <Button title="sa" /> */}
     </View>
   );

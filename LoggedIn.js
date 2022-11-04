@@ -31,8 +31,8 @@ Notifications.setNotificationHandler({
   handleNotification: async (notif) => {
     return {
       shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
     };
   },
 });
@@ -44,8 +44,9 @@ export default function LoggedIn() {
   function notificationsCall() {
     Notifications.scheduleNotificationAsync({
       content: {
-        title: "Look at that notification",
-        body: "I'm so proud of myself!",
+        title: "Raspuns cerere",
+        body: "Ai fost aprobat",
+        sound: "./success.wav",
       },
       trigger: {
         seconds: 1,

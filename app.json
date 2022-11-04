@@ -31,8 +31,9 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/favicon.png",
-          "color": "#ffffff"
+          "icon": "./assets/favicon.png",
+          "color": "red",
+          "sounds": ["./assets/success.wav"]
         }
       ]
     ]
