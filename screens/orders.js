@@ -1,7 +1,24 @@
+import { useState } from "react";
 import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
 import Orders from "../components/Orders/Orders";
 
 export default function Comenzi() {
+  const [testObj, setTestObj] = useState([]);
+  function testFunction2() {
+    setTestObj(as);
+  }
+  function testFunction() {
+    // console.log(testObj);
+    console.log(typeof testObj);
+  }
+  function deleteAComponent() {
+    setTestObj((current) =>
+      current.filter((employee) => {
+        // 👇️ remove object that has id equal to 2
+        return employee.id !== 3643;
+      })
+    );
+  }
   let as = [
     {
       id: 3643,
@@ -257,12 +274,21 @@ export default function Comenzi() {
         <Text style={styles.goalText}>Câștiguri zilnice</Text>
         <Text style={styles.goalText}>{"Suma"} Ron</Text>
       </View>
+      <Pressable onPress={testFunction2}>
+        <Text>Set As to state</Text>
+      </Pressable>
+      <Pressable onPress={testFunction}>
+        <Text>Test btn</Text>
+      </Pressable>
+      <Pressable onPress={deleteAComponent}>
+        <Text>DELETE</Text>
+      </Pressable>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewPad}
       >
         {/* {renderOrdersTest()} */}
-        {as.map((item, index) => {
+        {testObj.map((item, index) => {
           return (
             <Orders
               key={index}
