@@ -32,6 +32,12 @@ export default function Orders(props) {
   // const [pressed, setPressed] = useState(false);
   const [pressed, setPressed] = useState("acceptOrder");
   const [presableText, setPresableText] = useState("Acceptare comandă");
+  function passFinishDeleteOrder() {
+    console.log("in passFinishDeleteOrder");
+    setModalIsVisibleDetailsOrders(false);
+    props.deleteAComponent(props.orderID);
+    console.log(pressed);
+  }
   function acceptOrder() {
     if (pressed === "acceptOrder") {
       setModalIsVisible(true);
@@ -64,6 +70,7 @@ export default function Orders(props) {
     console.log("Order DELIVERED");
     setModalIsVisibleDetailsOrders(false);
   }
+
   return (
     <View style={styles.mainContainer}>
       <AcceptedOrders
@@ -90,12 +97,17 @@ export default function Orders(props) {
         totalPrice={props.totalPrice}
         orderID={props.orderID}
         closeDetailsModal={closeModalDetails}
-        deliver={deliverOrdersFromModal}
+        // deliver={deliverOrdersFromModal}
+        finishOrderDel={passFinishDeleteOrder}
       />
+      <View style={styles.inLineText}>
+        <Text style={styles.textPadding}>To be deleted: {props.orderID}</Text>
+      </View>
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>{props.orderCode}</Text>
         <Text style={styles.textPadding}>De achitat la {props.vendorName}</Text>
       </View>
+
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>Data </Text>
         <Text style={styles.textPadding}>Suma 1250 Ron</Text>
@@ -113,6 +125,12 @@ export default function Orders(props) {
       </Text>
       <Text style={styles.textPadding}>Valoare:{props.totalPrice} Ron</Text>
       <Pressable onPress={acceptOrder} style={styles.presableButton}>
+        {/* <Pressable
+        onPress={() => {
+          props.deleteAComponent(props.orderID);
+        }}
+        style={styles.presableButton}
+      > */}
         <Text style={styles.pressableText}>{presableText}</Text>
       </Pressable>
       {/* <Pressable onPress={acceptOrder} style={styles.presableButton}>

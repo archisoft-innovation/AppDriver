@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Pressable, Modal } from "react-native";
 export default function OrderDetailsAndDeliver(props) {
   function deliverOrder() {
     console.log(props.orderID + " orderDelivered");
+    console.log("inapoi buton");
     // setPickUpTime(false);
     // send pickup time reqeust comes here, above are selected minutes and order id
   }
@@ -67,8 +68,8 @@ export default function OrderDetailsAndDeliver(props) {
               <Text style={styles.presableText}>Inapoi</Text>
             </Pressable>
             <Pressable
-              onPress={props.deliver}
-              onPressIn={deliverOrder}
+              // onPress={props.deliver}
+              onPressIn={props.finishOrderDel}
               style={styles.presableButton}
             >
               <Text style={styles.presableText}>Comanda a fost livrată</Text>
