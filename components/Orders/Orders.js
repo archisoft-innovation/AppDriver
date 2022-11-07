@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StyleSheet, View, Text, Pressable, Linking } from "react-native";
 import AcceptedOrders from "./AcceptOrders";
 import ConfirmOrderPicked from "./confirmOrderPicked";
+import FinalOrderDetailsModal from "./finalOrderDetailsModal";
 import OrderDetailsAndDeliver from "./orderDetailsAndDeliver";
 
 export default function Orders(props) {
@@ -25,6 +26,8 @@ export default function Orders(props) {
     Linking.openURL(url);
   }
   const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [modalIsVisibleFinalOrderDetails, setModalIsVisibleFinalOrderDetails] =
+    useState(false);
   const [modalIsVisibleDetailsOrder, setModalIsVisibleDetailsOrders] =
     useState(false);
   const [modalIsVisibleConfirmOrder, setModalIsVisibleConfirmOrder] =
@@ -35,8 +38,11 @@ export default function Orders(props) {
   function passFinishDeleteOrder() {
     console.log("in passFinishDeleteOrder");
     setModalIsVisibleDetailsOrders(false);
+    // setModalIsVisibleFinalOrderDetails(true);
+    setTimeout(function () {
+      setModalIsVisibleFinalOrderDetails(true);
+    }, 500);
     props.deleteAComponent(props.orderID);
-    console.log(pressed);
   }
   function acceptOrder() {
     if (pressed === "acceptOrder") {
@@ -50,6 +56,7 @@ export default function Orders(props) {
     }
   }
   function closeConfirmOrderPickedModal() {
+    setModalIsVisibleDetailsOrders(true);
     setModalIsVisibleConfirmOrder(false);
     setPressed("detailsOrder");
     setPresableText("Detalii comanda/ Livrare");
@@ -70,7 +77,9 @@ export default function Orders(props) {
     console.log("Order DELIVERED");
     setModalIsVisibleDetailsOrders(false);
   }
-
+  function closeFinalOrderDetails() {
+    setModalIsVisibleFinalOrderDetails(false);
+  }
   return (
     <View style={styles.mainContainer}>
       <AcceptedOrders
@@ -99,6 +108,10 @@ export default function Orders(props) {
         closeDetailsModal={closeModalDetails}
         // deliver={deliverOrdersFromModal}
         finishOrderDel={passFinishDeleteOrder}
+      />
+      <FinalOrderDetailsModal
+        visible={modalIsVisibleFinalOrderDetails}
+        closeDetailsModal={closeFinalOrderDetails}
       />
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>To be deleted: {props.orderID}</Text>

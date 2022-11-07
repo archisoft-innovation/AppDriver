@@ -1,20 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
 import Orders from "../components/Orders/Orders";
 
 export default function Comenzi() {
   const [testObj, setTestObj] = useState([]);
-  function testFunction2() {
-    console.log("test function 2");
+  useEffect(() => {
     setTestObj(as);
-  }
-  function testFunction() {
-    // console.log(testObj);
-    console.log(typeof testObj);
-  }
+  }, []);
+
   function deleteAComponent(id) {
     console.log("in delete Component");
-    console.log(id);
     setTestObj((current) =>
       current.filter((employee) => {
         return employee.id !== id;
@@ -281,15 +276,7 @@ export default function Comenzi() {
         <Text style={styles.goalText}>Câștiguri zilnice</Text>
         <Text style={styles.goalText}>{"Suma"} Ron</Text>
       </View>
-      <Pressable onPress={testFunction2}>
-        <Text>Set As to state</Text>
-      </Pressable>
-      <Pressable onPress={testFunction}>
-        <Text>Test btn</Text>
-      </Pressable>
-      <Pressable onPress={deleteAComponent}>
-        <Text>DELETE</Text>
-      </Pressable>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewPad}
@@ -298,7 +285,7 @@ export default function Comenzi() {
         {testObj.map((item, index) => {
           return (
             <Orders
-              key={index}
+              key={item.id}
               vendorName={item.vendorName}
               vendorPhone={item.driverPhone}
               vendorAddress={item.vendorAddress}

@@ -16,14 +16,15 @@ export default function ConfirmOrderPicked(props) {
               Ai ridicat comanda {" " + props.orderCode + "  "} de la partenerul
               {" " + props.vendorName}?
             </Text>
-            <Text>
-              Prin confirmare cu "Da", te vom redirectiona catre datele de
+            <Text style={styles.goalText2}>
+              Prin confirmare cu "Da", te vom redirecționa către datele de
               contact a clientului.
             </Text>
-            <Text>Obs</Text>
-            <Text>
-              Clientul primeste automat un SMS cu confirmarea comenzii cat si cu
-              datele tale de contact dupa ce confirmi comanda ca a fost ridicata
+            <Text style={styles.goalText2}></Text>
+            <Text style={styles.goalText2}>
+              Observații: Clientul primește automat un SMS cu confirmarea
+              comenzii cât și cu datele tale de contact după ce confirmi comanda
+              că a fost ridicată
             </Text>
             <Pressable
               onPress={props.closeModalConfirm}
@@ -61,11 +62,15 @@ const styles = StyleSheet.create({
   goalText: {
     color: "white",
     padding: 20,
-    textAlign: "center",
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 16,
   },
-
+  goalText2: {
+    color: "white",
+    padding: 20,
+    fontWeight: "bold",
+    fontSize: 16,
+  },
   image: {
     width: 200,
     height: 240,
@@ -75,6 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 60,
+    justifyContent: "center",
   },
 
   readyText: {

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, Pressable, Modal } from "react-native";
+import { StyleSheet, View, Text, Pressable, Modal, Image } from "react-native";
 
-export default function OrderDetailsAndDeliver(props) {
+export default function FinalOrderDetailsModal(props) {
   function deliverOrder() {
     console.log(props.orderID + " orderDelivered");
     console.log("inapoi buton");
@@ -13,10 +13,9 @@ export default function OrderDetailsAndDeliver(props) {
       <View style={styles.inputContainer}>
         <View style={styles.buttonContainer}>
           <View>
-            <Text style={styles.goalText}>Detalii comandă</Text>
             <View style={styles.shiftBContainer}>
               <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Cod comandă</Text>
+                <Text style={styles.pickupTimeColor}>Sumar comandă</Text>
                 <Text style={styles.pickupTimeColor}>
                   {props.paymentMethod}
                 </Text>
@@ -27,48 +26,58 @@ export default function OrderDetailsAndDeliver(props) {
                   {props.totalPrice + " Ron"}
                 </Text>
               </View>
-            </View>
-            <View style={styles.shiftBContainer}>
-              <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Metoda de plata</Text>
-                <Text style={styles.pickupTimeColor}>
-                  {props.paymentMethod}
-                </Text>
-              </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Valoare</Text>
                 <Text style={styles.pickupTimeColor}>
                   {props.totalPrice + " Ron"}
                 </Text>
               </View>
-            </View>
-            <View style={styles.shiftBContainer}>
               <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Metoda de plata</Text>
+                <Text style={styles.pickupTimeColor}>Total KM</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.paymentMethod}
+                  {props.totalPrice + " Ron"}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Valoare</Text>
+                <Text style={styles.pickupTimeColor}>Baza/comandă</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.totalPrice + " Ron"}
+                </Text>
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>Baza/ KM</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.totalPrice + " Ron"}
+                </Text>
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>Bonus</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.totalPrice + " Ron"}
+                </Text>
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>Recalculări</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.totalPrice + " Ron"}
+                </Text>
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>Ai câștigat</Text>
                 <Text style={styles.pickupTimeColor}>
                   {props.totalPrice + " Ron"}
                 </Text>
               </View>
             </View>
+            <Image
+              style={styles.image}
+              source={require("../../assets/images/finalOrderModal.png")}
+            />
             <Pressable
-              onPress={props.closeDetailsModal}
-              onPressIn={deliverOrder}
+              onPressIn={props.closeDetailsModal}
               style={styles.presableButton}
             >
-              <Text style={styles.presableText}>Inapoi</Text>
-            </Pressable>
-            <Pressable
-              // onPress={props.deliver}
-              onPressIn={props.finishOrderDel}
-              style={styles.presableButton}
-            >
-              <Text style={styles.presableText}>Comanda a fost livrată</Text>
+              <Text style={styles.presableText}>Următoarea comandă</Text>
             </Pressable>
           </View>
         </View>
@@ -77,6 +86,11 @@ export default function OrderDetailsAndDeliver(props) {
   );
 }
 const styles = StyleSheet.create({
+  image: {
+    width: 300,
+    height: 180,
+    margin: 20,
+  },
   inputContainer: {
     flex: 1,
     justifyContent: "center",
