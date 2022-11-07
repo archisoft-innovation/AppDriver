@@ -2,14 +2,8 @@ import { useState } from "react";
 import { StyleSheet, View, Text, Pressable, Modal, Image } from "react-native";
 
 export default function FinalOrderDetailsModal(props) {
-  function deliverOrder() {
-    console.log(props.orderID + " orderDelivered");
-    console.log("inapoi buton");
-    // setPickUpTime(false);
-    // send pickup time reqeust comes here, above are selected minutes and order id
-  }
   return (
-    <Modal visible={props.visible} animationType="slide">
+    <Modal visible={props.visible} animationType="fade">
       <View style={styles.inputContainer}>
         <View style={styles.buttonContainer}>
           <View>
@@ -74,7 +68,7 @@ export default function FinalOrderDetailsModal(props) {
               source={require("../../assets/images/finalOrderModal.png")}
             />
             <Pressable
-              onPressIn={props.closeDetailsModal}
+              onPress={props.finishOrderDel}
               style={styles.presableButton}
             >
               <Text style={styles.presableText}>Următoarea comandă</Text>

@@ -1,15 +1,25 @@
 import { useState } from "react";
 import { StyleSheet, View, Text, Pressable, Modal } from "react-native";
+import FinalOrderDetailsModal from "./finalOrderDetailsModal";
 
 export default function OrderDetailsAndDeliver(props) {
-  function deliverOrder() {
-    console.log(props.orderID + " orderDelivered");
-    console.log("inapoi buton");
-    // setPickUpTime(false);
-    // send pickup time reqeust comes here, above are selected minutes and order id
+  const [modalIsVisibleInside, setModalIsVisibleInside] = useState(false);
+  function orderDelivered() {
+    //request de inchidere comanda, dupa inchidere modal existent + child modal
+    setModalIsVisibleInside(true);
+    console.log("in orderDelivered");
+    // props.finishOrderDel();
+  }
+  function closeAllModalls() {
+    setModalIsVisibleInside(false);
+    props.finishOrderDel();
   }
   return (
     <Modal visible={props.visible} animationType="slide">
+      <FinalOrderDetailsModal
+        finishOrderDel={closeAllModalls}
+        visible={modalIsVisibleInside}
+      />
       <View style={styles.inputContainer}>
         <View style={styles.buttonContainer}>
           <View>
@@ -24,14 +34,6 @@ export default function OrderDetailsAndDeliver(props) {
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Metoda de plată</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.shiftBContainer}>
-              <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Metoda de plata</Text>
-                <Text style={styles.pickupTimeColor}>
                   {props.paymentMethod}
                 </Text>
               </View>
@@ -42,15 +44,39 @@ export default function OrderDetailsAndDeliver(props) {
                 </Text>
               </View>
             </View>
+            <Text style={styles.goalText}>Detalii client</Text>
+
             <View style={styles.shiftBContainer}>
               <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Metoda de plata</Text>
+                <Text style={styles.pickupTimeColor}>Nume Client</Text>
                 <Text style={styles.pickupTimeColor}>
                   {props.paymentMethod}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Valoare</Text>
+                <Text style={styles.pickupTimeColor}>Telefon Client</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.totalPrice + " Ron"}
+                </Text>
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>Adresă Client</Text>
+                <Text style={styles.pickupTimeColor}>{props.totalPrice}</Text>
+              </View>
+            </View>
+            <Text style={styles.goalText}>Sumar Comandă</Text>
+
+            <View style={styles.shiftBContainer}>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>Total KM</Text>
+                <Text style={styles.pickupTimeColor}>
+                  {props.paymentMethod}
+                </Text>
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>
+                  Observații de la client:
+                </Text>
                 <Text style={styles.pickupTimeColor}>
                   {props.totalPrice + " Ron"}
                 </Text>
@@ -58,14 +84,13 @@ export default function OrderDetailsAndDeliver(props) {
             </View>
             <Pressable
               onPress={props.closeDetailsModal}
-              onPressIn={deliverOrder}
               style={styles.presableButton}
             >
               <Text style={styles.presableText}>Inapoi</Text>
             </Pressable>
             <Pressable
               // onPress={props.deliver}
-              onPressIn={props.finishOrderDel}
+              onPress={orderDelivered}
               style={styles.presableButton}
             >
               <Text style={styles.presableText}>Comanda a fost livrată</Text>

@@ -36,13 +36,9 @@ export default function Orders(props) {
   const [pressed, setPressed] = useState("acceptOrder");
   const [presableText, setPresableText] = useState("Acceptare comandă");
   function passFinishDeleteOrder() {
-    console.log("in passFinishDeleteOrder");
     setModalIsVisibleDetailsOrders(false);
-    // setModalIsVisibleFinalOrderDetails(true);
-    setTimeout(function () {
-      setModalIsVisibleFinalOrderDetails(true);
-    }, 500);
     props.deleteAComponent(props.orderID);
+    // setModalIsVisibleFinalOrderDetails(true);
   }
   function acceptOrder() {
     if (pressed === "acceptOrder") {
@@ -73,13 +69,11 @@ export default function Orders(props) {
   function closeModalDetails() {
     setModalIsVisibleDetailsOrders(false);
   }
-  function deliverOrdersFromModal() {
-    console.log("Order DELIVERED");
-    setModalIsVisibleDetailsOrders(false);
-  }
+
   function closeFinalOrderDetails() {
     setModalIsVisibleFinalOrderDetails(false);
   }
+
   return (
     <View style={styles.mainContainer}>
       <AcceptedOrders
@@ -106,7 +100,6 @@ export default function Orders(props) {
         totalPrice={props.totalPrice}
         orderID={props.orderID}
         closeDetailsModal={closeModalDetails}
-        // deliver={deliverOrdersFromModal}
         finishOrderDel={passFinishDeleteOrder}
       />
       <FinalOrderDetailsModal
@@ -138,18 +131,8 @@ export default function Orders(props) {
       </Text>
       <Text style={styles.textPadding}>Valoare:{props.totalPrice} Ron</Text>
       <Pressable onPress={acceptOrder} style={styles.presableButton}>
-        {/* <Pressable
-        onPress={() => {
-          props.deleteAComponent(props.orderID);
-        }}
-        style={styles.presableButton}
-      > */}
         <Text style={styles.pressableText}>{presableText}</Text>
       </Pressable>
-      {/* <Pressable onPress={acceptOrder} style={styles.presableButton}>
-        <Text style={styles.pressableText}>Am ridicat comanda</Text>
-      </Pressable> */}
-      {/* <Button title="sa" /> */}
     </View>
   );
 }
