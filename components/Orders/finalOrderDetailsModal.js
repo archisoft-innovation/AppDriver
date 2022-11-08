@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "white",
     justifyContent: "space-between",
     width: 300,
   },

@@ -6,11 +6,12 @@ import { DevSettings } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "../services/api/secureStorageConstants";
 import ProfileRegisterDriver from "../components/profileRegisterDriver";
+import Complaints from "../components/complaints";
 export default function Profil() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const info = useContext(AuthContext);
   const navigation = useNavigation();
-
+  const [modalComplains, setModalComplains] = useState(false);
   // console.log(info);
   const tookToken = info.token;
   const nameToken = info.name;
@@ -33,9 +34,19 @@ export default function Profil() {
   function closeRegisterPage() {
     setModalIsVisible(false);
   }
+  function openComplaintsModal() {
+    setModalComplains(true);
+  }
+  function closeCompointsModal() {
+    setModalComplains(false);
+  }
   return (
     <>
       <View style={styles.mainContainer}>
+        <Complaints
+          visible={modalComplains}
+          closeCompointsModal={closeCompointsModal}
+        />
         <View style={styles.contentContainer}>
           <ProfileRegisterDriver
             visible={modalIsVisible}
@@ -44,10 +55,17 @@ export default function Profil() {
           <Text style={styles.goalText2}>Bună, {nameToken}</Text>
           <Text style={styles.goalText}>Email: {userEmail}</Text>
           <Text style={styles.goalText}>Telefon:</Text>
-          <Text style={styles.goalText}>Vehicul setat:</Text>
-          <Text style={styles.goalText}>{tookToken}</Text>
+          <Text style={styles.goalText}>
+            Vehicul setat: {"Vehiculul setat"}
+          </Text>
           <Pressable onPress={registerADriver} style={styles.presableButton2}>
             <Text style={styles.presableText}>Înscrie un curier</Text>
+          </Pressable>
+          <Pressable
+            onPress={openComplaintsModal}
+            style={styles.presableButton2}
+          >
+            <Text style={styles.presableText}>Sesizări</Text>
           </Pressable>
           <View style={styles.inputContainer}>
             <View style={styles}></View>
@@ -127,6 +145,5 @@ const styles = StyleSheet.create({
   image: {
     width: 300,
     height: 250,
-    // margin: 20,
   },
 });

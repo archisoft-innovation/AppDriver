@@ -4,6 +4,7 @@ import { SmartiooMcsApi, SmartiooApi } from "./apiConstants";
 import { UserData } from "./secureStorageConstants";
 
 async function getOrders(page, status, type, startDate, endDate) {
+  console.log("in get Orders");
   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
   try {
     var request = await axios.get(SmartiooApi + "/orders", {
@@ -17,9 +18,11 @@ async function getOrders(page, status, type, startDate, endDate) {
       },
       headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
     });
+    console.log(request.data);
     return request.data;
   } catch (exception) {
     console.log(exception);
+    console.log("in else, bad");
   }
 }
 

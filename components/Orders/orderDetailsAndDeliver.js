@@ -88,11 +88,7 @@ export default function OrderDetailsAndDeliver(props) {
             >
               <Text style={styles.presableText}>Inapoi</Text>
             </Pressable>
-            <Pressable
-              // onPress={props.deliver}
-              onPress={orderDelivered}
-              style={styles.presableButton}
-            >
+            <Pressable onPress={orderDelivered} style={styles.presableButton}>
               <Text style={styles.presableText}>Comanda a fost livrată</Text>
             </Pressable>
           </View>

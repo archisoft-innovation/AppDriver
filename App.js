@@ -68,7 +68,7 @@ export default function App() {
     const result = await SecureStore.getItemAsync(key);
     if (result) {
       let a = result;
-      // console.log(a);
+      console.log(a);
       console.log("here");
       //aici am apikey etc de vazut
       // storeSec = true;

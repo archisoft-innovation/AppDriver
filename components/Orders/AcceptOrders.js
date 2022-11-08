@@ -1,19 +1,10 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Button,
-  View,
-  Image,
-  Text,
-  Pressable,
-  Modal,
-} from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, Modal } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 
 export default function AcceptedOrders(props) {
   const [pickUpTime, setPickUpTime] = useState(true);
   const [pickUpTime2, setPickUpTime2] = useState("");
-  // de vazut la pickUpTime cum sa rezolv, daca intra o data si selecteaza un timp, urmatoarea data cand intru nu-i mai cere
   const mins = [
     "10 minute",
     "20 minute",
@@ -75,6 +66,7 @@ export default function AcceptedOrders(props) {
                 </Text>
               </View>
             </View>
+
             <Pressable
               disabled={pickUpTime}
               onPress={props.onTheRoad}
@@ -83,24 +75,20 @@ export default function AcceptedOrders(props) {
             >
               <Text style={styles.presableText}>Sunt pe drum</Text>
             </Pressable>
-            <View style={styles.readySet}>
-              {/* <Image
-              style={styles.image}
-              source={require("../assets/images/gpsNavigator.png")}
-            /> */}
-            </View>
+            <View style={styles.readySet}></View>
           </View>
+        </View>
+        <View style={styles.readySet}>
+          <Image
+            style={styles.image}
+            source={require("../../assets/images/acceptOrderModal.png")}
+          />
         </View>
       </View>
     </Modal>
   );
 }
 const styles = StyleSheet.create({
-  image: {
-    width: 300,
-    height: 180,
-    margin: 20,
-  },
   inputContainer: {
     flex: 1,
     justifyContent: "center",
@@ -116,7 +104,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
   },
-
+  readySet: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 60,
+    justifyContent: "center",
+  },
   image: {
     width: 200,
     height: 240,
@@ -143,7 +136,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "white",
     justifyContent: "space-between",
     width: 300,
   },

@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
 import Orders from "../components/Orders/Orders";
+import { getOrders } from "../services/api/ordersService";
 
 export default function Comenzi() {
+  function toBeDeleted() {
+    getOrders();
+  }
   const [testObj, setTestObj] = useState([]);
   useEffect(() => {
     setTestObj(as);
@@ -15,11 +19,6 @@ export default function Comenzi() {
         return employee.id !== id;
       })
     );
-    // (current) =>
-    //   current.filter((employee) => {
-    //     console.log(employee);
-    //     setTestObj(employee.id !== id);
-    //   });
   }
   let as = [
     {
@@ -271,17 +270,21 @@ export default function Comenzi() {
 
   return (
     <View style={styles.inputContainer}>
-      {/* <View style={styles.goalItem}> */}
       <View style={styles.shiftContainer}>
         <Text style={styles.goalText}>Câștiguri zilnice</Text>
         <Text style={styles.goalText}>{"Suma"} Ron</Text>
       </View>
-
+      <Pressable onPress={toBeDeleted}>
+        <Text>Get orders test man</Text>
+        <Text>Get orders test man</Text>
+        <Text>Get orders test man</Text>
+        <Text>Get orders test man</Text>
+        <Text>Get orders test man</Text>
+      </Pressable>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewPad}
       >
-        {/* {renderOrdersTest()} */}
         {testObj.map((item, index) => {
           return (
             <Orders
@@ -297,9 +300,6 @@ export default function Comenzi() {
             />
           );
         })}
-        {/* <Orders />
-        <Orders />
-        <Orders /> */}
       </ScrollView>
     </View>
   );
