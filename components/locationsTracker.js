@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
-import { DoLoghin } from "./services/api/authorizationService";
+// import { DoLoghin } from "./services/api/authorizationService";
+import { DoLoghin } from "../services/api/authorizationService";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 let foregroundSubscription = null;
@@ -14,6 +15,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   }
   if (data) {
     // Extract location coordinates from data
+    console.log("in data");
     const { locations } = data;
     const location = locations[0];
     if (location) {
@@ -22,7 +24,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   }
 });
 
-export default function App() {
+export default function LocationTracker() {
   // Define position state: {latitude: number, longitude: number}
   const [position, setPosition] = useState(null);
 

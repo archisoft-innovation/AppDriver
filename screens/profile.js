@@ -1,21 +1,23 @@
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../services/api/store/auth-context";
-import { useNavigation } from "@react-navigation/native";
 import { DevSettings } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "../services/api/secureStorageConstants";
 import ProfileRegisterDriver from "../components/profileRegisterDriver";
 import Complaints from "../components/complaints";
+
 export default function Profil() {
+  useEffect(() => {
+    fetchData(UserData);
+  }, []);
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const info = useContext(AuthContext);
-  const navigation = useNavigation();
   const [modalComplains, setModalComplains] = useState(false);
-  // console.log(info);
-  const tookToken = info.token;
-  const nameToken = info.name;
-  const idToken = info.id;
+  const [name, setName] = useState("");
+  // const tookToken = info.token;
+  // const nameToken = info.name;
+  // const idToken = info.id;
   const userEmail = info.email;
   // asa se foloseste tokenul
   // console.log(info);
@@ -26,9 +28,31 @@ export default function Profil() {
 
     // reload page to main
   }
-
+  async function toBePass() {
+    let shifts = "He is in shift";
+    let a = "shiftStatssss";
+    await SecureStore.setItemAsync(a, JSON.stringify(shifts));
+    // await SecureStore.setItemAsync(UserData.isInShift, JSON.stringify(shifts));
+    console.log("in toBe Pass func");
+    // let testB = await fetchData(UserData);
+    // console.log(testB);
+  }
+  const fetchData = async (key) => {
+    const result = await SecureStore.getItemAsync(key);
+    if (result) {
+      let a = JSON.parse(result);
+      setName(a.name);
+      console.log("in profile page");
+      a.shiftStat = "Accepted";
+      // console.log(a);
+      await SecureStore.setItemAsync(UserData, JSON.stringify(a));
+    } else {
+      console.log("No result passed");
+    }
+  };
   function registerADriver() {
-    setModalIsVisible(true);
+    // setModalIsVisible(true);
+    toBePass();
   }
 
   function closeRegisterPage() {
@@ -52,7 +76,7 @@ export default function Profil() {
             visible={modalIsVisible}
             cancelRegister={closeRegisterPage}
           />
-          <Text style={styles.goalText2}>Bună, {nameToken}</Text>
+          <Text style={styles.goalText2}>Bună, {name}</Text>
           <Text style={styles.goalText}>Email: {userEmail}</Text>
           <Text style={styles.goalText}>Telefon:</Text>
           <Text style={styles.goalText}>
@@ -143,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width: 300,
-    height: 250,
+    width: 250,
+    height: 200,
   },
 });

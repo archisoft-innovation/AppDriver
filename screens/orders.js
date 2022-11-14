@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
 import Orders from "../components/Orders/Orders";
-import { getOrders } from "../services/api/ordersService";
+import {
+  getOrders,
+  getOrdersMcs,
+  getOrderDetails,
+} from "../services/api/ordersService";
 
 export default function Comenzi() {
   function toBeDeleted() {
-    getOrders();
+    // getOrders();
+    // getOrdersMcs();
+    // getOrderDetails(19);
   }
+
   const [testObj, setTestObj] = useState([]);
   useEffect(() => {
     setTestObj(as);
@@ -274,7 +281,7 @@ export default function Comenzi() {
         <Text style={styles.goalText}>Câștiguri zilnice</Text>
         <Text style={styles.goalText}>{"Suma"} Ron</Text>
       </View>
-      <Pressable onPress={toBeDeleted}>
+      <Pressable>
         <Text>Get orders test man</Text>
         <Text>Get orders test man</Text>
         <Text>Get orders test man</Text>

@@ -13,78 +13,49 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RegisterDriver from "./components/registerDriver";
 import LoadingOverlay from "./components/Auth/LoadingOverlay";
+import LocationTracker from "./components/locationsTracker";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const userInfo = useContext(AuthContext);
   const [storeSec, setStoreSec] = useState(false);
-  // useEffect(() => {
-  //   console.log("USef effect log");
-  //   // declare the data fetching function
-  //   const fetchData = async (key) => {
-  //     const result = await SecureStore.getItemAsync(key);
-  //     if (result) {
-  //       let a = result;
-  //       // console.log(a);
-  //       userInfo.authenticate(a.token);
-  //       userInfo.named(a.name);
-  //       console.log(
-  //         userInfo.isAutheticated + " log user info is or not autheticated"
-  //       );
 
-  //       return (
-  //         <Stack.Navigator
-  //           screenOptions={{
-  //             headerShown: false,
-  //           }}
-  //         >
-  //           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
-  //           <Stack.Screen name="LoggedIn" component={LoggedIn} />
-  //           <Stack.Screen name="GoalInput" component={GoalInput} />
-  //           {/* <Stack.Screen name="Some" component={Some} /> */}
-  //         </Stack.Navigator>
-  //       );
-  //     } else {
-  //       console.log("No result passed");
-  //       return (
-  //         <Stack.Navigator
-  //           screenOptions={{
-  //             headerShown: false,
-  //           }}
-  //         >
-  //           <Stack.Screen name="LoggedIn" component={LoggedIn} />
-  //           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
-  //           <Stack.Screen name="GoalInput" component={GoalInput} />
-  //           {/* <Stack.Screen name="Some" component={Some} /> */}
-  //         </Stack.Navigator>
-  //       );
-  //     }
-  //   };
-  //   fetchData(UserData).catch(console.error);
-  // }, []);
-
+  useEffect(() => {}, []);
   const fetchData = async (key) => {
     const result = await SecureStore.getItemAsync(key);
     if (result) {
       let a = result;
       console.log(a);
-      console.log("here");
-      //aici am apikey etc de vazut
-      // storeSec = true;
-      // console.log(storeSec);
-      // return true;
-      userInfo.authenticate(a.apiKey);
-      userInfo.named(a.name);
+      console.log("heressssss");
       setStoreSec(true);
     } else {
       console.log("No result passed");
-      // storeSec = false;
-      // console.log(storeSec);
-      // return false;
       setStoreSec(false);
     }
   };
+  if (storeSec) {
+    console.log("storesec TRUE!");
+  } else {
+    console.log("in Store False!");
+  }
+  // const fetchData = async (key) => {
+  //   const result = await SecureStore.getItemAsync(key);
+  //   if (result) {
+  //     let a = result;
+  //     console.log(a);
+  //     console.log("here");
+  //     // userInfo.authenticate(a.apiKey);
+  //     // userInfo.named(a.name);
+  //     setStoreSec(true);
+  //   } else {
+  //     console.log("No result passed");
+  //     // storeSec = false;
+  //     // console.log(storeSec);
+  //     // return false;
+  //     setStoreSec(false);
+  //   }
+  // };
   function mainRender() {
     fetchData(UserData);
     if (storeSec) {
@@ -96,8 +67,8 @@ export default function App() {
           }}
         >
           <Stack.Screen name="LoggedIn" component={LoggedIn} />
-          <Stack.Screen name="GoalInput" component={GoalInput} />
           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
+          <Stack.Screen name="GoalInput" component={GoalInput} />
           {/* <Stack.Screen name="Some" component={Some} /> */}
         </Stack.Navigator>
       );
@@ -121,6 +92,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <AuthContextProvider>
+        {/* <LocationTracker /> */}
         {mainRender()}
         {/* <Stack.Navigator
           screenOptions={{

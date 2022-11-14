@@ -18,7 +18,7 @@ async function getOrders(page, status, type, startDate, endDate) {
       },
       headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
     });
-    console.log(request.data);
+
     return request.data;
   } catch (exception) {
     console.log(exception);
@@ -38,9 +38,13 @@ async function getOrdersMcs(startDate, endDate) {
       headers: { Authorization: `Bearer ${userDataFromLocal.apiKey}` },
     })
     .then((response) => {
+      console.log("log response good");
       return response.data;
     })
-    .catch((error) => {});
+    .catch((error) => {
+      console.log("in error");
+      console.log(error);
+    });
 }
 
 async function getOrderDetails(id) {
@@ -50,9 +54,13 @@ async function getOrderDetails(id) {
       headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
     })
     .then((response) => {
+      console.log("log response good");
       return response.data;
     })
-    .catch((error) => {});
+    .catch((error) => {
+      console.log("in err");
+      console.log(error);
+    });
 }
 
 async function getDriverArrivingTime(id) {

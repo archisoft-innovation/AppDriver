@@ -16,13 +16,21 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": ["location", "fetch"],
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "App requires geolocation to improve the quality of the service",
+        "NSLocationAlwaysUsageDescription": "App requires geolocation to improve the quality of the service",
+        "NSLocationWhenInUseUsageDescription": "App requires geolocation to improve the quality of the service",
+        "NSCameraUsageDescription": "The picture will be used to inform the state of the order after delivery"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
