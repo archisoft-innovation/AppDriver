@@ -9,7 +9,7 @@ import {
   Text,
   Alert,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DoLoghin } from "../../services/api/authorizationService";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "../../services/api/secureStorageConstants";
@@ -17,18 +17,28 @@ import { useContext } from "react";
 import { AuthContext } from "../../services/api/store/auth-context";
 import { useNavigation } from "@react-navigation/native";
 import LoadingOverlay from "./LoadingOverlay";
-// import LoggedIn from "../../LoggedIn";
 
 export default function GoalInput(props) {
   const userInfo = useContext(AuthContext);
   const navigation = useNavigation();
-  const [loggedin, setLoggedin] = useState(false);
+  // const [loggedin, setLoggedin] = useState(false);
 
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [enteredEmailText, setEnteredEmailText] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [emailValidation, setEmailValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
+  useEffect(() => {
+    fetchData(UserData);
+  }, []);
+  const fetchData = async (key) => {
+    const result = await SecureStore.getItemAsync(key);
+    if (result) {
+      navigation.navigate("LoggedIn");
+    } else {
+      console.log("Stay on login Page");
+    }
+  };
 
   function emailInputHandler(enteredText) {
     setEnteredEmailText(enteredText);
@@ -54,24 +64,24 @@ export default function GoalInput(props) {
       // setEnteredEmailText("");
       // setEnteredPassword("");
 
-      let test = await DoLoghin(enteredEmailText, enteredPassword);
+      let loginProc = await DoLoghin(enteredEmailText, enteredPassword);
       userInfo.emailed(enteredEmailText);
 
       // console.log("all goodie");
-      // console.log(test);
-      // userInfo.authenticate(test.token);
-      // userInfo.named(test.name);
+      // console.log(loginProc);
+      // userInfo.authenticate(loginProc.token);
+      // userInfo.named(loginProc.name);
       // console.log(userInfo.isAutheticated + " userinfo.isAutheticated");
       // console.log(userInfo.name + " userinfo.name");
 
       // save from data from login to useContext
       // if (await DoLoghin(enteredEmailText, enteredPassword)) {
-      if (test) {
+      if (loginProc) {
         setIsAuthenticating(false);
         console.log("returned true");
-        userInfo.authenticate(test.token);
-        userInfo.authenticate(test.apiKey);
-        userInfo.named(test.name);
+        userInfo.authenticate(loginProc.token);
+        userInfo.authenticate(loginProc.apiKey);
+        userInfo.named(loginProc.name);
         navigation.replace("LoggedIn");
       } else {
         setIsAuthenticating(false);
@@ -87,29 +97,13 @@ export default function GoalInput(props) {
   function moveToRegister() {
     navigation.navigate("RegisterDriver");
   }
-  async function getValuesStore() {
-    // console.log("in this one");
-    let infoSecure = await getValueFor(UserData);
-    console.log(infoSecure);
-  }
 
   async function forgetPassword() {
     // getValueFor(UserData);
     console.log("forget Password btn");
     // setIsAuthenticating(true);
   }
-  async function getValueFor(key) {
-    let result = await SecureStore.getItemAsync(key);
-    if (result) {
-      let a = JSON.parse(result);
-      console.log(a);
-      // console.log(a.apiKey);
-      // console.log(a.name);
-      // console.log(a.id);
-    } else {
-      console.log("No result passed");
-    }
-  }
+
   if (isAuthenticating) {
     return <LoadingOverlay message="Logging in" />;
   }
