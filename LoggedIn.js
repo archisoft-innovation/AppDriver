@@ -19,35 +19,35 @@ import * as Location from "expo-location";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "./services/api/secureStorageConstants";
 
-const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
-let foregroundSubscription = null;
-// Define the background task for location tracking
-TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
-  if (error) {
-    console.error(error);
-    return;
-  }
-  if (data) {
-    // Extract location coordinates from data
-    console.log("in data");
-    const { locations } = data;
-    const location = locations[0];
-    if (location) {
-      console.log("Location in background", location.coords);
-    }
-  }
-});
+// const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
+// let foregroundSubscription = null;
+// // Define the background task for location tracking
+// TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
+//   if (error) {
+//     console.error(error);
+//     return;
+//   }
+//   if (data) {
+//     // Extract location coordinates from data
+//     console.log("in data");
+//     const { locations } = data;
+//     const location = locations[0];
+//     if (location) {
+//       console.log("Location in background", location.coords);
+//     }
+//   }
+// });
 const BottomTab = createBottomTabNavigator();
-async function requestPermissionsAsync() {
-  return await Notifications.requestPermissionsAsync({
-    ios: {
-      allowAlert: true,
-      allowBadge: true,
-      allowSound: true,
-      allowAnnouncements: true,
-    },
-  });
-}
+// async function requestPermissionsAsync() {
+//   return await Notifications.requestPermissionsAsync({
+//     ios: {
+//       allowAlert: true,
+//       allowBadge: true,
+//       allowSound: true,
+//       allowAnnouncements: true,
+//     },
+//   });
+// }
 
 Notifications.setNotificationHandler({
   handleNotification: async (notif) => {
@@ -65,18 +65,18 @@ export default function LoggedIn() {
     // await SecureStore.setItemAsync(UserData.isInShift, JSON.stringify(shifts));
     console.log(shifts);
   }
-  useEffect(() => {
-    fetchData();
-    requestPermissionsAsync();
-    const requestPermissions = async () => {
-      // await DoLoghin("demo@driver.com", "parola");
-      const foreground = await Location.requestForegroundPermissionsAsync();
-      // startForegroundUpdate();
-      if (foreground.granted)
-        await Location.requestBackgroundPermissionsAsync();
-    };
-    requestPermissions();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  //   requestPermissionsAsync();
+  //   const requestPermissions = async () => {
+  //     // await DoLoghin("demo@driver.com", "parola");
+  //     const foreground = await Location.requestForegroundPermissionsAsync();
+  //     // startForegroundUpdate();
+  //     if (foreground.granted)
+  //       await Location.requestBackgroundPermissionsAsync();
+  //   };
+  //   requestPermissions();
+  // }, []);
   const fetchData = async () => {
     const result = await SecureStore.getItemAsync(UserData);
     if (result) {
@@ -103,6 +103,7 @@ export default function LoggedIn() {
   }
   // Start location tracking in foreground
   const startForegroundUpdate = async () => {
+    console.log("in start Foreground");
     // Check if foreground permission is granted
     const { granted } = await Location.getForegroundPermissionsAsync();
     if (!granted) {
@@ -128,12 +129,16 @@ export default function LoggedIn() {
 
   // Stop location tracking in foreground
   const stopForegroundUpdate = () => {
+    console.log("in stopForegroundUpdate");
+
     foregroundSubscription?.remove();
     setPosition(null);
   };
 
   // Start location tracking in background
   const startBackgroundUpdate = async () => {
+    console.log("in startBackgroundUpdate");
+
     // Don't track position if permission is not granted
     const { granted } = await Location.getBackgroundPermissionsAsync();
     if (!granted) {
@@ -172,6 +177,7 @@ export default function LoggedIn() {
 
   // Stop location tracking in background
   const stopBackgroundUpdate = async () => {
+    console.log(" in stopBackgroundUpdate");
     const hasStarted = await Location.hasStartedLocationUpdatesAsync(
       LOCATION_TASK_NAME
     );

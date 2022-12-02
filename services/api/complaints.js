@@ -1,44 +1,28 @@
 import axios from "axios";
-import { SmartiooApi } from "./apiConstants";
+import { SmartiooMcsApi } from "./apiConstants";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "./secureStorageConstants";
 
-async function SendComplaint(complaint) {
+async function SendComplaintR(orderCodes, complainTexts) {
+  var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
   try {
-    var response = await axios.post(SmartiooApi + "/login", {
-      email: email,
-      password: password,
-      role: "driver",
+    const request = await axios({
+      method: "post",
+      url: SmartiooMcsApi + "/mcsidentity/Complains",
+      headers: { athKey: userDataFromLocal.apiKey },
+      data: {
+        orderCode: orderCodes,
+        complainText: complainTexts,
+      },
     });
-
-    var userOrbject = {
-      apiKey: response.data.apiKey,
-      token: response.data.token,
-      id: response.data.user.id,
-      name: response.data.user.name,
-    };
-
-    await SecureStore.setItemAsync(UserData, JSON.stringify(userOrbject));
-    console.log("all good");
-    // return true;
-    return userOrbject;
+    console.log(request);
+    console.log("returned ok");
+    return true;
   } catch (error) {
-    console.log("Error");
+    console.log("An error has occurred");
     console.log(error);
-    if (error.response) {
-      if (error.response.status == 400) {
-        console.log(error.response);
-        console.log("Wrong username or password");
-        // here return bad request
-        return false;
-      }
-      if (error.response.status == 401) {
-        // unathorized
-        console.log("unhauthorized");
-        return false;
-      }
-    }
+    console.log(error.response);
+    return false;
   }
 }
-
-export { SendComplaint };
+export { SendComplaintR };

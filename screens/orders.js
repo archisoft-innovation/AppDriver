@@ -9,7 +9,7 @@ import {
 
 export default function Comenzi() {
   function toBeDeleted() {
-    // getOrders();
+    getOrders();
     // getOrdersMcs();
     // getOrderDetails(19);
   }
@@ -281,12 +281,9 @@ export default function Comenzi() {
         <Text style={styles.goalText}>Câștiguri zilnice</Text>
         <Text style={styles.goalText}>{"Suma"} Ron</Text>
       </View>
-      <Pressable>
-        <Text>Get orders test man</Text>
-        <Text>Get orders test man</Text>
-        <Text>Get orders test man</Text>
-        <Text>Get orders test man</Text>
-        <Text>Get orders test man</Text>
+      <Pressable onPress={toBeDeleted}>
+        <Text>Get orders test</Text>
+        <Text>Get orders test</Text>
       </Pressable>
       <ScrollView
         showsVerticalScrollIndicator={false}

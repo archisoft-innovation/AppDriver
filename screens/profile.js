@@ -15,6 +15,7 @@ export default function Profil() {
   const info = useContext(AuthContext);
   const [modalComplains, setModalComplains] = useState(false);
   const [name, setName] = useState("");
+  const [emailUsr, setEmailUsr] = useState("");
   // const tookToken = info.token;
   // const nameToken = info.name;
   // const idToken = info.id;
@@ -25,34 +26,25 @@ export default function Profil() {
   function logOut() {
     SecureStore.deleteItemAsync(UserData);
     DevSettings.reload();
-
     // reload page to main
-  }
-  async function toBePass() {
-    let shifts = "He is in shift";
-    let a = "shiftStatssss";
-    await SecureStore.setItemAsync(a, JSON.stringify(shifts));
-    // await SecureStore.setItemAsync(UserData.isInShift, JSON.stringify(shifts));
-    console.log("in toBe Pass func");
-    // let testB = await fetchData(UserData);
-    // console.log(testB);
   }
   const fetchData = async (key) => {
     const result = await SecureStore.getItemAsync(key);
     if (result) {
       let a = JSON.parse(result);
       setName(a.name);
+      setEmailUsr(a.email);
       console.log("in profile page");
-      a.shiftStat = "Accepted";
+      // a.shiftStat = "Accepted";
       // console.log(a);
-      await SecureStore.setItemAsync(UserData, JSON.stringify(a));
+      // await SecureStore.setItemAsync(UserData, JSON.stringify(a));
+      //mai sus am copiat tot ce era in Secure si am adaugat shiftStatus
     } else {
       console.log("No result passed");
     }
   };
   function registerADriver() {
-    // setModalIsVisible(true);
-    toBePass();
+    setModalIsVisible(true);
   }
 
   function closeRegisterPage() {
@@ -77,7 +69,7 @@ export default function Profil() {
             cancelRegister={closeRegisterPage}
           />
           <Text style={styles.goalText2}>Bună, {name}</Text>
-          <Text style={styles.goalText}>Email: {userEmail}</Text>
+          <Text style={styles.goalText}>Email: {emailUsr}</Text>
           <Text style={styles.goalText}>Telefon:</Text>
           <Text style={styles.goalText}>
             Vehicul setat: {"Vehiculul setat"}

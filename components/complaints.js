@@ -6,21 +6,31 @@ import {
   Pressable,
   Modal,
   TextInput,
-  SafeAreaView,
+  Alert,
 } from "react-native";
-
+import { SendComplaintR } from "../services/api/complaints.js";
 export default function Complaints(props) {
-  const [orderCode, setOrderCode] = useState("Cod Comandă");
-  const [complaints, setComplaints] = useState("Mențiuni");
-  function sendComplain() {
-    console.log(orderCode);
-    console.log(complaints);
-    //request trimitere dupa facut loadingScreen
+  const [orderCode, setOrderCode] = useState("");
+  const [complaints, setComplaints] = useState("");
+  async function sendComplain() {
+    // let sent = true;
+    if (orderCode.length > 0 && complaints.length > 0) {
+      let sent = await SendComplaintR(orderCode, complaints);
+      if (sent) {
+        setOrderCode("");
+        setComplaints("");
+        Alert.alert("Sesizare trimisă!");
+        console.log("in true");
+      } else {
+        Alert("A apărut o eroare!");
+        console.log("in else");
+      }
+    }
   }
   function closeAndReset() {
     props.closeCompointsModal();
-    setOrderCode("Cod Comandă");
-    setComplaints("Mențiuni");
+    setOrderCode("");
+    setComplaints("");
   }
   return (
     <Modal visible={props.visible} animationType="fade">
@@ -34,7 +44,8 @@ export default function Complaints(props) {
           style={styles.textInput}
           onChangeText={setOrderCode}
           placeholderTextColor="#000"
-          //   placeholder={orderCode}
+          placeholder={orderCode}
+          value={orderCode}
         />
         <Text style={styles.readyText2}>Mențiuni</Text>
         <TextInput
@@ -43,7 +54,8 @@ export default function Complaints(props) {
           style={styles.textInput2}
           onChangeText={setComplaints}
           placeholderTextColor="#000"
-          //   placeholder={complaints}
+          placeholder={complaints}
+          value={complaints}
         />
         <View style={styles.buttons}>
           <Pressable onPress={closeAndReset} style={styles.presableButton2}>

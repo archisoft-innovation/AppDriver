@@ -16,6 +16,7 @@ async function DoLoghin(email, password) {
       token: response.data.token,
       id: response.data.user.id,
       name: response.data.user.name,
+      email: email,
     };
 
     await SecureStore.setItemAsync(UserData, JSON.stringify(userOrbject));

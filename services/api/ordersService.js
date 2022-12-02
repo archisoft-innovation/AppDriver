@@ -3,7 +3,8 @@ import * as SecureStore from "expo-secure-store";
 import { SmartiooMcsApi, SmartiooApi } from "./apiConstants";
 import { UserData } from "./secureStorageConstants";
 
-async function getOrders(page, status, type, startDate, endDate) {
+async function getOrders(startDate, endDate, page, status, type) {
+  // async function getOrders(page, status, type, startDate, endDate) {
   console.log("in get Orders");
   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
   try {
@@ -13,12 +14,21 @@ async function getOrders(page, status, type, startDate, endDate) {
         page: page,
         status: status,
         type: type,
-        start_date: startDate,
+        start_date: "2022-11-15",
         end_date: endDate,
       },
       headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
     });
+    console.log(request.data.data.length);
+    // console.log(startDate);
 
+    for (let i = 0; i < request.data.data.length; i++) {
+      // console.log(request.data.data[i].vendor.name);
+      console.log(request.data.data[i]);
+      console.log(i);
+      console.log(request.data.data[i].delivery_address.created_at);
+      console.log("<<<<<<End of i>>>>>>");
+    }
     return request.data;
   } catch (exception) {
     console.log(exception);
@@ -28,17 +38,24 @@ async function getOrders(page, status, type, startDate, endDate) {
 
 async function getOrdersMcs(startDate, endDate) {
   var userDataFromLocal = await SecureStore.getItemAsync(UserData);
-  axios
+  // console.log(userDataFromLocal);
+  // console.log(JSON.parse(userDataFromLocal).apiKey);
+  return axios
     .get(SmartiooMcsApi + "/mcsorder/orderReports", {
       params: {
-        driverId: userDataFromLocal.id,
+        driverId: JSON.parse(userDataFromLocal).id,
         startDate: startDate,
         endDate: endDate,
       },
-      headers: { Authorization: `Bearer ${userDataFromLocal.apiKey}` },
+      headers: { athkey: JSON.parse(userDataFromLocal).apiKey },
     })
     .then((response) => {
-      console.log("log response good");
+      // console.log(response.data.rows.length);
+      // console.log(response.data);
+      // console.log(response.data.numberOfRows);
+      console.log(startDate);
+      console.log(endDate);
+
       return response.data;
     })
     .catch((error) => {
