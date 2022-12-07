@@ -35,6 +35,7 @@ export default function GoalInput(props) {
     const result = await SecureStore.getItemAsync(key);
     if (result) {
       navigation.navigate("LoggedIn");
+      // navigation.navigate("TestNotif");
     } else {
       console.log("Stay on login Page");
     }

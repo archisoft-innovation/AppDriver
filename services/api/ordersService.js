@@ -53,8 +53,6 @@ async function getOrdersMcs(startDate, endDate) {
       // console.log(response.data.rows.length);
       // console.log(response.data);
       // console.log(response.data.numberOfRows);
-      console.log(startDate);
-      console.log(endDate);
 
       return response.data;
     })

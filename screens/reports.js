@@ -31,6 +31,7 @@ export default function Rapoarte() {
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
     setCurrentDate(year + "-" + month + "-" + date);
+    setSelectedDate(year + "-" + month + "-" + date);
     setSelectedDate2(year + "-" + month + "-" + date);
   }, []);
   function reportsBtn() {
@@ -40,7 +41,6 @@ export default function Rapoarte() {
 
   async function closeStartDateModal(id) {
     setSelectedDate(id.replaceAll("/", "-"));
-    console.log("once1");
     let totalEarn = 0;
     let bonus = 0;
     let totalsBig = 0;
@@ -49,24 +49,20 @@ export default function Rapoarte() {
     for (let i = 0; i < response.rows.length; i++) {
       totalEarn = totalEarn + response.rows[i].deliveryManFee;
       if (isNaN(response.rows[i].driverBonus)) {
-        console.log("numberrr");
       } else {
-        console.log(response.rows[i].driverBonus);
+        // console.log(response.rows[i].driverBonus);
         bonus = bonus + response.rows[i].driverBonus;
       }
     }
     totalsBig = totalEarn + bonus;
     setReports(response);
-    console.log("totalEarn: " + totalEarn);
     setBonuses(bonus.toFixed(2));
     setTotalEarnings(totalEarn.toFixed(2));
     settotals(totalsBig.toFixed(2));
-    console.log(totalsBig);
     setmodalVisibility(false);
   }
   async function closeStartDateModal2(id) {
     setSelectedDate2(id.replaceAll("/", "-"));
-    console.log("once1");
     let totalEarn = 0;
     let bonus = 0;
     let totalsBig = 0;
@@ -75,19 +71,15 @@ export default function Rapoarte() {
     for (let i = 0; i < response.rows.length; i++) {
       totalEarn = totalEarn + response.rows[i].deliveryManFee;
       if (isNaN(response.rows[i].driverBonus)) {
-        console.log("numberrr");
       } else {
-        console.log(response.rows[i].driverBonus);
         bonus = bonus + response.rows[i].driverBonus;
       }
     }
     totalsBig = totalEarn + bonus;
     setReports(response);
-    console.log("totalEarn: " + totalEarn);
     setBonuses(bonus.toFixed(2));
     setTotalEarnings(totalEarn.toFixed(2));
     settotals(totalsBig.toFixed(2));
-    console.log(totalsBig);
     setmodalVisibility2(false);
   }
 
@@ -101,7 +93,7 @@ export default function Rapoarte() {
     <View style={styles.inputContainer}>
       <Pressable onPress={setModalVisible}>
         <Text style={styles.goalText}>
-          Selecteaza data de pornire:{" " + currentDate}
+          Selecteaza data de pornire:{" " + selectedDate}
         </Text>
       </Pressable>
       <Pressable onPress={setModalVisible2}>

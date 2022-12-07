@@ -34,7 +34,6 @@ export default function Profil() {
       let a = JSON.parse(result);
       setName(a.name);
       setEmailUsr(a.email);
-      console.log("in profile page");
       // a.shiftStat = "Accepted";
       // console.log(a);
       // await SecureStore.setItemAsync(UserData, JSON.stringify(a));

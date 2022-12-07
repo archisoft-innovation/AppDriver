@@ -107,9 +107,6 @@ export default function Orders(props) {
         closeDetailsModal={closeFinalOrderDetails}
       />
       <View style={styles.inLineText}>
-        <Text style={styles.textPadding}>To be deleted: {props.orderID}</Text>
-      </View>
-      <View style={styles.inLineText}>
         <Text style={styles.textPadding}>{props.orderCode}</Text>
         <Text style={styles.textPadding}>De achitat la {props.vendorName}</Text>
       </View>

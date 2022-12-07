@@ -209,7 +209,7 @@ export default function LoggedIn() {
     setShift(true);
     // setRequestedInShift(true);
     // mai jost am shift inu request
-    shiftIn2(info.token);
+    shiftIn2();
     setCheckShiftInStatus(true);
     // console.log(info.token);
     // setCheckShiftInStatus(true);
