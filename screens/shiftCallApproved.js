@@ -1,15 +1,7 @@
-import {
-  StyleSheet,
-  Modal,
-  View,
-  Image,
-  Text,
-  Pressable,
-  Switch,
-} from "react-native";
+import { StyleSheet, Modal, View, Image, Text, Pressable } from "react-native";
 import React, { useState } from "react";
 
-export default function ShiftCall(props) {
+export default function ShiftCallApproved(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (
@@ -18,39 +10,20 @@ export default function ShiftCall(props) {
         <View style={styles.buttonContainer}>
           <View>
             <Text style={styles.goalText}>
-              Ca urmare că nu ești online, nu putem sa îți atribuim comenzi :-(
+              Solicitarea ta a fost aprobată de către dispecerat, ești Online!
             </Text>
-            <Text style={styles.goalText}>
-              Solicitarea ta a fost trimisă către dispecerat urmând să fie
-              procesată
-            </Text>
-            <Text style={styles.goalText}>{props.myMessage}</Text>
-            {/* <View style={styles.shiftBContainer}>
-              <View style={styles.shiftContainer}>
-                <Text style={styles.shiftText}>Intră în tură</Text>
-                <Switch
-                  style={styles.switchMrg}
-                  trackColor={{ false: "white", true: "orange" }}
-                  thumbColor={isEnabled ? "green" : "white"}
-                  ios_backgroundColor="red"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                />
-              </View>
-            </View> */}
-
             <View style={styles.readySet}>
               <Image
                 style={styles.image}
                 source={require("../assets/images/shiftIn.png")}
               />
               <View>
-                <Text style={styles.readyText}>Ready, Set</Text>
-                <Text style={styles.readyText}>Smartioo</Text>
+                <Text style={styles.readyText}>Spor la livrări!</Text>
+                <Text style={styles.readyText}>Echipa Smartioo</Text>
               </View>
             </View>
             <Pressable
-              onPress={props.shiftInAcknowledged}
+              onPress={props.shiftAprovedAcknowledged}
               style={styles.presableButton}
             >
               <Text style={styles.pressableText}>OK</Text>

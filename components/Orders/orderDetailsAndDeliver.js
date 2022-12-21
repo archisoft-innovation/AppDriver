@@ -17,6 +17,10 @@ export default function OrderDetailsAndDeliver(props) {
   return (
     <Modal visible={props.visible} animationType="slide">
       <FinalOrderDetailsModal
+        orderCode={props.orderCode}
+        paymentMethod={props.paymentMethod}
+        totalPrice={props.totalPrice}
+        deliveryDistance={props.deliveryDistance}
         finishOrderDel={closeAllModalls}
         visible={modalIsVisibleInside}
       />
@@ -27,9 +31,7 @@ export default function OrderDetailsAndDeliver(props) {
             <View style={styles.shiftBContainer}>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Cod comandă</Text>
-                <Text style={styles.pickupTimeColor}>
-                  {props.paymentMethod}
-                </Text>
+                <Text style={styles.pickupTimeColor}>{props.orderCode}</Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Metoda de plată</Text>
@@ -50,18 +52,25 @@ export default function OrderDetailsAndDeliver(props) {
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Nume Client</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.paymentMethod}
+                  {props.deliveryClientName}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Telefon Client</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {props.deliveryClientPhone}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Adresă Client</Text>
-                <Text style={styles.pickupTimeColor}>{props.totalPrice}</Text>
+                {/* <Text style={styles.pickupTimeColor}>
+                  {props.deliveryAddress}
+                </Text> */}
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>
+                  {props.deliveryAddress}
+                </Text>
               </View>
             </View>
             <Text style={styles.goalText}>Sumar Comandă</Text>
@@ -70,16 +79,17 @@ export default function OrderDetailsAndDeliver(props) {
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Total KM</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.paymentMethod}
+                  {props.deliveryDistance / 1000 + " KM"}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>
                   Observații de la client:
                 </Text>
-                <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
-                </Text>
+                {/* <Text style={styles.pickupTimeColor}>{props.deliveryNote}</Text> */}
+              </View>
+              <View style={styles.shiftContainer}>
+                <Text style={styles.pickupTimeColor}>{props.deliveryNote}</Text>
               </View>
             </View>
             <Pressable

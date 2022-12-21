@@ -5,13 +5,34 @@ import {
   getOrders,
   getOrdersMcs,
   getOrderDetails,
+  getOrderDetails2,
 } from "../services/api/ordersService";
 
 export default function Comenzi() {
-  function toBeDeleted() {
-    getOrders();
+  const [orders, setORders] = useState([]);
+  async function toBeDeleted() {
+    // getOrders();
     // getOrdersMcs();
-    // getOrderDetails(19);
+    // getOrderDetails();
+    // getOrderDetails2();
+    getOrders();
+  }
+  async function toBeDeleted2() {
+    console.log(orders[0]);
+    // console.log(orders[0].vendor.latitude);
+    // console.log(orders[0].vendor.longitude);
+  }
+  // setInterval(() => {
+  //   testt();
+  // }, 10000);
+  function testt() {
+    console.log("test function:");
+  }
+
+  async function getOrders() {
+    let newOrders = await getOrderDetails();
+    setORders(await getOrderDetails());
+    console.log(newOrders);
   }
 
   const [testObj, setTestObj] = useState([]);
@@ -133,146 +154,6 @@ export default function Comenzi() {
       deliveryFee: 16.4,
       paymentMethod: "Platita cu cardul",
     },
-    // {
-    //   id: 3646,
-    //   orderCode: "smt_42_3646",
-    //   note: " casa client number: 0746117289",
-    //   distance: 7.847,
-    //   totalPrice: 144,
-    //   subTotal: 144,
-    //   driverBonus: 10,
-    //   orderExtraPrice: 10,
-    //   initialDeliveryFee: 19.73,
-    //   initialDeliveryManFee: 15,
-    //   clientName: "Client",
-    //   clientPhone: "0746117289",
-    //   clientEmail: "8ea01caf-9779-47ad-811f-31e0d1f9c389",
-    //   deliveryAddress: "Strada Bistri?a 32, Dumbravi?a, Romania",
-    //   city: "Dumbravi?a",
-    //   vendorId: 42,
-    //   vendorName: "Little Hanoi3",
-    //   vendorBaseDeliveryFee: 10,
-    //   vendorDeliveryFee: 1.1,
-    //   driverId: 2470,
-    //   driverName: "Badea Andrei [AZL] [TIM]",
-    //   driverPhone: "0790 762 686",
-    //   driverPricePerKm: 0,
-    //   driverBasePrice: 15,
-    //   driverComission: 0,
-    //   createdDate: "2022-10-19T18:45:40+00:00",
-    //   updatedDate: "2022-10-19T20:26:36+00:00",
-    //   status: "delivered",
-    //   vendorAddress: "Strada Mărășești 9, Timișoara, Romania",
-    //   sayving: 4.73,
-    //   deliveryManFee: 25,
-    //   deliveryFee: 29.73,
-    //   paymentMethod: "Se achita la ridicare",
-    // },
-    // {
-    //   id: 3647,
-    //   orderCode: "smt_42_3647",
-    //   note: "  client number: 0771085277",
-    //   distance: 3.92,
-    //   totalPrice: 172,
-    //   subTotal: 172,
-    //   driverBonus: null,
-    //   orderExtraPrice: null,
-    //   initialDeliveryFee: 15.41,
-    //   initialDeliveryManFee: 15,
-    //   clientName: "Client",
-    //   clientPhone: "0771085277",
-    //   clientEmail: "37755b64-8d33-4770-807a-b368426069bb",
-    //   deliveryAddress: "Strada Johann Heinrich Pestalozzi, Timi?oara, Romania",
-    //   city: "Timi?oara",
-    //   vendorId: 42,
-    //   vendorName: "Little Hanoi4",
-    //   vendorBaseDeliveryFee: 10,
-    //   vendorDeliveryFee: 1.1,
-    //   driverId: 2470,
-    //   driverName: "Badea Andrei [AZL] [TIM]",
-    //   driverPhone: "0790 762 686",
-    //   driverPricePerKm: 0,
-    //   driverBasePrice: 15,
-    //   driverComission: 0,
-    //   createdDate: "2022-10-19T18:48:03+00:00",
-    //   updatedDate: "2022-10-19T20:02:46+00:00",
-    //   status: "delivered",
-    //   vendorAddress: "Strada Mărășești 9, Timișoara, Romania",
-    //   sayving: 0.41,
-    //   deliveryManFee: 15,
-    //   deliveryFee: 15.41,
-    //   paymentMethod: "Se achita la ridicare",
-    // },
-    // {
-    //   id: 3648,
-    //   orderCode: "smt_42_3648",
-    //   note: " casa client number: 0740010508",
-    //   distance: 13.847,
-    //   totalPrice: 153,
-    //   subTotal: 153,
-    //   driverBonus: 15,
-    //   orderExtraPrice: 15,
-    //   initialDeliveryFee: 26.33,
-    //   initialDeliveryManFee: 15,
-    //   clientName: "Client",
-    //   clientPhone: "0740010508",
-    //   clientEmail: "796273ec-83d4-493c-b639-1344317d20de",
-    //   deliveryAddress: "Strada Maslinului 26, Mo?ni?a Veche 307287, Romania",
-    //   city: "Mo?ni?a Veche",
-    //   vendorId: 42,
-    //   vendorName: "Little Hanoi5",
-    //   vendorBaseDeliveryFee: 10,
-    //   vendorDeliveryFee: 1.1,
-    //   driverId: 2473,
-    //   driverName: "Covaci Roberta [AZL] [TIM]",
-    //   driverPhone: "0773938044",
-    //   driverPricePerKm: 0,
-    //   driverBasePrice: 15,
-    //   driverComission: 0,
-    //   createdDate: "2022-10-20T11:30:35+00:00",
-    //   updatedDate: "2022-10-20T12:42:45+00:00",
-    //   status: "delivered",
-    //   vendorAddress: "Strada Mărășești 9, Timișoara, Romania",
-    //   sayving: 26.33,
-    //   deliveryManFee: 15,
-    //   deliveryFee: 41.33,
-    //   paymentMethod: "Platita cu cardul",
-    // },
-    // {
-    //   id: 3649,
-    //   orderCode: "smt_42_3649",
-    //   note: " ap1 client number: 0726417849",
-    //   distance: 6.888,
-    //   totalPrice: 140,
-    //   subTotal: 140,
-    //   driverBonus: null,
-    //   orderExtraPrice: null,
-    //   initialDeliveryFee: 18.68,
-    //   initialDeliveryManFee: 15,
-    //   clientName: "Client",
-    //   clientPhone: "0726417849",
-    //   clientEmail: "b9e69eec-a4d6-4e7b-b082-26b5c8855ac9",
-    //   deliveryAddress: "ap.1, Strada Mure? 169, Timi?oara 307221, Romania",
-    //   city: "Timi?oara",
-    //   vendorId: 42,
-    //   vendorName: "Little Hanoi6",
-    //   vendorBaseDeliveryFee: 10,
-    //   vendorDeliveryFee: 1.1,
-    //   driverId: 2473,
-    //   driverName: "Covaci Roberta [AZL] [TIM]",
-    //   driverPhone: "0773938044",
-    //   driverPricePerKm: 0,
-    //   driverBasePrice: 15,
-    //   driverComission: 0,
-    //   createdDate: "2022-10-20T13:18:21+00:00",
-    //   updatedDate: "2022-10-20T14:15:08+00:00",
-    //   status: "delivered",
-    //   vendorAddress: "Strada Mărășești 9, Timișoara, Romania",
-    //   sayving: 3.68,
-    //   deliveryManFee: 15,
-    //   deliveryFee: 18.68,
-    //   paymentMethod: "Se achita la ridicare",
-    // },
   ];
 
   return (
@@ -285,21 +166,33 @@ export default function Comenzi() {
         <Text>Get orders test</Text>
         <Text>Get orders test</Text>
       </Pressable>
+      <Pressable onPress={toBeDeleted2}>
+        <Text>Let's see the orders</Text>
+        <Text>Let's see the orders</Text>
+      </Pressable>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewPad}
       >
-        {testObj.map((item, index) => {
+        {orders.map((item, index) => {
           return (
             <Orders
               key={item.id}
-              vendorName={item.vendorName}
-              vendorPhone={item.driverPhone}
-              vendorAddress={item.vendorAddress}
-              paymentMethod={item.paymentMethod}
-              totalPrice={item.totalPrice}
-              orderCode={item.orderCode}
+              vendorName={item.vendor.name}
+              vendorPhone={item.vendor.phone}
+              vendorAddress={item.vendor.address}
+              vendorLat={item.vendor.latitude}
+              vendorLong={item.vendor.longitude}
+              paymentMethod={item.payment_method.name}
+              notes={item.note}
+              totalPrice={item.total}
+              orderCode={item.code}
               orderID={item.id}
+              deliveryAddress={item.delivery_address.address}
+              deliveryClientName={item.user.name}
+              deliveryClientPhone={item.user.phone}
+              deliveryNote={item.note}
+              deliveryDistance={item.total_distance}
               deleteAComponent={deleteAComponent}
             />
           );

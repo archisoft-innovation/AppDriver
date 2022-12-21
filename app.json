@@ -16,6 +16,10 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": ["location", "fetch"],

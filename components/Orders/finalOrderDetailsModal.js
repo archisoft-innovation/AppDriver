@@ -10,14 +10,12 @@ export default function FinalOrderDetailsModal(props) {
             <View style={styles.shiftBContainer}>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Sumar comandă</Text>
-                <Text style={styles.pickupTimeColor}>
-                  {props.paymentMethod}
-                </Text>
+                <Text style={styles.pickupTimeColor}>{props.orderCode}</Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Metoda de plată</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {props.paymentMethod}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
@@ -29,7 +27,7 @@ export default function FinalOrderDetailsModal(props) {
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Total KM</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {props.deliveryDistance / 1000 + " KM"}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>

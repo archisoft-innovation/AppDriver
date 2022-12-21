@@ -12,11 +12,11 @@ export default function Orders(props) {
   }
 
   function mapAddress() {
-    let latitude = "40.7127753";
+    let latitude = props.vendorLat;
     // let latitude = props.lat;
-    let longitude = "-74.0059728";
+    let longitude = props.vendorLong;
     // let longitude = props.long;
-    let label = "New York, NY, USA";
+    let label = props.vendorAddress;
     // let label = props.address;
 
     let url = Platform.select({
@@ -99,13 +99,22 @@ export default function Orders(props) {
         paymentMethod={props.paymentMethod}
         totalPrice={props.totalPrice}
         orderID={props.orderID}
+        deliveryAddress={props.deliveryAddress}
+        deliveryClientName={props.deliveryClientName}
+        deliveryClientPhone={props.deliveryClientPhone}
+        deliveryNote={props.deliveryNote}
+        deliveryDistance={props.deliveryDistance}
         closeDetailsModal={closeModalDetails}
         finishOrderDel={passFinishDeleteOrder}
       />
-      <FinalOrderDetailsModal
+      {/* <FinalOrderDetailsModal
+        orderCode={props.orderCode}
+        paymentMethod={props.paymentMethod}
+        totalPrice={props.totalPrice}
+        deliveryDistance={props.deliveryDistance}
         visible={modalIsVisibleFinalOrderDetails}
         closeDetailsModal={closeFinalOrderDetails}
-      />
+      /> */}
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>{props.orderCode}</Text>
         <Text style={styles.textPadding}>De achitat la {props.vendorName}</Text>

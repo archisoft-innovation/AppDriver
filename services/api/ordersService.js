@@ -14,7 +14,7 @@ async function getOrders(startDate, endDate, page, status, type) {
         page: page,
         status: status,
         type: type,
-        start_date: "2022-11-15",
+        start_date: startDate,
         end_date: endDate,
       },
       headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
@@ -22,17 +22,16 @@ async function getOrders(startDate, endDate, page, status, type) {
     console.log(request.data.data.length);
     // console.log(startDate);
 
-    for (let i = 0; i < request.data.data.length; i++) {
-      // console.log(request.data.data[i].vendor.name);
-      console.log(request.data.data[i]);
-      console.log(i);
-      console.log(request.data.data[i].delivery_address.created_at);
-      console.log("<<<<<<End of i>>>>>>");
-    }
+    // for (let i = 0; i < request.data.data.length; i++) {
+    //   console.log(request.data.data[i]);
+    //   console.log(i);
+    //   console.log(request.data.data[i].delivery_address.created_at);
+    //   console.log("<<<<<<End of i>>>>>>");
+    // }
     return request.data;
   } catch (exception) {
     console.log(exception);
-    console.log("in else, bad");
+    // console.log("in else, bad");
   }
 }
 
@@ -62,14 +61,65 @@ async function getOrdersMcs(startDate, endDate) {
     });
 }
 
-async function getOrderDetails(id) {
-  var userDataFromLocal = await SecureStore.getItemAsync(UserData);
+async function getOrderDetails() {
+  var date = new Date().getDate(); //Current Date
+  var month = new Date().getMonth() + 1; //Current Month
+  var year = new Date().getFullYear(); //Current Year
+  var today = year + "-" + month + "-" + date;
+  var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
+  return axios
+    .get(
+      SmartiooApi + "/orders?driver_id=" + userDataFromLocal.id,
+      {
+        headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
+      }
+      // {
+      // params: {
+      // driver_id: userDataFromLocal.id,
+      // page: page,
+      // status: "preparing",
+      // type: type,
+      // start_date: today,
+      // end_date: today,
+      //   },
+      // }
+    )
+    .then((response) => {
+      console.log("log response good");
+      // console.log(userDataFromLocal.token);
+      // console.log(response.data);
+      // console.log(response.data);
+      var orders = [];
+      // console.log(response.data.data.length);
+      for (let i = 0; i < response.data.data.length; i++) {
+        if (response.data.data[i].status === "preparing") {
+          orders.push(response.data.data[i]);
+          // console.log(i);
+        }
+      }
+      // return response.data;
+      return orders;
+    })
+    .catch((error) => {
+      console.log("in err");
+      console.log(error);
+    });
+}
+
+async function getOrderDetails2() {
+  var date = new Date().getDate(); //Current Date
+  var month = new Date().getMonth() + 1; //Current Month
+  var year = new Date().getFullYear(); //Current Year
+  var today = year + "-" + month + "-" + date;
+  var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
   axios
-    .get(SmartiooApi + "/orders" + "/" + id, {
+    .get(SmartiooApi + "/orders/4908", {
       headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
     })
     .then((response) => {
       console.log("log response good");
+      console.log(response.data);
+
       return response.data;
     })
     .catch((error) => {
@@ -111,4 +161,5 @@ export {
   getDriverArrivingTime,
   setOrderDelivered,
   setOrderPicker,
+  getOrderDetails2,
 };

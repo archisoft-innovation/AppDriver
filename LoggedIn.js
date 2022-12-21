@@ -18,6 +18,7 @@ import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import * as SecureStore from "expo-secure-store";
 import { UserData } from "./services/api/secureStorageConstants";
+import ShiftCallApproved from "./screens/shiftCallApproved";
 
 // const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 // let foregroundSubscription = null;
@@ -188,11 +189,13 @@ export default function LoggedIn() {
   };
   const [position, setPosition] = useState(null);
   const [modalShiftIn, setModalShiftIn] = useState(false);
+  const [modalShiftInApproved, setmodalShiftInApproved] = useState(false);
   const [modalShiftOut, setModalShiftOut] = useState(false);
   const [checkShiftInStatus, setCheckShiftInStatus] = useState(false);
   const [shift, setShift] = useState(false);
   const [shiftOutBtn, setShiftOutBtn] = useState(false);
   const [shiftStatus, setShiftStatus] = useState("");
+  const [myMessage, setMyMessage] = useState("");
   // const [requestedInShift, setRequestedInShift] = useState(false);
   const [requestedOutShift, setRequestedOutShift] = useState(false);
   const info = useContext(AuthContext);
@@ -206,12 +209,12 @@ export default function LoggedIn() {
   }
   async function requestInShift() {
     setModalShiftIn(true);
+    // setmodalShiftInApproved(true);
     setShift(true);
     // setRequestedInShift(true);
     // mai jost am shift inu request
     shiftIn2();
     setCheckShiftInStatus(true);
-    // console.log(info.token);
     // setCheckShiftInStatus(true);
     // mai sus, setTestInterval se apeleaza dupa ce face request de shift in si asteapta raspuns. cumva sa vad sa ii ascund butonu de shift in dupa ce e facut requestul
   }
@@ -225,7 +228,8 @@ export default function LoggedIn() {
   }
   async function getStatus() {
     // console.log("in get status");
-    let requestStatus = await shiftRequestStatus(info.token);
+    let requestStatus = await shiftRequestStatus();
+    console.log(requestStatus);
     if (requestStatus.isApproved) {
       // aici am functia de start foreGround + start background
       //startBackgroundUpdate()
@@ -233,6 +237,7 @@ export default function LoggedIn() {
       // set notification to approve
       setShiftInRequestAnswer("Accepted");
       setShiftOutBtn(true);
+      setmodalShiftInApproved(true);
       console.log("request in approved");
       //mai jos notificarea, trebuie facuta doar sa arate ce trebuie :-D sunet etc
       // notificationsCall();
@@ -255,6 +260,11 @@ export default function LoggedIn() {
     // alert("request intrare in tura");
     setModalShiftIn(false);
   }
+  function requestShiftApprovedModalClose() {
+    // alert("request intrare in tura");
+    setmodalShiftInApproved(false);
+  }
+
   function requestOutShift() {
     setModalShiftOut(true);
     setShift(false);
@@ -299,10 +309,15 @@ export default function LoggedIn() {
       <ShiftCall
         visible={modalShiftIn}
         shiftInAcknowledged={requestInShiftModalClose}
+        myMessage={myMessage}
       />
       <ShiftCallOut
         visible={modalShiftOut}
         shiftOutAcknowledged={requestOutShiftModalClose}
+      />
+      <ShiftCallApproved
+        visible={modalShiftInApproved}
+        shiftAprovedAcknowledged={requestShiftApprovedModalClose}
       />
       <BottomTab.Navigator
         screenOptions={{
