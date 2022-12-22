@@ -33,31 +33,31 @@ export default function FinalOrderDetailsModal(props) {
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Baza/comandă</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {props.base_price + " Ron"}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Baza/ KM</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {props.price_per_km + " Ron"}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Bonus</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {props.driver_bonus + " Ron"}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Recalculări</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {/* {props.totalPrice + " Ron"} */}
                 </Text>
               </View>
               <View style={styles.shiftContainer}>
                 <Text style={styles.pickupTimeColor}>Ai câștigat</Text>
                 <Text style={styles.pickupTimeColor}>
-                  {props.totalPrice + " Ron"}
+                  {props.delivery_man_fee + " Ron"}
                 </Text>
               </View>
             </View>

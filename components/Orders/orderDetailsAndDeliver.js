@@ -1,8 +1,29 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, Pressable, Modal } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Modal,
+  Linking,
+} from "react-native";
 import FinalOrderDetailsModal from "./finalOrderDetailsModal";
 
 export default function OrderDetailsAndDeliver(props) {
+  function call() {
+    const url = "tel://" + props.deliveryClientPhone;
+    Linking.openURL(url);
+  }
+  function mapAddress() {
+    let latitude = props.deliveryLat;
+    let longitude = props.deliveryLong;
+    let label = props.deliveryAddress;
+    let url = Platform.select({
+      ios: "maps:" + latitude + "," + longitude + "?q=" + label,
+      android: "geo:" + latitude + "," + longitude + "?q=" + label,
+    });
+    Linking.openURL(url);
+  }
   const [modalIsVisibleInside, setModalIsVisibleInside] = useState(false);
   function orderDelivered() {
     //request de inchidere comanda, dupa inchidere modal existent + child modal
@@ -18,6 +39,10 @@ export default function OrderDetailsAndDeliver(props) {
     <Modal visible={props.visible} animationType="slide">
       <FinalOrderDetailsModal
         orderCode={props.orderCode}
+        delivery_man_fee={props.delivery_man_fee}
+        price_per_km={props.price_per_km}
+        base_price={props.base_price}
+        driver_bonus={props.driver_bonus}
         paymentMethod={props.paymentMethod}
         totalPrice={props.totalPrice}
         deliveryDistance={props.deliveryDistance}
@@ -55,23 +80,27 @@ export default function OrderDetailsAndDeliver(props) {
                   {props.deliveryClientName}
                 </Text>
               </View>
-              <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Telefon Client</Text>
-                <Text style={styles.pickupTimeColor}>
-                  {props.deliveryClientPhone}
-                </Text>
-              </View>
-              <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>Adresă Client</Text>
-                {/* <Text style={styles.pickupTimeColor}>
+              <Pressable onPress={call}>
+                <View style={styles.shiftContainer}>
+                  <Text style={styles.pickupTimeColor}>Telefon Client</Text>
+                  <Text style={styles.pickupTimeColor}>
+                    {props.deliveryClientPhone}
+                  </Text>
+                </View>
+              </Pressable>
+              <Pressable onPress={mapAddress}>
+                <View style={styles.shiftContainer}>
+                  <Text style={styles.pickupTimeColor}>Adresă Client</Text>
+                  {/* <Text style={styles.pickupTimeColor}>
                   {props.deliveryAddress}
                 </Text> */}
-              </View>
-              <View style={styles.shiftContainer}>
-                <Text style={styles.pickupTimeColor}>
-                  {props.deliveryAddress}
-                </Text>
-              </View>
+                </View>
+                <View style={styles.shiftContainer}>
+                  <Text style={styles.pickupTimeColor}>
+                    {props.deliveryAddress}
+                  </Text>
+                </View>
+              </Pressable>
             </View>
             <Text style={styles.goalText}>Sumar Comandă</Text>
 

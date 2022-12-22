@@ -104,6 +104,12 @@ export default function Orders(props) {
         deliveryClientPhone={props.deliveryClientPhone}
         deliveryNote={props.deliveryNote}
         deliveryDistance={props.deliveryDistance}
+        price_per_km={props.price_per_km}
+        driver_bonus={props.driver_bonus}
+        delivery_man_fee={props.delivery_man_fee}
+        deliveryLat={props.deliveryLat}
+        deliveryLong={props.deliveryLong}
+        base_price={props.base_price}
         closeDetailsModal={closeModalDetails}
         finishOrderDel={passFinishDeleteOrder}
       />
@@ -122,7 +128,7 @@ export default function Orders(props) {
 
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>Data </Text>
-        <Text style={styles.textPadding}>Suma 1250 Ron</Text>
+        <Text style={styles.textPadding}>{props.created_at} </Text>
       </View>
       <Text style={styles.textPadding}>Partener:{props.vendorName}</Text>
       <Pressable onPress={call}>
@@ -130,7 +136,9 @@ export default function Orders(props) {
       </Pressable>
 
       <Pressable onPress={mapAddress}>
-        <Text style={styles.textPadding}>Adresa:{props.vendorAddress}</Text>
+        <Text style={styles.textPadding}>
+          Adresa Partener:{" " + props.vendorAddress}
+        </Text>
       </Pressable>
       <Text style={styles.textPadding}>
         Metoda de plata: {props.paymentMethod}

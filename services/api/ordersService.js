@@ -86,15 +86,11 @@ async function getOrderDetails() {
     )
     .then((response) => {
       console.log("log response good");
-      // console.log(userDataFromLocal.token);
-      // console.log(response.data);
-      // console.log(response.data);
+
       var orders = [];
-      // console.log(response.data.data.length);
       for (let i = 0; i < response.data.data.length; i++) {
         if (response.data.data[i].status === "preparing") {
           orders.push(response.data.data[i]);
-          // console.log(i);
         }
       }
       // return response.data;
