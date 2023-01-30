@@ -7,6 +7,7 @@ import {
   Modal,
   Linking,
 } from "react-native";
+import { setOrderDelivered } from "../../services/api/ordersService";
 import FinalOrderDetailsModal from "./finalOrderDetailsModal";
 
 export default function OrderDetailsAndDeliver(props) {
@@ -29,6 +30,8 @@ export default function OrderDetailsAndDeliver(props) {
     //request de inchidere comanda, dupa inchidere modal existent + child modal
     setModalIsVisibleInside(true);
     console.log("in orderDelivered");
+    props.getOrdersToPassCompleted();
+    setOrderDelivered(props.orderID);
     // props.finishOrderDel();
   }
   function closeAllModalls() {

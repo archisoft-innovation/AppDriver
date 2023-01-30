@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, View, Text, Pressable, Linking } from "react-native";
+import { setOrderDelivered } from "../../services/api/ordersService";
 import AcceptedOrders from "./AcceptOrders";
 import ConfirmOrderPicked from "./confirmOrderPicked";
 import FinalOrderDetailsModal from "./finalOrderDetailsModal";
@@ -41,6 +42,8 @@ export default function Orders(props) {
     // setModalIsVisibleFinalOrderDetails(true);
   }
   function acceptOrder() {
+    // conditiile pentru status
+    console.log(props.status);
     if (pressed === "acceptOrder") {
       setModalIsVisible(true);
     } else if (pressed === "acceptedOrder") {
@@ -57,8 +60,9 @@ export default function Orders(props) {
     setPressed("detailsOrder");
     setPresableText("Detalii comanda/ Livrare");
   }
-  function onTheWayOrder() {
+  async function onTheWayOrder() {
     console.log(props.orderID + " order ID on accept order btn");
+    setOrderDelivered(props.orderID);
     setPressed("acceptedOrder");
     setPresableText("Am ridicat comanda");
     // post accept order function
@@ -110,6 +114,7 @@ export default function Orders(props) {
         deliveryLat={props.deliveryLat}
         deliveryLong={props.deliveryLong}
         base_price={props.base_price}
+        getOrdersToPassCompleted={props.getOrdersToPassCompleted}
         closeDetailsModal={closeModalDetails}
         finishOrderDel={passFinishDeleteOrder}
       />
@@ -123,7 +128,8 @@ export default function Orders(props) {
       /> */}
       <View style={styles.inLineText}>
         <Text style={styles.textPadding}>{props.orderCode}</Text>
-        <Text style={styles.textPadding}>De achitat la {props.vendorName}</Text>
+        <Text style={styles.textPadding}>Status:{" " + props.status}</Text>
+        {/* <Text style={styles.textPadding}>De achitat la {props.vendorName}</Text> */}
       </View>
 
       <View style={styles.inLineText}>

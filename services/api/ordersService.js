@@ -89,7 +89,11 @@ async function getOrderDetails() {
 
       var orders = [];
       for (let i = 0; i < response.data.data.length; i++) {
-        if (response.data.data[i].status === "preparing") {
+        if (
+          response.data.data[i].status === "preparing" ||
+          response.data.data[i].status === "ready" ||
+          response.data.data[i].status === "enroute"
+        ) {
           orders.push(response.data.data[i]);
         }
       }
@@ -148,7 +152,74 @@ async function setOrderPicker(id) {
     .catch((error) => {});
 }
 
-function setOrderDelivered(id) {}
+async function setDriverArrivingTime(orderID, minutes) {
+  var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
+  try {
+    const request = await axios({
+      method: "post",
+      url:
+        SmartiooMcsApi +
+        "/mcsorder/DriversMap/arrivingTime/" +
+        // userDataFromLocal.id +
+        orderID +
+        "/" +
+        minutes,
+      // headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
+      // headers: { Authorization: `Bearer ${userDataFromLocal.apiKey}` },
+      headers: { athKey: userDataFromLocal.apiKey },
+    });
+    console.log("returned ok setDriverArrivingTime");
+    console.log(request);
+    return true;
+  } catch (error) {
+    console.log("An error has occurred");
+    console.log(error);
+    console.log(error.response);
+    return false;
+  }
+}
+
+async function setOrderOnTheRoute(orderId) {
+  var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
+  try {
+    const request = await axios({
+      method: "post",
+      url: SmartiooMcsApi + "/mcsorder/Order/setOrderOnRoute/" + orderId,
+      // headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
+      // headers: { Authorization: `Bearer ${userDataFromLocal.apiKey}` },
+      headers: { athKey: userDataFromLocal.apiKey },
+    });
+    console.log("returned ok setOrderOnTheRoute");
+    console.log(request);
+    return true;
+  } catch (error) {
+    console.log("An error has occurred");
+    console.log(error);
+    console.log(error.response);
+    return false;
+  }
+}
+
+// function setOrderDelivered(id) {}
+
+async function setOrderDelivered(id) {
+  var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
+  try {
+    const request = await axios({
+      method: "post",
+      url: SmartiooMcsApi + "/mcsorder/OrderTracking/" + id + "/orderPicker/",
+      headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
+    });
+    console.log("returned ok");
+    console.log(request);
+    return true;
+  } catch (error) {
+    console.log("An error has occurred");
+    console.log(error);
+    console.log(error.response);
+    return false;
+  }
+}
 
 export {
   getOrdersMcs,
@@ -158,4 +229,6 @@ export {
   setOrderDelivered,
   setOrderPicker,
   getOrderDetails2,
+  setDriverArrivingTime,
+  setOrderOnTheRoute,
 };

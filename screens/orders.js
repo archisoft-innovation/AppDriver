@@ -17,32 +17,35 @@ export default function Comenzi() {
     // getOrderDetails2();
     getOrders();
   }
-  // useEffect(() => {
-  //   getOrders();
-  // }, []);
+
   async function toBeDeleted2() {
     console.log(orders[0]);
     // console.log(orders[0].vendor.latitude);
     // console.log(orders[0].vendor.longitude);
   }
-  setInterval(() => {
+  // setInterval(() => {
+  //   getOrders();
+  // }, 60 * 2000);
+  useEffect(() => {
     getOrders();
-  }, 60 * 1000);
-
+  }, []);
   async function getOrders() {
     // let newOrders = await getOrderDetails();
     setORders(await getOrderDetails());
-    console.log("here");
+    console.log("in getORders");
     // console.log(newOrders);
+    setTimeout(getOrders, 60 * 1000);
   }
-
+  async function getOrdersToPassCompleted() {
+    setORders(await getOrderDetails());
+  }
   function deleteAComponent(id) {
     console.log("in delete Component");
-    setTestObj((current) =>
-      current.filter((employee) => {
-        return employee.id !== id;
-      })
-    );
+    // setTestObj((current) =>
+    //   current.filter((employee) => {
+    //     return employee.id !== id;
+    //   })
+    // );
   }
 
   return (
@@ -51,14 +54,14 @@ export default function Comenzi() {
         <Text style={styles.goalText}>Câștiguri zilnice</Text>
         <Text style={styles.goalText}>{"Suma"} Ron</Text>
       </View>
-      <Pressable onPress={seeOrders}>
+      {/* <Pressable onPress={seeOrders}>
         <Text>Get orders test</Text>
         <Text>Get orders test</Text>
       </Pressable>
       <Pressable onPress={toBeDeleted2}>
         <Text>Let's see the orders</Text>
         <Text>Let's see the orders</Text>
-      </Pressable>
+      </Pressable> */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewPad}
@@ -68,6 +71,7 @@ export default function Comenzi() {
             <Orders
               key={item.id}
               status={item.status}
+              getOrdersToPassCompleted={getOrdersToPassCompleted}
               vendorName={item.vendor.name}
               vendorPhone={item.vendor.phone}
               vendorAddress={item.vendor.address}

@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { StyleSheet, View, Image, Text, Pressable, Modal } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
+import {
+  setDriverArrivingTime,
+  setOrderOnTheRoute,
+} from "../../services/api/ordersService";
 
 export default function AcceptedOrders(props) {
   const [pickUpTime, setPickUpTime] = useState(true);
@@ -15,11 +19,16 @@ export default function AcceptedOrders(props) {
   ];
   // props.orderID orderIdul
   function sendPickupTimeOrder() {
-    console.log(pickUpTime2 + " selected time");
-    console.log(props.orderID + " order id din sendPickupTimeORder");
+    // console.log(pickUpTime2 + " selected time");
+
+    let arringTime = setDriverArrivingTime(props.orderID, pickUpTime2);
+    // console.log(props.orderID + " order id din sendPickupTimeORder");
+    let delOrder = setOrderOnTheRoute(props.orderID);
+
     // setPickUpTime(false);
     // send pickup time reqeust comes here, above are selected minutes and order id
   }
+
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputContainer}>
@@ -42,7 +51,7 @@ export default function AcceptedOrders(props) {
                   rowTextStyle={styles.dropdown1RowTxtStyle}
                   onSelect={(selectedItem, index) => {
                     // console.log(selectedItem, index);
-                    setPickUpTime2(selectedItem);
+                    setPickUpTime2(selectedItem.slice(0, 2));
                     setPickUpTime(false);
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
