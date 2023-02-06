@@ -231,16 +231,19 @@ async function setOrderDelivered(id) {
 }
 async function setOrderDelivered2(orderId) {
   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
-  console.log("hereee");
-  axios
-    .patch(SmartiooApi + "/orders/" + orderId, {
-      headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
-      // headers: { athKey: userDataFromLocal.apiKey },
-
-      data: {
+  console.log(userDataFromLocal.token);
+  console.log(userDataFromLocal.apiKey);
+  console.log(orderId);
+  return axios
+    .patch(
+      SmartiooApi + "/orders/" + orderId,
+      {
         status: "delivered",
       },
-    })
+      {
+        headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
+      }
+    )
     .then((response) => {
       console.log("log response good from setOrderDelivered2123");
       console.log(response.data);
