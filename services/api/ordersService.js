@@ -127,6 +127,15 @@ async function getOrderDetails2() {
       console.log(error);
     });
 }
+// Future<Order> getOrderDetails({@required int id}) async {
+//   final apiResult = await get(Api.orders + "/$id");
+//   final apiResponse = ApiResponse.fromResponse(apiResult);
+//   if (apiResponse.allGood) {
+//     return Order.fromJson(apiResponse.body);
+//   } else {
+//     throw apiResponse.message;
+//   }
+// }
 
 async function getDriverArrivingTime(id) {
   var userDataFromLocal = await SecureStore.getItemAsync(UserData);
@@ -220,7 +229,52 @@ async function setOrderDelivered(id) {
     return false;
   }
 }
+async function setOrderDelivered2(orderId) {
+  var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
+  console.log("hereee");
+  axios
+    .patch(SmartiooApi + "/orders/" + orderId, {
+      headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
+      // headers: { athKey: userDataFromLocal.apiKey },
 
+      data: {
+        status: "delivered",
+      },
+    })
+    .then((response) => {
+      console.log("log response good from setOrderDelivered2123");
+      console.log(response.data);
+
+      return response.data;
+    })
+    .catch((error) => {
+      console.log("in err setOrderDelivered2123");
+      console.log(error);
+    });
+}
+// async function setOrderDelivered2(orderId) {
+//   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
+//   console.log(userDataFromLocal.apiKey);
+//   console.log(orderId + " Order ID");
+//   try {
+//     const request = await axios({
+//       method: "post",
+//       url: SmartiooMcsApi + "/orders/" + orderId,
+//       headers: { athKey: `Bearer ${userDataFromLocal.token}` },
+//       data: {
+//         status: "delivered",
+//       },
+//     });
+//     console.log(request);
+//     console.log("log response good from setOrderDelivered2123");
+//     return true;
+//   } catch (error) {
+//     console.log("in err setOrderDelivered2123");
+//     console.log(error);
+//     // console.log(error.response);
+//     return false;
+//   }
+// }
 export {
   getOrdersMcs,
   getOrders,
@@ -231,4 +285,21 @@ export {
   getOrderDetails2,
   setDriverArrivingTime,
   setOrderOnTheRoute,
+  setOrderDelivered2,
 };
+
+// Future<Order> updateOrder({int id, String status = "delivered"}) async {
+//   final apiResult = await patch(
+//     Api.orders + "/$id",
+//     {
+//       "status": status,
+//     },
+//   );
+//   //
+//   final apiResponse = ApiResponse.fromResponse(apiResult);
+//   if (apiResponse.allGood) {
+//     return Order.fromJson(apiResponse.body["order"]);
+//   } else {
+//     throw apiResponse.message;
+//     }
+//   }

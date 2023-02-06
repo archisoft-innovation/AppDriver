@@ -7,7 +7,10 @@ import {
   Modal,
   Linking,
 } from "react-native";
-import { setOrderDelivered } from "../../services/api/ordersService";
+import {
+  setOrderDelivered,
+  setOrderDelivered2,
+} from "../../services/api/ordersService";
 import FinalOrderDetailsModal from "./finalOrderDetailsModal";
 
 export default function OrderDetailsAndDeliver(props) {
@@ -31,7 +34,8 @@ export default function OrderDetailsAndDeliver(props) {
     setModalIsVisibleInside(true);
     console.log("in orderDelivered");
     props.getOrdersToPassCompleted();
-    setOrderDelivered(props.orderID);
+    // setOrderDelivered(props.orderID);
+    setOrderDelivered2(props.orderID);
     // props.finishOrderDel();
   }
   function closeAllModalls() {
