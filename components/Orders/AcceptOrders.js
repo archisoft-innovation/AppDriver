@@ -75,7 +75,14 @@ export default function AcceptedOrders(props) {
                 </Text>
               </View>
             </View>
-
+            {/* <Pressable
+              onPress={props.closeModalAcceptedOrDers}
+              style={styles.presableButton}
+            >
+              <Text style={styles.presableText}>
+                Inapoi de vazut cum sa arate mai bine
+              </Text>
+            </Pressable> */}
             <Pressable
               disabled={pickUpTime}
               onPress={props.onTheRoad}

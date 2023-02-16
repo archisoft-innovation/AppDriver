@@ -47,11 +47,13 @@ export default function Rapoarte() {
     let response = await getOrdersMcs(selectedDate, selectedDate2);
 
     for (let i = 0; i < response.rows.length; i++) {
-      totalEarn = totalEarn + response.rows[i].deliveryManFee;
-      if (isNaN(response.rows[i].driverBonus)) {
-      } else {
-        // console.log(response.rows[i].driverBonus);
-        bonus = bonus + response.rows[i].driverBonus;
+      if (response.rows[i].status === "delivered") {
+        totalEarn = totalEarn + response.rows[i].deliveryManFee;
+        if (isNaN(response.rows[i].driverBonus)) {
+        } else {
+          // console.log(response.rows[i].driverBonus);
+          bonus = bonus + response.rows[i].driverBonus;
+        }
       }
     }
     totalsBig = totalEarn + bonus;
@@ -67,12 +69,13 @@ export default function Rapoarte() {
     let bonus = 0;
     let totalsBig = 0;
     let response = await getOrdersMcs(selectedDate, selectedDate2);
-
     for (let i = 0; i < response.rows.length; i++) {
-      totalEarn = totalEarn + response.rows[i].deliveryManFee;
-      if (isNaN(response.rows[i].driverBonus)) {
-      } else {
-        bonus = bonus + response.rows[i].driverBonus;
+      if (response.rows[i].status === "delivered") {
+        totalEarn = totalEarn + response.rows[i].deliveryManFee;
+        if (isNaN(response.rows[i].driverBonus)) {
+        } else {
+          bonus = bonus + response.rows[i].driverBonus;
+        }
       }
     }
     totalsBig = totalEarn + bonus;
@@ -89,6 +92,17 @@ export default function Rapoarte() {
   function setModalVisible2() {
     setmodalVisibility2(true);
   }
+  function tobedeleted() {
+    for (let i = 0; i < reports.rows.length; i++) {
+      // console.log(reports.rows[i].status);
+      // console.log(reports.rows[i].deliveryManFee);
+      if (reports.rows[i].deliveryManFee > 0) {
+        console.log(reports.rows[i].orderCode);
+      }
+    }
+    // console.log(reports.rows[0].status);
+    // console.log(reports.rows[0].deliveryManFee);
+  }
   return (
     <View style={styles.inputContainer}>
       <Pressable onPress={setModalVisible}>
@@ -104,6 +118,7 @@ export default function Rapoarte() {
 
       <Modal visible={modalVisibility}>
         <View style={styles.inputContainerModal}>
+          <Text>Some texts</Text>
           <DatePicker
             options={{
               backgroundColor: "#090C08",
@@ -117,7 +132,7 @@ export default function Rapoarte() {
             onSelectedChange={async (newValue) => {
               closeStartDateModal(newValue);
             }}
-            current={currentDate}
+            // current={currentDate}
             mode="calendar"
             style={{ borderRadius: 10 }}
           />
@@ -138,7 +153,7 @@ export default function Rapoarte() {
             onSelectedChange={async (newValue) => {
               closeStartDateModal2(newValue);
             }}
-            current={currentDate}
+            // current={currentDate}
             mode="calendar"
             style={{ borderRadius: 10 }}
           />
@@ -159,6 +174,11 @@ export default function Rapoarte() {
           <View style={styles.distanta}>
             <Text style={styles.earnings}>Penalizări:</Text>
             <Text style={styles.earnings2}>{" Ron"}</Text>
+          </View>
+          <View>
+            <Pressable onPress={tobedeleted}>
+              <Text>Cevas</Text>
+            </Pressable>
           </View>
         </View>
       </View>

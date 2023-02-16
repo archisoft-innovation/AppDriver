@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Pressable, Linking } from "react-native";
 import { setOrderDelivered } from "../../services/api/ordersService";
 import AcceptedOrders from "./AcceptOrders";
@@ -7,6 +7,24 @@ import FinalOrderDetailsModal from "./finalOrderDetailsModal";
 import OrderDetailsAndDeliver from "./orderDetailsAndDeliver";
 
 export default function Orders(props) {
+  useEffect(() => {
+    setStatusOrder();
+  }, []);
+  function setStatusOrder() {
+    console.log(props.status);
+    if (props.status === "enroute") {
+      console.log("Enrouteeeeee");
+
+      setPressed("acceptedOrder");
+      setPresableText("Am ridicat comanda");
+    } else if (props.status === "ready") {
+      // setPressed("detailsOrder");
+      // setPresableText("Detalii comanda/ Livrare");
+    } else {
+      console.log("in else setStatusOrder");
+    }
+    // console.log(orderStatus + " in setStatusOrder");
+  }
   function call() {
     const url = "tel://" + props.vendorPhone;
     Linking.openURL(url);
@@ -36,6 +54,7 @@ export default function Orders(props) {
   // const [pressed, setPressed] = useState(false);
   const [pressed, setPressed] = useState("acceptOrder");
   const [presableText, setPresableText] = useState("Acceptare comandă");
+  const [orderStatus, setOrderStatus] = useState();
   function passFinishDeleteOrder() {
     setModalIsVisibleDetailsOrders(false);
     props.deleteAComponent(props.orderID);
@@ -44,6 +63,7 @@ export default function Orders(props) {
   function acceptOrder() {
     // conditiile pentru status
     console.log(props.status);
+    console.log("Props stautus din Orders.JS");
     if (pressed === "acceptOrder") {
       setModalIsVisible(true);
     } else if (pressed === "acceptedOrder") {
@@ -77,11 +97,15 @@ export default function Orders(props) {
   function closeFinalOrderDetails() {
     setModalIsVisibleFinalOrderDetails(false);
   }
-
+  // function closeModalAcceptedOrDersF() {
+  //   console.log("hereee");
+  //   setModalIsVisible(false);
+  // }
   return (
     <View style={styles.mainContainer}>
       <AcceptedOrders
         visible={modalIsVisible}
+        // closeModalAcceptedOrDers={closeModalAcceptedOrDersF}
         onTheRoad={onTheWayOrder}
         vendorName={props.vendorName}
         orderCode={props.orderCode}

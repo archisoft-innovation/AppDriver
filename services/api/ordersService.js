@@ -194,8 +194,6 @@ async function setOrderOnTheRoute(orderId) {
     const request = await axios({
       method: "post",
       url: SmartiooMcsApi + "/mcsorder/Order/setOrderOnRoute/" + orderId,
-      // headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
-      // headers: { Authorization: `Bearer ${userDataFromLocal.apiKey}` },
       headers: { athKey: userDataFromLocal.apiKey },
     });
     console.log("returned ok setOrderOnTheRoute");
@@ -208,8 +206,6 @@ async function setOrderOnTheRoute(orderId) {
     return false;
   }
 }
-
-// function setOrderDelivered(id) {}
 
 async function setOrderDelivered(id) {
   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
@@ -231,14 +227,14 @@ async function setOrderDelivered(id) {
 }
 async function setOrderDelivered2(orderId) {
   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
-  console.log(userDataFromLocal.token);
-  console.log(userDataFromLocal.apiKey);
-  console.log(orderId);
+
+  // verific si fara return, doar sterg return sa vad cum e
   return axios
     .patch(
       SmartiooApi + "/orders/" + orderId,
       {
         status: "delivered",
+        // status: delivered,
       },
       {
         headers: { Authorization: `Bearer ${userDataFromLocal.token}` },
@@ -255,29 +251,7 @@ async function setOrderDelivered2(orderId) {
       console.log(error);
     });
 }
-// async function setOrderDelivered2(orderId) {
-//   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
-//   console.log(userDataFromLocal.apiKey);
-//   console.log(orderId + " Order ID");
-//   try {
-//     const request = await axios({
-//       method: "post",
-//       url: SmartiooMcsApi + "/orders/" + orderId,
-//       headers: { athKey: `Bearer ${userDataFromLocal.token}` },
-//       data: {
-//         status: "delivered",
-//       },
-//     });
-//     console.log(request);
-//     console.log("log response good from setOrderDelivered2123");
-//     return true;
-//   } catch (error) {
-//     console.log("in err setOrderDelivered2123");
-//     console.log(error);
-//     // console.log(error.response);
-//     return false;
-//   }
-// }
+
 export {
   getOrdersMcs,
   getOrders,
@@ -290,19 +264,3 @@ export {
   setOrderOnTheRoute,
   setOrderDelivered2,
 };
-
-// Future<Order> updateOrder({int id, String status = "delivered"}) async {
-//   final apiResult = await patch(
-//     Api.orders + "/$id",
-//     {
-//       "status": status,
-//     },
-//   );
-//   //
-//   final apiResponse = ApiResponse.fromResponse(apiResult);
-//   if (apiResponse.allGood) {
-//     return Order.fromJson(apiResponse.body["order"]);
-//   } else {
-//     throw apiResponse.message;
-//     }
-//   }
