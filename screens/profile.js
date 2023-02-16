@@ -6,6 +6,7 @@ import * as SecureStore from "expo-secure-store";
 import { UserData } from "../services/api/secureStorageConstants";
 import ProfileRegisterDriver from "../components/profileRegisterDriver";
 import Complaints from "../components/complaints";
+import SelectDropdown from "react-native-select-dropdown";
 
 export default function Profil() {
   useEffect(() => {
@@ -16,6 +17,10 @@ export default function Profil() {
   const [modalComplains, setModalComplains] = useState(false);
   const [name, setName] = useState("");
   const [emailUsr, setEmailUsr] = useState("");
+  const [enteredDeliveryMethod, setEnteredDeliveryMethod] = useState("");
+
+  const deliveryMethod = ["Mașină", "Motocicletă", "Scuter", "Bicicletă"];
+
   // const tookToken = info.token;
   // const nameToken = info.name;
   // const idToken = info.id;
@@ -70,9 +75,29 @@ export default function Profil() {
           <Text style={styles.goalText2}>Bună, {name}</Text>
           <Text style={styles.goalText}>Email: {emailUsr}</Text>
           <Text style={styles.goalText}>Telefon:</Text>
-          <Text style={styles.goalText}>
-            Vehicul setat: {"Vehiculul setat"}
-          </Text>
+          <Text style={styles.goalText}>Vehicul setat:</Text>
+          <View style={styles.dropDownView}>
+            <SelectDropdown
+              defaultButtonText={"Cu ce vrei să livrezi"}
+              data={deliveryMethod}
+              buttonStyle={styles.dropdown1BtnStyle}
+              buttonTextStyle={styles.dropdown1BtnTxtStyle}
+              dropdownStyle={styles.dropdown1DropdownStyle}
+              rowStyle={styles.dropdown1RowStyle}
+              rowTextStyle={styles.dropdown1RowTxtStyle}
+              onSelect={(selectedItem, index) => {
+                // console.log(selectedItem, index);
+                setEnteredDeliveryMethod(selectedItem);
+                // logDropdowns(selectedItem);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+          </View>
           <Pressable onPress={registerADriver} style={styles.presableButton2}>
             <Text style={styles.presableText}>Înscrie un curier</Text>
           </Pressable>
@@ -160,5 +185,24 @@ const styles = StyleSheet.create({
   image: {
     width: 250,
     height: 200,
+  },
+  dropdown1BtnStyle: {
+    flex: 1,
+    height: 20,
+    backgroundColor: "orange",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "orange",
+    marginBottom: 4,
+  },
+  dropdown1BtnTxtStyle: { color: "white" },
+  dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
+  dropdown1RowStyle: {
+    backgroundColor: "orange",
+    borderBottomColor: "#06b4e0",
+  },
+  dropdown1RowTxtStyle: { color: "white" },
+  dropDownView: {
+    height: 50,
   },
 });
