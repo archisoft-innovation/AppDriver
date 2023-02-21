@@ -75,28 +75,30 @@ export default function Profil() {
           <Text style={styles.goalText2}>Bună, {name}</Text>
           <Text style={styles.goalText}>Email: {emailUsr}</Text>
           <Text style={styles.goalText}>Telefon:</Text>
-          <Text style={styles.goalText}>Vehicul setat:</Text>
-          <View style={styles.dropDownView}>
-            <SelectDropdown
-              defaultButtonText={"Cu ce vrei să livrezi"}
-              data={deliveryMethod}
-              buttonStyle={styles.dropdown1BtnStyle}
-              buttonTextStyle={styles.dropdown1BtnTxtStyle}
-              dropdownStyle={styles.dropdown1DropdownStyle}
-              rowStyle={styles.dropdown1RowStyle}
-              rowTextStyle={styles.dropdown1RowTxtStyle}
-              onSelect={(selectedItem, index) => {
-                // console.log(selectedItem, index);
-                setEnteredDeliveryMethod(selectedItem);
-                // logDropdowns(selectedItem);
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-            />
+          <View style={styles.inRow}>
+            <Text style={styles.goalText}>Vehicul setat:</Text>
+            <View style={styles.dropDownView}>
+              <SelectDropdown
+                defaultButtonText={"livrare"}
+                data={deliveryMethod}
+                buttonStyle={styles.dropdown1BtnStyle}
+                buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                dropdownStyle={styles.dropdown1DropdownStyle}
+                rowStyle={styles.dropdown1RowStyle}
+                rowTextStyle={styles.dropdown1RowTxtStyle}
+                onSelect={(selectedItem, index) => {
+                  // console.log(selectedItem, index);
+                  setEnteredDeliveryMethod(selectedItem);
+                  // logDropdowns(selectedItem);
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }}
+              />
+            </View>
           </View>
           <Pressable onPress={registerADriver} style={styles.presableButton2}>
             <Text style={styles.presableText}>Înscrie un curier</Text>
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
   },
   goalText2: {
     // marginTop: 10,
-    marginBottom: 40,
+    marginBottom: 10,
     color: "white",
     padding: 8,
     fontSize: 26,
@@ -203,6 +205,12 @@ const styles = StyleSheet.create({
   },
   dropdown1RowTxtStyle: { color: "white" },
   dropDownView: {
-    height: 50,
+    height: 40,
+  },
+  inRow: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+    justifyContent: "flex-start",
+    marginTop: 10,
   },
 });
