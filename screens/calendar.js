@@ -8,9 +8,12 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
+import { getScheduleer } from "../services/api/calendarService";
+
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState("");
   const [modalVisibility, setmodalVisibility] = useState(false);
   const [ten, setTen] = useState(false);
   const [eleven, seteleven] = useState(false);
@@ -27,22 +30,39 @@ export default function Calendar() {
   const [twentyTwo, settwentyTwo] = useState(false);
   const [twentyThree, settwentyThree] = useState(false);
   const [twentyFour, settwentyFour] = useState(false);
+  const [scheduler, setScheduler] = useState([]);
   useEffect(() => {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
     setCurrentDate(year + "-" + month + "-" + date);
+    console.log(currentDate);
   }, []);
+
+  async function getSchedulerForDriver(date) {
+    let a = await getScheduleer(date);
+    setScheduler(a);
+    console.log(a);
+  }
+
   function test(id) {
-    // console.log("changed");
     // setSelectedDate(date);
     // (newValue) => setSelectedDate(newValue);
     // console.log(selectedDate);
     // console.log(id);
-    setSelectedDate(id);
-    // ceva nu e ok aici, da aflu maine. nu apuca sa se salveze statul si la log apare mereu cel din urma
+    setSelectedDate(id.replaceAll("/", "-"));
+    // id.replaceAll("/", "-")
     setmodalVisibility(false);
-    console.log(selectedDate);
+    // console.log(id);
+    // console.log("ceav" + selectedDate);
+    console.log(id.replaceAll("/", "-"));
+    let a = new Date(id);
+    let month = a.getUTCMonth() + 1;
+    let day = a.getDate();
+    let year = a.getFullYear();
+    let requestDate = day + "-" + month + "-" + year;
+    console.log(requestDate);
+    getSchedulerForDriver(requestDate);
   }
 
   function setModalVisible() {
@@ -99,7 +119,7 @@ export default function Calendar() {
       <Pressable onPress={setModalVisible}>
         <Text style={styles.heading}>Selectează data</Text>
       </Pressable>
-      <Text>Data selectata</Text>
+      <Text>Data selectata: {selectedDate}</Text>
       <Modal visible={modalVisibility}>
         <View style={styles.inputContainer}>
           <DatePicker
