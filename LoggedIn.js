@@ -331,7 +331,7 @@ export default function LoggedIn() {
               return (
                 <View style={styles.shiftAll}>
                   <Pressable style={styles.shift} onPress={requestOutShift}>
-                    <Ionicons name="radio-button-on" color="red" size="20" />
+                    <Ionicons name="radio-button-on" color="red" size={20} />
                     <Text style={styles.headerRightText}>Iesi din tura</Text>
                   </Pressable>
                 </View>
@@ -343,7 +343,7 @@ export default function LoggedIn() {
               return (
                 <View style={styles.shiftAll}>
                   <Pressable style={styles.shift} onPress={requestInShift}>
-                    <Ionicons name="radio-button-on" color="green" size="20" />
+                    <Ionicons name="radio-button-on" color="green" size={20} />
                     <Text style={styles.headerRightText}>Intra in tura</Text>
                   </Pressable>
                 </View>
@@ -352,7 +352,7 @@ export default function LoggedIn() {
               return (
                 <View style={styles.shiftAll}>
                   {/* <Pressable style={styles.shift} onPress={requestInShift}> */}
-                  {/* <Ionicons name="radio-button-on" color="green" size="20" /> */}
+                  {/* <Ionicons name="radio-button-on" color="green" size={20} /> */}
                   <Text style={styles.headerRightText}>Procesare tura</Text>
                   {/* </Pressable> */}
                 </View>
@@ -361,7 +361,7 @@ export default function LoggedIn() {
               return (
                 <View style={styles.shiftAll}>
                   {/* <Pressable style={styles.shift} onPress={requestInShift}> */}
-                  {/* <Ionicons name="radio-button-on" color="green" size="20" /> */}
+                  {/* <Ionicons name="radio-button-on" color="green" size={20} /> */}
                   <Text style={styles.headerRightText}>In tura</Text>
                   {/* </Pressable> */}
                 </View>
@@ -370,7 +370,7 @@ export default function LoggedIn() {
               return (
                 <View style={styles.shiftAll}>
                   <Pressable style={styles.shift} onPress={requestInShift}>
-                    <Ionicons name="radio-button-on" color="green" size="20" />
+                    <Ionicons name="radio-button-on" color="green" size={20} />
                     <Text style={styles.headerRightText}>Intra in tura</Text>
                   </Pressable>
                 </View>
@@ -384,7 +384,7 @@ export default function LoggedIn() {
           component={Comenzi}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="list" color="white" size="24" />
+              <Ionicons name="list" color="white" size={24} />
             ),
             // headerShown: false,
           }}
@@ -395,7 +395,7 @@ export default function LoggedIn() {
           component={Rapoarte}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="bar-chart" color="white" size="24" />
+              <Ionicons name="bar-chart" color="white" size={24} />
             ),
           }}
         />
@@ -404,7 +404,7 @@ export default function LoggedIn() {
           component={Calendar}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="calendar" color="white" size="24" />
+              <Ionicons name="calendar" color="white" size={24} />
             ),
           }}
         />
@@ -413,7 +413,7 @@ export default function LoggedIn() {
           component={Profil}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="man" color="white" size="24" />
+              <Ionicons name="man" color="white" size={24} />
             ),
           }}
         />
