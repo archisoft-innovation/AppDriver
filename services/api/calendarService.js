@@ -13,6 +13,7 @@ async function getScheduleer(date) {
     });
     // console.log(request);
     console.log("returned ok");
+    console.log(request.data);
     return request.data;
   } catch (error) {
     console.log("An error has occurred");
@@ -21,44 +22,28 @@ async function getScheduleer(date) {
     return false;
   }
 }
-// async function getScheduleer2(date) {
-//   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
-//   try {
-//     const request = await axios({
-//       method: "get",
-//       url: SmartiooMcsApi + "/mcsorder/DriverSchedule/" + date,
-//       headers: { athKey: userDataFromLocal.apiKey },
-//     });
-//     console.log("returned ok getScheduleer2");
-//     console.log(request);
-//     return true;
-//   } catch (error) {
-//     console.log("An error has occurred in getScheduleer2");
-//     console.log(error);
-//     console.log(error.response);
-//     return false;
-//   }
-// }
 
-async function Scheduleer(schedule, date) {
+async function createDriverSchedule(date, work) {
   var userDataFromLocal = JSON.parse(await SecureStore.getItemAsync(UserData));
+  console.log(work);
   try {
     const request = await axios({
       method: "post",
       url: SmartiooMcsApi + "/mcsorder/DriverSchedule/" + date,
+      data: work,
       headers: { athKey: userDataFromLocal.apiKey },
       //   data: {
-      //     [schedule]
+      //     [workSheet]
       //   },
-      data: [schedule],
+      // data: [workSheet],
     });
-    console.log(request);
+    // console.log(request);
     console.log("returned ok");
     return true;
   } catch (error) {
     console.log("An error has occurred");
     console.log(error);
-    console.log(error.response);
+    // console.log(error.response);
     return false;
   }
 }
@@ -108,4 +93,4 @@ async function Scheduleer(schedule, date) {
 //     setBusy(false);
 //     await getData(date: date);
 //   }
-export { getScheduleer };
+export { getScheduleer, createDriverSchedule };

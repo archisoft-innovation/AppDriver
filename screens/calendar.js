@@ -8,7 +8,10 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
-import { getScheduleer } from "../services/api/calendarService";
+import {
+  createDriverSchedule,
+  getScheduleer,
+} from "../services/api/calendarService";
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState("");
@@ -31,20 +34,102 @@ export default function Calendar() {
   const [twentyThree, settwentyThree] = useState(false);
   const [twentyFour, settwentyFour] = useState(false);
   const [scheduler, setScheduler] = useState([]);
+  const [allHours, setAllHours] = useState([
+    // { blocked: false, hour: 0, working: twentyFour },
+    // { blocked: false, hour: 1, working: true },
+    // { blocked: false, hour: 2, working: false },
+    // { blocked: false, hour: 3, working: false },
+    // { blocked: false, hour: 4, working: false },
+    // { blocked: false, hour: 5, working: false },
+    // { blocked: false, hour: 6, working: false },
+    // { blocked: false, hour: 7, working: false },
+    // { blocked: false, hour: 8, working: false },
+    // { blocked: false, hour: 9, working: false },
+    // { blocked: false, hour: 10, working: ten },
+    // { blocked: false, hour: 11, working: eleven },
+    // { blocked: false, hour: 12, working: twelve },
+    // { blocked: false, hour: 13, working: thirteen },
+    // { blocked: false, hour: 14, working: fourteen },
+    // { blocked: false, hour: 15, working: fifteen },
+    // { blocked: false, hour: 16, working: sixteen },
+    // { blocked: false, hour: 17, working: seventeen },
+    // { blocked: false, hour: 18, working: eighteen },
+    // { blocked: false, hour: 19, working: nineteen },
+    // { blocked: false, hour: 20, working: twenty },
+    // { blocked: false, hour: 21, working: twentyOne },
+    // { blocked: false, hour: 22, working: twentyTwo },
+    // { blocked: false, hour: 23, working: twentyThree },
+    { blocked: false, hour: 0, working: false },
+    { blocked: false, hour: 1, working: false },
+    { blocked: false, hour: 2, working: false },
+    { blocked: false, hour: 3, working: false },
+    { blocked: false, hour: 4, working: false },
+    { blocked: false, hour: 5, working: false },
+    { blocked: false, hour: 6, working: false },
+    { blocked: false, hour: 7, working: false },
+    { blocked: false, hour: 8, working: false },
+    { blocked: false, hour: 9, working: false },
+    { blocked: false, hour: 10, working: false },
+    { blocked: false, hour: 11, working: false },
+    { blocked: false, hour: 12, working: false },
+    { blocked: false, hour: 13, working: false },
+    { blocked: false, hour: 14, working: false },
+    { blocked: false, hour: 15, working: false },
+    { blocked: false, hour: 16, working: false },
+    { blocked: false, hour: 17, working: false },
+    { blocked: false, hour: 18, working: false },
+    { blocked: false, hour: 19, working: false },
+    { blocked: false, hour: 20, working: false },
+    { blocked: false, hour: 21, working: false },
+    { blocked: false, hour: 22, working: false },
+    { blocked: false, hour: 23, working: false },
+  ]);
   useEffect(() => {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
     setCurrentDate(year + "-" + month + "-" + date);
-    console.log(currentDate);
   }, []);
 
   async function getSchedulerForDriver(date) {
     let a = await getScheduleer(date);
-    setScheduler(a);
-    console.log(a);
+    if (a) {
+      setScheduler(a);
+      setHoursRender(a);
+    }
   }
-
+  function setHoursRender(id) {
+    setTen(id[10].working);
+    seteleven(id[11].working);
+    setTwelve(id[12].working);
+    setThirteen(id[13].working);
+    setFourteen(id[14].working);
+    setFifteen(id[15].working);
+    setsixteen(id[16].working);
+    setseventeen(id[17].working);
+    seteighteen(id[18].working);
+    setnineteen(id[19].working);
+    settwenty(id[20].working);
+    settwentyOne(id[21].working);
+    settwentyTwo(id[22].working);
+    settwentyThree(id[23].working);
+    settwentyFour(id[0].working);
+    allHours[10].working = id[10].working;
+    allHours[11].working = id[11].working;
+    allHours[12].working = id[12].working;
+    allHours[13].working = id[13].working;
+    allHours[14].working = id[14].working;
+    allHours[15].working = id[15].working;
+    allHours[16].working = id[16].working;
+    allHours[17].working = id[17].working;
+    allHours[18].working = id[18].working;
+    allHours[19].working = id[19].working;
+    allHours[20].working = id[20].working;
+    allHours[21].working = id[21].working;
+    allHours[22].working = id[22].working;
+    allHours[23].working = id[23].working;
+    allHours[0].working = id[0].working;
+  }
   function test(id) {
     // setSelectedDate(date);
     // (newValue) => setSelectedDate(newValue);
@@ -71,15 +156,19 @@ export default function Calendar() {
 
   function switchTen() {
     setTen((current) => !current);
-  }
-  function switchtwelve() {
-    setTwelve((current) => !current);
+    allHours[10].working = !ten;
   }
   function switeleven() {
     seteleven((current) => !current);
+    allHours[11].working = eleven;
+  }
+  function switchtwelve() {
+    setTwelve((current) => !current);
+    allHours[12].working = twelve;
   }
   function switchthirteen() {
     setThirteen((current) => !current);
+    allHours[13].working = thirteen;
   }
   function switchfourteen() {
     setFourteen((current) => !current);
@@ -112,7 +201,46 @@ export default function Calendar() {
     settwentyThree((current) => !current);
   }
   function switchtwentyFour() {
+    console.log("herer");
     settwentyFour((current) => !current);
+    // setAllHours([
+    //   { blocked: false, hour: 0, working: twentyFour },
+    //   { blocked: false, hour: 1, working: false },
+    //   { blocked: false, hour: 2, working: false },
+    //   { blocked: false, hour: 3, working: false },
+    //   { blocked: false, hour: 4, working: false },
+    //   { blocked: false, hour: 5, working: false },
+    //   { blocked: false, hour: 6, working: false },
+    //   { blocked: false, hour: 7, working: false },
+    //   { blocked: false, hour: 8, working: false },
+    //   { blocked: false, hour: 9, working: false },
+    //   { blocked: false, hour: 10, working: ten },
+    //   { blocked: false, hour: 11, working: eleven },
+    //   { blocked: false, hour: 12, working: twelve },
+    //   { blocked: false, hour: 13, working: thirteen },
+    //   { blocked: false, hour: 14, working: fourteen },
+    //   { blocked: false, hour: 15, working: fifteen },
+    //   { blocked: false, hour: 16, working: sixteen },
+    //   { blocked: false, hour: 17, working: seventeen },
+    //   { blocked: false, hour: 18, working: eighteen },
+    //   { blocked: false, hour: 19, working: nineteen },
+    //   { blocked: false, hour: 20, working: twenty },
+    //   { blocked: false, hour: 21, working: twentyOne },
+    //   { blocked: false, hour: 22, working: twentyTwo },
+    //   { blocked: false, hour: 23, working: twentyThree },
+    // ]);
+  }
+  function sendSchedule() {
+    // console.log(allHours);
+    let dateC = new Date(selectedDate);
+    let month = dateC.getUTCMonth() + 1;
+    let day = dateC.getDate();
+    let year = dateC.getFullYear();
+    let goodDate = day + "-" + month + "-" + year;
+    createDriverSchedule(goodDate, allHours);
+    console.log(allHours);
+    console.log(allHours[10].working + " working");
+    console.log(ten + " ten");
   }
   return (
     <View style={styles.inputContainerMain}>
@@ -120,6 +248,12 @@ export default function Calendar() {
         <Text style={styles.heading}>Selectează data</Text>
       </Pressable>
       <Text>Data selectata: {selectedDate}</Text>
+      {/* <Pressable onPress={sendSchedule}>
+        <Text>Apasaa</Text>
+      </Pressable> */}
+      <Pressable onPress={sendSchedule} style={styles.presableButton2}>
+        <Text style={styles.heading2}>Trimite program</Text>
+      </Pressable>
       <Modal visible={modalVisibility}>
         <View style={styles.inputContainer}>
           <DatePicker
@@ -484,5 +618,20 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 20,
     color: "white",
+  },
+  heading2: {
+    fontSize: 16,
+    color: "white",
+  },
+  presableButton2: {
+    width: 160,
+    backgroundColor: "orange",
+    padding: 8,
+    // alignSelf: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#06b4e0",
+    borderRadius: 4,
+    marginTop: 10,
   },
 });
