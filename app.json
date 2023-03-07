@@ -55,7 +55,7 @@
         "expo-notifications",
         {
           "icon": "./assets/favicon.png",
-          "color": "red",
+          "color": "#FF0000",
           "sounds": [
             "./assets/success.wav"
           ]
